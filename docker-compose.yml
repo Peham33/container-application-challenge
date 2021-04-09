@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  # Backend server for testing our proxy configuration
+  http:
+    image: python
+    command: python -m http.server 1234
+  
+  proxy:
+    build:
+      context: ha-proxy
+    volumes:
+      - './ha-proxy:/usr/local/etc/haproxy/'
+    environment:
+      BACKEND_HOST: 'http'
+      BACKEND_PORT: 1234
+    ports:
+      - 9999:9999
