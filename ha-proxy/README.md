@@ -13,3 +13,6 @@ docker-compose up
 
 HTTP request logs will be shown in stdout of the container.
 
+# HTTPS
+
+In order for HTTPS to work you need to
