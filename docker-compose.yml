@@ -1,11 +1,10 @@
 version: '3'
 
 services:
-
-  # Backend server for testing our proxy configuration
-  http:
-    image: python
-    command: python -m http.server 1234
+  quarkus-api:
+    build: 
+      context: app
+      dockerfile: src/main/docker/Dockerfile.jvm
   
   proxy:
     build:
@@ -13,7 +12,7 @@ services:
     volumes:
       - './ha-proxy:/usr/local/etc/haproxy/'
     environment:
-      BACKEND_HOST: 'http'
-      BACKEND_PORT: 1234
+      BACKEND_HOST: quarkus-api
+      BACKEND_PORT: 8080
     ports:
       - 9999:9999
