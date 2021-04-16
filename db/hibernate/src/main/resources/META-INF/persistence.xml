@@ -4,33 +4,17 @@
              version="2.0">
 
     <!-- https://docs.jboss.org/hibernate/orm/5.4/quickstart/html_single/#hibernate-gsg-tutorial-basic-config -->
-    <persistence-unit name="org.hibernate.tutorial.jpa">
-<!--        <property name = "hibernate.dialect">
-            org.hibernate.dialect.PostgreSQLDialect
-        </property>
+    <persistence-unit name="hibernate.persistence">
+        <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
+        <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/secret" /> <!-- DB Name -->
+        <property name="javax.persistence.jdbc.user" value="james" /> <!-- DB User -->
+        <property name="javax.persistence.jdbc.password" value="bond" /> <!-- DB Password -->
 
-        <property name = "hibernate.connection.driver_class">
-            org.postgresql.Driver
-        </property>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/> <!-- DB Dialect -->
+        <property name="hibernate.hbm2ddl.auto" value="create" /> <!-- create / create-drop / update -->
 
-        &lt;!&ndash; Assume test is the database name &ndash;&gt;
-
-        <property name = "hibernate.connection.url">
-            jdbc:postgresql://localhost:5432/secret
-        </property>
-
-        <property name = "hibernate.connection.username">
-            james
-        </property>
-
-        <property name = "hibernate.connection.password">
-            bond
-        </property>
-
-        &lt;!&ndash; List of XML mapping files &ndash;&gt;
-        <mapping resource = "Mission.hbm.xml"/>
-        <mapping resource = "Spy.hbm.xml"/>
-        <mapping resource = "Target.hbm.xml"/>-->
+        <property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
+        <property name="hibernate.format_sql" value="true" /> <!-- Show SQL formatted -->
     </persistence-unit>
 </persistence>
 
