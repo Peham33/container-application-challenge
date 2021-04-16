@@ -17,3 +17,13 @@ services:
     ports:
       -  80:8080
       -  443:8443
+
+  database:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: james
+      POSTGRES_PASSWORD: bond
+      POSTGRES_DB: secret
+    volumes:
+      - ./db/postgres/initdb:/docker-entrypoint-initdb.d
