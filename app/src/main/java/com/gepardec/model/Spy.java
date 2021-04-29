@@ -2,29 +2,54 @@ package com.gepardec.model;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
-import java.util.ArrayList;
-import java.util.Iterator;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-//@Entity
-@JsonbPropertyOrder({"codename", "name", "retired", "alive", "missions"})
+@JsonbPropertyOrder({"code", "name", "alive", "retired", "missions"})
+@Entity
+@Table(name = "spy")
 public class Spy {
-    private String codeName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    
+    @Column(name = "code", unique = true, nullable = false)
+    private String code;
+
+    @Column(name = "name")
     private String name;
-    private ArrayList<Mission> missions;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "mission_assignment",
+            joinColumns = {@JoinColumn(name = "spy_id")},
+            inverseJoinColumns = {@JoinColumn(name = "mission_id")}
+    )
+    private Set<Mission> missions;
+
+    @Column(name = "retired")
     private boolean retired;
+
+    @Column(name = "alive")
     private boolean alive;
 
-    public Spy(String codeName, String name) {
-        this.codeName = codeName;
+    public Spy() {
+    }
+
+    public Spy(String code, String name) {
+        this.code = code;
         this.name = name;
-        this.missions = new ArrayList<>();
+        this.missions = new HashSet<>();
         this.retired = false;
         this.alive = true;
     }
 
-    @JsonbProperty("codename")
-    public String getCodeName() {
-        return codeName;
+    @JsonbProperty("code")
+    public String getCode() {
+        return code;
     }
 
     @JsonbProperty("name")
@@ -33,7 +58,7 @@ public class Spy {
     }
 
     @JsonbProperty("missions")
-    public ArrayList<Mission> getMissions() {
+    public Set<Mission> getMissions() {
         return missions;
     }
 

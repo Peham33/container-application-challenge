@@ -1,0 +1,15 @@
+version: "3.1"
+
+services:
+  database:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: james
+      POSTGRES_PASSWORD: bond
+      POSTGRES_DB: secret
+    volumes:
+      - ./1-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./2-insert.sql:/docker-entrypoint-initdb.d/2-insert.sql

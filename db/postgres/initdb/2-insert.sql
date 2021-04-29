@@ -1,96 +1,29 @@
------------- INSERT INTO Tables for CONTAINER CHALLENGE ------------
+INSERT INTO spy(id, code, name)
+VALUES (1, '69', 'Austin Powers'),
+       (2, '007', 'James Bond'),
+       (3, '003', 'Johnny English');
 
--------------- INSERT INTO Spy --------------
-INSERT INTO Spy VALUES
-(
-    '409','Austin Powers', false, true  
-);
+ALTER SEQUENCE spy_id_seq RESTART WITH 4;
 
-INSERT INTO Spy VALUES
-(
-    '007','James Bond', false, true  
-);
+INSERT INTO mission(id, name, description, country)
+VALUES (1, 'Operation Dijkstra', '409 Agent in conflict', 'Rotterdam'),
+       (2, 'Operation Freedom', 'Search for the ultimate solution', 'North Pole'),
+       (3, 'Deployment', 'Deployment without downtime', 'Linz'),
+       (4, 'Save communication', 'Setting up an encrypted communication channel', 'Vienna'),
+       (5, 'Container challenge', 'Start the challenge and try to get into the best company', 'Top secret');
 
-INSERT INTO Spy VALUES
-(
-    '410','Johnny Englisch', true, false  
-);
+ALTER SEQUENCE mission_id_seq RESTART WITH 4;
 
--------------- INSERT INTO Mission --------------
-INSERT INTO Mission VALUES
-(
-    01, 'Operation Dijkstra', '409 Agent in conflict', 'Rotterdam'
-);
+INSERT INTO target(name, description, mission_id)
+VALUES ('A*', 'Mission successful', 1),
+       ('Bad boys', 'Mission successful', 2),
+       ('Kubernetes', 'unfinished mission', 3),
+       ('HAProxy', 'Mission successful', 4),
+       ('Gepardec', 'unfinished mission', 5);
 
-INSERT INTO Mission VALUES
-(
-    02, 'Operation Freedom', 'Search for the ultimate solution', 'North Pole'
-);
-
-INSERT INTO Mission VALUES
-(
-    03, 'Deployment', 'Deployment without downtime', 'Linz'
-);
-
-INSERT INTO Mission VALUES
-(
-    04, 'Save communication', 'Setting up an encrypted communication channel', 'Vienna'
-);
-
-INSERT INTO Mission VALUES
-(
-    05, 'Container challenge', 'Start the challenge and try to get into the best company', 'Top secret'
-);
-
--------------- INSERT INTO Target --------------
-
-INSERT INTO Target VALUES
-(
-    'A*', 'Mission successful', 01
-);
-
-INSERT INTO Target VALUES
-(
-    'Bad boys', 'Mission successful', 02
-);
-
-INSERT INTO Target VALUES
-(
-    'Kubernetes', 'unfinished mission', 03
-);
-
-INSERT INTO Target VALUES
-(
-    'HAProxy', 'Mission successful', 04
-);
-
-INSERT INTO Target VALUES
-(
-    'Gepardec', 'unfinished mission', 05
-);
-
--------------- INSERT INTO assignedMissions --------------
-INSERT INTO assignedMissions VALUES
-(
-    '007', 03
-);
-
-INSERT INTO assignedMissions VALUES
-(
-    '007', 04
-);
-
-INSERT INTO assignedMissions VALUES
-(
-    '007', 05
-);
-
-INSERT INTO assignedMissions VALUES
-(
-    '409', 01
-);
-
-INSERT INTO assignedMissions VALUES
-(
-    '410', 02
-);
+INSERT INTO mission_assignment
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (2, 4),
+       (3, 5);

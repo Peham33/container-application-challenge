@@ -1,34 +1,40 @@
 package com.gepardec.model;
 
-import javax.json.bind.annotation.JsonbAnnotation;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@JsonbPropertyOrder({"id", "name", "description"})
-//@Entity
+@JsonbPropertyOrder({"mission_id", "name", "description"})
+@Entity
+@Table(name = "target")
 public class Target {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "mission_id")
+    private Long missionId;
+
+    @Column(name = "description")
     private String description;
 
     public Target() {
     }
 
     public Target(String name, String description) {
-        this.id = 17L;
+        this.missionId = 17L;
         this.name = name;
         this.description = description;
     }
 
-    @JsonbProperty("id")
-    public Long getId() {
-        return id;
+    @JsonbProperty("mission_id")
+    public Long getMissionId() {
+        return missionId;
     }
 
     @JsonbProperty("name")
