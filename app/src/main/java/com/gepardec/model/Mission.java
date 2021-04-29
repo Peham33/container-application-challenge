@@ -2,20 +2,30 @@ package com.gepardec.model;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
-@JsonbPropertyOrder({"name", "description", "country", "targets"})
-//@Entity
+@JsonbPropertyOrder({"id", "name", "description", "country", "targets"})
+@Entity
+@Table(name = "Mission")
 public class Mission {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "country")
     private String country;
-    private Target[] targets;
+
+    @OneToMany(mappedBy = "missionId")
+    private List<Target> targets;
 
     public Mission() {
     }
@@ -26,23 +36,41 @@ public class Mission {
         this.country = country;
     }
 
-    @JsonbProperty("name")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    @JsonbProperty("description")
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    @JsonbProperty("country")
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getCountry() {
         return country;
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @JsonbProperty("targets")
-    public Target[] getTargets() {
+    public List<Target> getTargets() {
         return targets;
     }
+
 }

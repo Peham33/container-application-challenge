@@ -1,40 +1,40 @@
------------- CREATE Tables for CONTAINER CHALLENGE ------------
-
--------------- CREATE Spy --------------
-CREATE TABLE Spy
+DROP TABLE IF EXISTS spy CASCADE;
+CREATE TABLE spy
 (
-    codeName VARCHAR(255),
-    name VARCHAR(255),
-    retired BOOLEAN,
-    alive BOOLEAN,
-    CONSTRAINT spy_pk PRIMARY KEY (codeName)
+    id      SERIAL PRIMARY KEY,
+    code    VARCHAR(3) UNIQUE NOT NULL,
+    name    VARCHAR(255)      NOT NULL,
+    retired BOOLEAN DEFAULT FALSE,
+    alive   BOOLEAN DEFAULT TRUE
 );
 
-------------- CREATE Mission -------------
-CREATE TABLE Mission(
-    missionId INTEGER,
-    name VARCHAR(255),
+DROP TABLE IF EXISTS mission CASCADE;
+CREATE TABLE mission
+(
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
     description VARCHAR(255),
-    country VARCHAR(255),
-    CONSTRAINT mission_pk PRIMARY KEY (missionId)
+    country     VARCHAR(255)
 );
 
------------ CREATE assignedMissions -----------
-CREATE TABLE assignedMissions(
-    codeName VARCHAR(255),
-    missionId INTEGER,
-    CONSTRAINT assigned_spy FOREIGN KEY (codeName)
-    REFERENCES Spy(codeName),
-    CONSTRAINT assigned_mission FOREIGN KEY (missionId)
-    REFERENCES Mission(missionId)
+DROP TABLE IF EXISTS mission_assignment CASCADE;
+CREATE TABLE mission_assignment
+(
+    spy_id     SERIAL,
+    mission_id SERIAL,
+    CONSTRAINT spy_fk FOREIGN KEY (spy_id) REFERENCES Spy (id)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT mission_fk FOREIGN KEY (mission_id) REFERENCES Mission (id)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--------------- CREATE Target --------------
-CREATE TABLE Target(
-    name VARCHAR(255),
+DROP TABLE IF EXISTS target CASCADE;
+CREATE TABLE target
+(
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
     description VARCHAR(255),
-    missionId INTEGER,
-    CONSTRAINT target_pk PRIMARY KEY (name),
-    CONSTRAINT target_fk FOREIGN KEY (missionId)
-    REFERENCES Mission(missionId)
+    mission_id  SERIAL,
+    CONSTRAINT target_fk FOREIGN KEY (mission_id) REFERENCES Mission (id)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
