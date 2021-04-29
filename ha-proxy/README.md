@@ -24,7 +24,7 @@ As the self-signed certificate we use is not verified by a known Certificate Aut
 - [MacOS](https://superuser.com/questions/1359755/trust-self-signed-cert-in-chrome-macos-10-13)
 - [Linux](https://tarunlalwani.com/post/self-signed-certificates-trusting-them/)
 
-If you want to generate a new certificate please see [generate-ssl-certificate.sh]() on how this can be scripted.
+If you want to generate a new certificate please see [generate-ssl-certificate.sh](./generate-ssl-certificate.sh) on how this can be scripted.
 
 ## Explainations
 
@@ -34,7 +34,7 @@ The private key used for encryption with this corresponding certificate. This ke
 
 ### server.crt
 
-This is the actual certificate file generated using the [server.key]() as an input. It contains information about  the certificate owner including its Issuer and the domain its valid for.
+This is the actual certificate file generated using the [server.key](./server.key) as an input. It contains information about  the certificate owner including its Issuer and the domain its valid for.
 
 To see plaintext information in your console run:
 ```sh
@@ -43,4 +43,4 @@ $ openssl x509 -text -noout -in server.crt
 
 ### server.pem
 
-This file is the result of concatenating the server.key and server.crt. It is referenced by the HAProxy configuration.
+This file is the result of concatenating the [server.key](./server.key) and [server.crt](./server.crt). It is referenced by the HAProxy configuration.

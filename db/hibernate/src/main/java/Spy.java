@@ -1,45 +1,64 @@
+import javax.persistence.*;
+
+@Entity
+@Table( name = "Spy")
 public class Spy {
 
-    private String codeName;
-    private String name;
-    private Mission[] missions;
-    private boolean retired;
-    private boolean alive;
+	@Id
+	@Column (name = "missionId")
+	private String codeName;
+	@Column (name = "name")
+	private String name;
+	// Check if foreign key relationship is correct
+	@ManyToOne
+	@JoinColumn(name = "assignedMissionId", referencedColumnName = "missionId")
+	private Mission[] missions;
+	@Column (name = "retired")
+	private boolean retired;
+	@Column (name = "alive")
+	private boolean alive;
 
-    public Spy() {
-    }
+	public Spy() {
+	}
 
-    ;
+	public String getCodeName() {
+		return codeName;
+	}
 
-    public String getCodeName() {
-        return codeName;
-    }
+	public String getName() {
+		return name;
+	}
 
-    ;
+	public Mission[] getMissions() {
+		return missions;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public boolean getRetired() {
+		return retired;
+	}
 
-    ;
+	public boolean getAlive() {
+		return alive;
+	}
 
-    public Mission[] getMissions() {
-        return missions;
-    }
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
+	}
 
-    ;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public boolean getRetired() {
-        return retired;
-    }
+	public void setMissions(Mission[] missions) {
+		this.missions = missions;
+	}
 
-    ;
+	public void setRetired(boolean retired) {
+		this.retired = retired;
+	}
 
-    public boolean getAlive() {
-        return alive;
-    }
-
-    ;
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
 }
 
-/*TODO- Setters and Constructor*/
