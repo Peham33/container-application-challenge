@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 
+//minikube service postgres --url
 public class ManageDBEntities {
 
     private static EntityManagerFactory factory;

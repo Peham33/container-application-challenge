@@ -8,7 +8,7 @@
     <persistence-unit name="hibernate.persistence">
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/secret" /> <!-- DB Name -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://127.0.0.1:57133/secret" /> <!-- DB Name -->
             <property name="javax.persistence.jdbc.user" value="james" /> <!-- DB User -->
             <property name="javax.persistence.jdbc.password" value="bond" /> <!-- DB Password -->
 
