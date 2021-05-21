@@ -16,6 +16,8 @@ spec:
       labels:
         io.kompose.service: database
     spec:
+      imagePullSecrets:
+        - name: github-registry
       containers:
         - env:
             - name: POSTGRES_DB
@@ -24,7 +26,7 @@ spec:
               value: bond
             - name: POSTGRES_USER
               value: james
-          image: spr/database:latest
+          image: docker.pkg.github.com/aeisl/container-application-challenge/database:latest
           imagePullPolicy: IfNotPresent
           name: database
           resources: {}
