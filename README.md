@@ -18,7 +18,10 @@ Use `minikube` to start a local kubernetes cluster by running `minikube start`.
 ---
 **NOTE**
 
-Use `minikube start --driver=hyperkit` if you are on MacOS, as there are some limitiations to the network driver of docker. (See [Issue #7332](https://github.com/kubernetes/minikube/issues/7332))
+
+Use `minikube start --driver=hyperv` on Windows or `minikube start --driver=hyperkit` on MacOS, as there are some limitiations to the network driver of docker. (See [Issue #7332](https://github.com/kubernetes/minikube/issues/7332))
+
+If you don't have Hyper-V enabled, see [the Microsoft documentation](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) for a guide on how to enable it.
 
 If you had previously set up a local cluster with minikube, you might need to delete it with `minikube delete`. Please be aware that this is a __permanent deletion__.
 
