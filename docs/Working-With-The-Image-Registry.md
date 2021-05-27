@@ -14,7 +14,12 @@ To use the Github Image Registry with Docker you first must authenticate yoursel
 
 ````
 echo "<yourtoken>" > CR_PAT.txt
-cat CR_PAT.txt | docker login docker.pkg.github.com -u USERNAME --password-stdin
+
+# Linux and Mac
+cat CR_PAT.txt | docker login docker.pkg.github.com --username USERNAME --password-stdin
+
+# Windows
+get-content CR_PAT.txt | docker login docker.pkg.github.com --username USERNAME --password-stdin
 ````
 
 It should give you a success response.
@@ -31,8 +36,7 @@ If not, check that the file contains the correct token or create a new one if yo
 
 Run the latest published version from the image registry.
 ````
-docker run -e POSTGRES_PASSWORD=password \
-  docker.pkg.github.com/aeisl/container-application-challenge/database:latest
+docker run -e POSTGRES_PASSWORD=password docker.pkg.github.com/aeisl/container-application-challenge/database:latest
 ````
 
 Build and publish a new latest version of our database image

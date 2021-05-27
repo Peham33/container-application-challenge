@@ -73,6 +73,7 @@ and then apply their configurations to the kubernetes cluster
 ```bash
 kubectl apply -f github-registry-secret.yml # Allows for pulling private Docker images
 kubectl apply -f database.yaml
+kubectl apply -f api.yaml
 kubectl apply -f app/target/kubernetes/kubernetes.yml
 ```
 
