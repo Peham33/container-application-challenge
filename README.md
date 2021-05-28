@@ -11,6 +11,10 @@ SPR4G1 Studienprojekt für gepardec
 4. The application is now running under [https://localhost:443](https://localhost:443)
 5. If the backend has not changed, running `docker-compose up` is enough
 
+## Instructions for Docker Image Registry
+
+[docs/Working-With-The-Image-Registry.md](docs/Working-With-The-Image-Registry.md)
+
 ## Setup Kubernetes local environment
 
 Use `minikube` to start a local kubernetes cluster by running `minikube start`.
@@ -61,13 +65,6 @@ kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha
 First up you want to build the required docker containers.
 
 ```bash
-# Mac and Linux
-eval $(minikube docker-env) 
-# or on Windows PowerShell
-minikube docker-env | Invoke-Expression
-
-docker build -t spr/database db/postgres
-
 cd app
 # Use your maven installation or a local wrapper ./mvnw or .\mvnw.cmd 
 mvn clean package -D"quarkus.kubernetes.deploy"="true" -DskipTests=true
@@ -77,7 +74,9 @@ cd ..
 and then apply their configurations to the kubernetes cluster
 
 ```bash
+kubectl apply -f github-registry-secret.yml # Allows for pulling private Docker images
 kubectl apply -f database.yaml
+kubectl apply -f api.yaml
 kubectl apply -f app/target/kubernetes/kubernetes.yml
 ```
 
