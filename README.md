@@ -95,5 +95,5 @@ Querying the API should now work:
  ```bash
  curl -L -v http://challenge.test/missions
 
- Invoke-RestMethod -method "GET" -Uri "http://challenge.test/missions"
+ Invoke-RestMethod -method "GET" -Uri "https://challenge.test/missions"
  ```
