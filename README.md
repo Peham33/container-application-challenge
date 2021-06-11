@@ -62,22 +62,17 @@ kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha
 
 ### Start the database and application
 
-First up you want to build the required docker containers.
+---
+**NOTE**
+
+The cluster uses Docker images provided by our [image registry on Github](https://github.com/aeisl/container-application-challenge/packages). If you want to update versions of those image, follow the [instructions](docs/Working-With-The-Image-Registry.md).
+
+---
 
 ```bash
-cd app
-# Use your maven installation or a local wrapper ./mvnw or .\mvnw.cmd 
-mvn clean package -D"quarkus.kubernetes.deploy"="true" -DskipTests=true
-cd ..
-```
-
-and then apply their configurations to the kubernetes cluster
-
-```bash
-kubectl apply -f github-registry-secret.yml # Allows for pulling private Docker images
-kubectl apply -f database.yaml
-kubectl apply -f api.yaml
-kubectl apply -f app/target/kubernetes/kubernetes.yml
+kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
+kubectl apply -f database.service.yaml -f database.deployment.yaml
+kubectl apply -f api.service.yaml -f api.deployment.yaml
 ```
 
 ### Finshing the setup
@@ -100,5 +95,5 @@ Querying the API should now work:
  ```bash
  curl -L -v http://challenge.test/missions
 
- Invoke-RestMethod -method "GET" -Uri "http://challenge.test/missions"
+ Invoke-RestMethod -method "GET" -Uri "https://challenge.test/missions"
  ```

@@ -53,7 +53,7 @@ Run the latest published version from the image registry.
 docker run docker.pkg.github.com/aeisl/container-application-challenge/api:latest
 ````
 
-Build and publish a new latest version of our database image
+Build and publish a new latest version of our api image
 ````
 build -t spr/api -f app/src/main/docker/Dockerfile.jvm app
 docker tag spr/api docker.pkg.github.com/aeisl/container-application-challenge/api:latest

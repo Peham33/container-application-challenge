@@ -2,19 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: database
+    app.kubernetes.io/name: database
+    app.kubernetes.io/part-of: container-application-challenge
   name: database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: database
+      app.kubernetes.io/name: database
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.kompose.service: database
+        app.kubernetes.io/name: database
     spec:
       imagePullSecrets:
         - name: github-registry
@@ -31,14 +32,3 @@ spec:
           name: database
           resources: {}
       restartPolicy: Always
-status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: database
-spec:
-  selector:
-    io.kompose.service: database
-  ports:
-    - port: 5432
