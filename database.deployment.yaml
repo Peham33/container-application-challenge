@@ -27,12 +27,12 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: secret-data
-                  key: bond
+                  key: password
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: secret-data
-                  key: james 
+                  key: username 
           image: docker.pkg.github.com/aeisl/container-application-challenge/database:latest
           imagePullPolicy: IfNotPresent
           name: database
