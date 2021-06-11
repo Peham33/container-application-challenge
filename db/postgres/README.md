@@ -18,7 +18,8 @@ Start another shell and run the command below
 docker-compose exec database psql --host=database --username=james --dbname=secret
 
 # Select the data
-SELECT * FROM Target JOIN Mission ON(mission_id = Mission.id)
+SELECT * FROM Target
+JOIN Mission ON(mission_id = Mission.id)
 JOIN mission_assignment USING(mission_id)
 JOIN Spy ON(spy_id = Spy.id) WHERE code = '007';
 ```
