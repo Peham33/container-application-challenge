@@ -5,6 +5,14 @@ services:
     build:
       context: app
       dockerfile: src/main/docker/Dockerfile.jvm
+    environment: 
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      APP_NAME: ${APP_NAME}
+      APP_VERSION: ${APP_VERSION}
+      APP_PULL_POLICY: ${APP_PULL_POLICY}
+      APP_SERVICE_TYPE: ${APP_SERVICE_TYPE}
 
   proxy:
     build:

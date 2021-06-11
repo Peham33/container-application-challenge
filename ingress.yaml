@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: challenge
+spec:
+  tls:
+    - hosts:
+        - challenge.test
+      secretName: challenge-test-tls
+
+  defaultBackend:
+    service:
+      name: api
+      port:
+        number: 8080
+  
+  rules:
+    - host: challenge.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port: 
+                  number: 8080
+      

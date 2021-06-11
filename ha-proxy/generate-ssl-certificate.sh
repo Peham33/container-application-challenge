@@ -13,6 +13,6 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
     echo "[san]"; 
     echo subjectAltName=DNS:localhost,DNS:challenge.test,IP:127.0.0.1
     ) \
-  -subj "/CN=localhost"
+  -subj "/CN=challenge.test"
 
 cat server.crt server.key | tee server.pem

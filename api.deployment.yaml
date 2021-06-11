@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: api
+    app.kubernetes.io/part-of: container-application-challenge
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: api
+    spec:
+      imagePullSecrets:
+        - name: github-registry
+      containers:
+        - image: docker.pkg.github.com/aeisl/container-application-challenge/api:latest
+          imagePullPolicy: IfNotPresent
+          name: api
+          resources: {}
+      restartPolicy: Always

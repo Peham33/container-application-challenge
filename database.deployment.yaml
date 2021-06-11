@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: database
+    app.kubernetes.io/part-of: container-application-challenge
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: database
+    spec:
+      imagePullSecrets:
+        - name: github-registry
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: secret
+            - name: POSTGRES_PASSWORD
+              value: bond
+            - name: POSTGRES_USER
+              value: james
+          image: docker.pkg.github.com/aeisl/container-application-challenge/database:latest
+          imagePullPolicy: IfNotPresent
+          name: database
+          resources: {}
+      restartPolicy: Always
