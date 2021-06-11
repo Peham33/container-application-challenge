@@ -11,5 +11,4 @@ services:
       POSTGRES_PASSWORD: bond
       POSTGRES_DB: secret
     volumes:
-      - ./1-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
-      - ./2-insert.sql:/docker-entrypoint-initdb.d/2-insert.sql
+      - ./initdb:/docker-entrypoint-initdb.d
