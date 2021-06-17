@@ -55,7 +55,7 @@ docker run docker.pkg.github.com/aeisl/container-application-challenge/api:lates
 
 Build and publish a new latest version of our api image
 ````
-build -t spr/api -f app/src/main/docker/Dockerfile.jvm app
+docker build -t spr/api -f app/src/main/docker/Dockerfile.jvm app
 docker tag spr/api docker.pkg.github.com/aeisl/container-application-challenge/api:latest
 docker push docker.pkg.github.com/aeisl/container-application-challenge/api:latest
 ````

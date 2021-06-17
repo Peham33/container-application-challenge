@@ -71,6 +71,7 @@ The cluster uses Docker images provided by our [image registry on Github](https:
 
 ```bash
 kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
+kubectl apply -f api.configmap.yaml # Applies config map for api 
 kubectl apply -f database.service.yaml -f database.deployment.yaml
 kubectl apply -f api.service.yaml -f api.deployment.yaml
 ```
