@@ -31,4 +31,12 @@ spec:
           imagePullPolicy: IfNotPresent
           name: database
           resources: {}
+          # Persistent volume configuration
+          volumeMounts: # Volume Mount for Container
+            - mountPath: /var/lib/postgresql/data
+              name: database-storage
+      volumes: # Volume Mount for Pod
+        - name: database-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
       restartPolicy: Always

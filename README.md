@@ -29,6 +29,15 @@ If you don't have Hyper-V enabled, see [the Microsoft documentation](https://doc
 
 If you had previously set up a local cluster with minikube, you might need to delete it with `minikube delete`. Please be aware that this is a __permanent deletion__.
 
+If `minikube delete` throws a FILE_IN_USE error you will need to manually delete the Hyper-V server and kill the services which are locking minikube files.
+
+![hyperv delete](docs/hyperv-delete.JPG)
+![minikube process delete](docs/minikube-process-delete.JPG)
+
+To stop the processes use `taskkill /F /PID <PID_NUMBER>`
+
+After deleting both the Hyper-V server and the locking tasks it is necessary to use `minikube delete --purge` to completely delete all existing minikube files.
+
 ---
 
 ### Ingress and SSL
@@ -73,6 +82,7 @@ The cluster uses Docker images provided by our [image registry on Github](https:
 kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
 kubectl apply -f database.service.yaml -f database.deployment.yaml
 kubectl apply -f api.service.yaml -f api.deployment.yaml
+kubectl apply -f database.volume.yaml -f database.claim.yaml
 ```
 
 ### Finshing the setup
