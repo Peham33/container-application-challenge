@@ -5,5 +5,3 @@ metadata:
 data:
   DB_URL: jdbc:postgresql://database:5432/secret
   DB: secret
-  DB_USERNAME: james 
-  DB_PASSWORD: bond

@@ -20,7 +20,7 @@ spec:
       imagePullSecrets:
         - name: github-registry
       containers:
-      // TODO update image to latest (rebuild and push to image registry)
+      # TODO before merge update image to latest (rebuild and push to image registry)
         - image: docker.pkg.github.com/aeisl/container-application-challenge/api:dev
           imagePullPolicy: IfNotPresent
           name: api
@@ -28,4 +28,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: api-configmap
+            - secretRef:
+                name: database-credentials
       restartPolicy: Always
