@@ -26,13 +26,13 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom: 
                 secretKeyRef:
-                  name: secret-data
+                  name: database-credentials
                   key: password
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: secret-data
-                  key: username 
+                  name: database-credentials
+                  key: user 
           image: docker.pkg.github.com/aeisl/container-application-challenge/database:latest
           imagePullPolicy: IfNotPresent
           name: database
