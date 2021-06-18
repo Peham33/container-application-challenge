@@ -1,4 +1,4 @@
-# Container Challenge
+# Docker-Compose Setup
 
 ## Vorbereitung und Infos
 
