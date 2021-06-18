@@ -13,17 +13,7 @@ __Beantworte:__ Wie kann man ein Deployment ohne Downtime in Kubernetes realisie
 Ergänze deine Antwort hier:
 
 ```
-Zwei gängige Methoden für Deployment ohne Downtime sind einerseits ein Blue/Green-Deployment oder ein Rolling-Update.
-
-Ein Blue/Green-Deployment dupliziert eine bestehende Deployment-Konfiguration und aktualisiert dabei die Version der Applikation. 
-Nachdem Healthchecks erfolgreich durchlaufen und alle Pods gestartet sind, kann das Service auf das neue Deployment umgestellt werden (zB durch Änderung des selection Labels auf den neuen Commit Hash).
-
-Vorteile sind, dass alle Pods auf einmal umgestellt werden und, wenn das alte Deployment noch nicht gelöst wurde, jederzeit zurückgewechselt werden kann. Dafür ist ein höherer Ressourcenaufwand notwendig.
-
-Beim Rolling-Update wird eine bestehende Deployment-Konfiguration aktualisiert und auf den Cluster angewandt.
-Nach und nach werden neue Pods gestartet und alte abgeschaltet, bis ausschließlich neue Pods laufen. 
-
-Ein Vorteil ist, dass das Deployment ressourcenschonender ist und automatisiert abläuft. Dafür muss unbedingt auf Rückwärtskompatibilität geachtet werden, denn alte und neue Versionen laufen gleichzeitig.
+...
 ```
 
 ---
