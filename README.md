@@ -65,12 +65,14 @@ kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha
 ---
 **NOTE**
 
-The cluster uses Docker images provided by our [image registry on Github](https://github.com/aeisl/container-application-challenge/packages). If you want to update versions of those image, follow the [instructions](docs/Working-With-The-Image-Registry.md).
+The cluster uses Docker images provided by our [image registry on Github](https://github.com/aeisl/container-application-challenge/packages). If you want to update versions of those images, follow the [instructions](docs/Working-With-The-Image-Registry.md).
 
 ---
 
 ```bash
 kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
+kubectl apply -f .\database-credentials.yaml # Applies database secrets
+kubectl apply -f api.configmap.yaml # Applies config map for api 
 kubectl apply -f database.service.yaml -f database.deployment.yaml
 kubectl apply -f api.service.yaml -f api.deployment.yaml
 ```
