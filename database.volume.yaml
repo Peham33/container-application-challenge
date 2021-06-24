@@ -1,0 +1,15 @@
+# Virtual Storage instance. 
+# Refers to a physical storage unit.
+# May become obsolete if dynamic provisioning is used.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10M
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"

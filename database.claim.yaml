@@ -1,0 +1,16 @@
+# A request sent by a node for storage. 
+# May include storage specific parameters, 
+# like storage size and access type.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10M
