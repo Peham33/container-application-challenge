@@ -7,8 +7,8 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: james
-      POSTGRES_PASSWORD: bond
-      POSTGRES_DB: secret
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB}
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
