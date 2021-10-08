@@ -1,0 +1,52 @@
+:root {
+    --background-color: #000000;
+    --text-color: #00ff00;
+    --highlight-color: #ffffff;
+}
+
+#run-tests {
+    width: 250px;
+    height: 70px;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    font-size: 36px;
+    font-family: inherit;
+    border-color: var(--highlight-color);
+}
+
+.test-case-container {
+    margin-top: 50px;
+}
+
+.test-case-progress {
+    width: 30%;
+    line-height: 30px;
+    background-color: grey;
+    margin-top: 10px;
+}
+  
+.test-case-bar {
+    width: 0%;
+    height: 30px;
+    background-color: #ffffff;
+    text-align: center;
+    line-height: 30px;
+    color: #000000;
+}
+
+.bar-success {
+    background-color: #00ff00 !important;
+}
+
+.bar-failure {
+    background-color: #ff0000 !important;
+}
+
+.error-msg {
+    margin-top: 10px;
+    color: #ff0000;
+}
+
+.hidden {
+    display: none;
+}

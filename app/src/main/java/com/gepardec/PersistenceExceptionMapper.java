@@ -10,6 +10,6 @@ public class PersistenceExceptionMapper implements ExceptionMapper<PersistenceEx
 
     @Override
     public Response toResponse(PersistenceException e) {
-        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+        return Response.status(Response.Status.GATEWAY_TIMEOUT).build();
     }
 }
