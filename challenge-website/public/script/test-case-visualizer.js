@@ -9,8 +9,29 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+//testing API reachability
 let testCase1 = async function() {
+    let result = [];
+    let status = null;
+
+    try {
+        status = await fetch('http://localhost:3000/api-test', {cache: "no-store"}).then(response => response.status);
+    } catch (e) {
+        status = 503
+    }
+
+    //status 200 or 504 denotes working API container (504 = database error, but API runs)
+    if (status == 200 || status == 504) {
+        result.push(true);
+    } else {
+        result.push(false);
+        result.push("Error Code: " + status);
+    }
+    return result;
+}
+
+//testing API<->Database connection
+let testCase2 = async function() {
     let result = [];
     let status = null;
 
@@ -29,7 +50,8 @@ let testCase1 = async function() {
     return result;
 }
 
-let testCase2 = async function() {
+//testing automatic https upgrade
+let testCase3 = async function() {
     let result = [];
     let status = null;
 
@@ -39,21 +61,13 @@ let testCase2 = async function() {
         status = 503
     }
 
+    //301 (redirect) means working https upgrade
     if (status == 301) {
         result.push(true);
     } else {
         result.push(false);
         result.push("Error Code: " + status);
     }
-    return result;
-}
-
-let testCase3 = function() {
-    let result = [];
-    //test (http request, whatever)
-
-
-    result.push(true);
     return result;
 }
 
@@ -66,6 +80,9 @@ class TestCase {
         this.desc = desc;
         this.testFunction = testFunction;
     }
+
+    //save currently running intervals (allows early restarting of tests)
+    intervals = [];
 
     render() {
         testDiv.innerHTML += `
@@ -81,6 +98,9 @@ class TestCase {
 
     //resets the progress bar and error message
     reset() {
+        //clear running intervals
+        this.intervals.forEach(clearInterval);
+
         //get DOM elements
         let barDiv = document.getElementById(`test-case-${this.id}-bar`);
         let errorDiv = document.getElementById(`test-case-${this.id}-error`);
@@ -105,7 +125,7 @@ class TestCase {
 
         //execute test function async
         let success = false;
-        let interval = 50;
+        let interval = 200;
 
         let testResult = null;
         let testPromise = this.testFunction().then(result =>
@@ -115,8 +135,8 @@ class TestCase {
         //wait 500ms for an answer
         await sleep(500);
 
-        console.log(testResult)
-        console.log(testPromise)
+        //console.log(testResult)
+        //console.log(testPromise)
         //if there was an answer already, shorten the interval for the bar animation
         if (testResult != null) {
             success = testResult[0];
@@ -125,12 +145,22 @@ class TestCase {
 
         //render bar animation
         let id = setInterval(frame, interval);
+        this.intervals.push(id);
         let width = 0;
         function frame() {
+            
+            if (testResult != null) {
+                success = testResult[0];
+                interval = 10;
+                clearInterval(id);
+                id = setInterval(frame, 10);
+            }
+
+
             if (width >= 100) {
                 clearInterval(id);
                 
-                console.log(testResult);
+                //console.log(testResult);
                 success = testResult[0];
 
                 if (success) {
@@ -156,8 +186,8 @@ class TestCase {
 //test case declarations
 let testCases = [];
 testCases.push(new TestCase(1, "Test Case 1: API running", "Tests if API is reachable", testCase1));
-testCases.push(new TestCase(2, "Test Case 2: https Upgrade", "Tests if automatic https upgrade is configured", testCase2));
-//testCases.push(new TestCase(3, "Test Case 3: API Insert into database", "Tests if the API can be used to insert values into the database", testCase3));
+testCases.push(new TestCase(2, "Test Case 2: API <-> Database connection", "Tests if the API can reach the database", testCase2));
+testCases.push(new TestCase(3, "Test Case 3: https Upgrade", "Tests if automatic https upgrade is configured", testCase3));
 
 //initial render of tests
 testCases.forEach(element => element.render());

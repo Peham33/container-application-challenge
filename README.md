@@ -2,7 +2,7 @@
 SPR4G1 Studienprojekt für gepardec
 
 ## How to start REST API with HAProxy
-1. Run `mvnw package` in ./app
+1. Run `mvnw package -DskipTests` in ./app
 2. Run `docker-compose up --build` in root directory
 3. Import the self-signed ssl certificate on your local system
     - [Windows](https://support.securly.com/hc/en-us/articles/360026808753-How-to-manually-install-the-Securly-SSL-certificate-on-Windows)

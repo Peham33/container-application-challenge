@@ -1,10 +1,13 @@
 package com.gepardec.service;
 
 import com.gepardec.model.Spy;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.mapping.Constraint;
 
 import javax.inject.Inject;
-import javax.persistence.EntityExistsException;
+import javax.persistence.ConstraintMode;
 import javax.persistence.EntityManager;
+import javax.persistence.UniqueConstraint;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,8 +28,11 @@ public class RegisterResource {
 
         try {
             em.persist(spy);
-        } catch (EntityExistsException e) {
+        } catch (ConstraintViolationException e) {
             return Response.status(Response.Status.CONFLICT).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.ok().entity(e.getMessage()).build();
         }
 
         return Response.ok().status(Response.Status.CREATED).build();
