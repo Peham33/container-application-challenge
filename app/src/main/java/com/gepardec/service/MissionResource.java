@@ -1,7 +1,6 @@
 package com.gepardec.service;
 
 import com.gepardec.model.Mission;
-import org.hibernate.exception.JDBCConnectionException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
