@@ -2,12 +2,9 @@ package com.gepardec.service;
 
 import com.gepardec.model.Spy;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.mapping.Constraint;
 
 import javax.inject.Inject;
-import javax.persistence.ConstraintMode;
 import javax.persistence.EntityManager;
-import javax.persistence.UniqueConstraint;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

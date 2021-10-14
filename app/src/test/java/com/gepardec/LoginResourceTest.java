@@ -7,9 +7,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static javax.ws.rs.core.Response.Status.*;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static javax.ws.rs.core.Response.Status.OK;
+import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
+import static org.hamcrest.Matchers.equalTo;
 
 @QuarkusTest
 public class LoginResourceTest {
