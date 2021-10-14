@@ -23,7 +23,9 @@ services:
       - "./ha-proxy:/usr/local/etc/haproxy/"
     environment:
       BACKEND_HOST: quarkus-api
+      BACKEND_PORT: 8080
     ports:
+      - 80:8080
       - 443:8443
 
   database:
@@ -33,3 +35,11 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB}
+    volumes:
+      - ./db/postgres/initdb:/docker-entrypoint-initdb.d
+
+  challenge-container:
+    build:
+      context: challenge-container
+    ports:
+      - 3000:3000
