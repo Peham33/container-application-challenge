@@ -7,9 +7,7 @@ In letzter Zeit bestanden einige Differenzen zu einem anderen Geheimdienst. Dies
 
 ## Aufgabenstellung
 
-<span style="color:red">
-//Diese Aufgabenstellung verbessern!!!
-</span>
+***Diese Aufgabenstellung verbessern***
 
 Jeder Versuch sich mit dem Ingress zu verbinden scheitert, wir glauben, dass der Doppelagent hier wichtige Codestücke entfernt hat und somit die Funktion zerstört hat.
 
@@ -17,18 +15,12 @@ Jeder Versuch sich mit dem Ingress zu verbinden scheitert, wir glauben, dass der
 
 Der Eindringling hat einen Weg gefunden, Schadsoftware auf unserem System auszuführen. Diese hat die Konfiguration der API geändert.
 
-### API Verbindung herstellen mit Ingress (Default Backend oder/und Rules)
+### API Verbindung herstellen mit Ingress
 
 Die API ist nicht mehr ansprechbar, es muss eine Möglichkeit geboten werden, diese von außerhalb des Clusters zu erreichen. Dafür sollte ein Ingress konfiguriert werden, welcher auf die API verweist. In der ingress.yaml File gibt es ein paar Einstellungen, die vorgenommen werden müssen, um die Verbindung wieder herzustellen.
 
-<span style="color:red">
-Möglicherweise nicht hier?
-</span>
-
 ### SSL Redirect - Bonuspunkt??
 
-Tests zeigen, dass Probleme mit der Verbindungsverschlüsselung existieren. Die Verbindung läuft nicht auf https, sondern nur auf http. Finden Sie eine Lösung ein http zu https Upgrade durchzuführen.
+***Möglicherweise nicht hier?***
 
-<span style="color:red">
-------------------
-</span>
+Tests zeigen, dass Probleme mit der Verbindungsverschlüsselung existieren. Die Verbindung läuft nicht auf https, sondern nur auf http. Finden Sie eine Lösung ein http zu https Upgrade durchzuführen.
