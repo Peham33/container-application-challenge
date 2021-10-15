@@ -1,8 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  # annotations:
-  #   nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  annotations:
+    nginx.ingress.kubernetes.io/server-snippet: |
+      proxy_intercept_errors on;
+      location @custom_503 {
+        return 404 "<html>Either API is not running or wrong rule configuration.</html>";
+      }
+      error_page 503 @custom_503;
+
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
   name: challenge
   labels:
     app.kubernetes.io/name: ingress
@@ -13,13 +21,8 @@ spec:
         - challenge.test
       secretName: challenge-test-tls
 
-# Musterlösung:
-  # defaultBackend:
-  #   service:
-  #     name: api
-  #     port:
-  #       number: 8080
-
+  # Musterlösung:
+  # Mit default backend funktionieren keine custom error messages
   # rules:
   #   - host: challenge.test
   #     http:
