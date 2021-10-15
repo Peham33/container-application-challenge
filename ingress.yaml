@@ -2,7 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      proxy_intercept_errors on;
+      location @custom_503 {
+        return 404 "<html>No service is available on the configured port.</html>";
+      }
+      error_page 503 @custom_503;
+
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
   name: challenge
 spec:
   tls:
@@ -10,21 +18,16 @@ spec:
         - challenge.test
       secretName: challenge-test-tls
 
-  defaultBackend:
-    service:
-      name: api
-      port:
-        number: 8080
-  
-  rules:
-    - host: challenge.test
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: api
-                port: 
-                  number: 8080
-      
+  # Musterlösung:
+  # Mit default backend funktionieren keine custom error messages
+  # rules:
+  #   - host: challenge.test
+  #     http:
+  #       paths:
+  #         - path: /
+  #           pathType: Prefix
+  #           backend:
+  #             service:
+  #               name: api
+  #               port:
+  #                 number: 8080
