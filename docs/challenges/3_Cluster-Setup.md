@@ -2,17 +2,33 @@
 
 ## Szenario
 
-*No Storyline here*
+Sehr gut, wie wir sehen haben Sie das Training erfolgreich abgeschlossen, da Sie nun anscheinend die Grundlagen beherrschen können wir uns sicher sein das Sie auch eine wichtige Mission für uns erfolgreich abschließen können.
+In letzter Zeit bestanden einige Differenzen zu einem anderen Geheimdienst. Dieser hat einen Doppelagenten bei uns eingeschleust um an wichtige Informationen von unseren Missionen zu kommen. Um seine Spuren zu verwischen hat er unsere Infrastruktur beschädigt. Den Doppelagenten konnten wir inzwischen ausfindig machen, die Schäden bestehen allerdings weiter, nun liegt es an Ihnen die Infrastruktur so gut wie möglich wieder herzustellen damit wir unsere Arbeiten wieder aufnehmen können. Bei dieser Aufgabe lassen wir Sie  nicht alleine, Sie werden immer wieder Hinweise von uns bekommen, viel Glück, wir zählen auf Sie!
 
 ## Aufgabenstellung
 
-API reparieren - Andreas
+<span style="color:red">
+//Diese Aufgabenstellung verbessern!!!
+</span>
 
-API Verbindung herstellen (Default Backend oder/und Rules)
+Jeder Versuch sich mit dem Ingress zu verbinden scheitert, wir glauben, dass der Doppelagent hier wichtige Codestücke entfernt hat und somit die Funktion zerstört hat.
 
-SSL Redirect - Bonuspunkt??
+### API reparieren
 
----
-**Hinweis:**
+Der Eindringling hat einen Weg gefunden, Schadsoftware auf unserem System auszuführen. Diese hat die Konfiguration der API geändert.
 
----
+### API Verbindung herstellen mit Ingress (Default Backend oder/und Rules)
+
+Die API ist nicht mehr ansprechbar, es muss eine Möglichkeit geboten werden, diese von außerhalb des Clusters zu erreichen. Dafür sollte ein Ingress konfiguriert werden, welcher auf die API verweist. In der ingress.yaml File gibt es ein paar Einstellungen, die vorgenommen werden müssen, um die Verbindung wieder herzustellen.
+
+<span style="color:red">
+Möglicherweise nicht hier?
+</span>
+
+### SSL Redirect - Bonuspunkt??
+
+Tests zeigen, dass Probleme mit der Verbindungsverschlüsselung existieren. Die Verbindung läuft nicht auf https, sondern nur auf http. Finden Sie eine Lösung ein http zu https Upgrade durchzuführen.
+
+<span style="color:red">
+------------------
+</span>
