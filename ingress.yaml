@@ -5,7 +5,7 @@ metadata:
     nginx.ingress.kubernetes.io/server-snippet: |
       proxy_intercept_errors on;
       location @custom_503 {
-        return 404 "<html>Either API is not running or wrong rule configuration.</html>";
+        return 404 "<html>No service is available on the configured port.</html>";
       }
       error_page 503 @custom_503;
 
