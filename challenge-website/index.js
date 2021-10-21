@@ -10,7 +10,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 //query missions, returning status code
 app.get('/api-test', (req, res) => {
     https
-    .get('https://127.0.0.1/missions', resp => {
+    .get('https://localhost:443/missions', resp => {
         let data = ''
         resp.on('data', chunk => {
             data += chunk
@@ -27,7 +27,7 @@ app.get('/api-test', (req, res) => {
 //query missions via http, returning status code
 app.get('/https-upgrade-test', (req, res) => {
     http
-    .get('http://127.0.0.1/missions', resp => {
+    .get('http://localhost:80/missions', resp => {
         let data = ''
         resp.on('data', chunk => {
             data += chunk
