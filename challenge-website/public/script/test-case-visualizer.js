@@ -9,6 +9,12 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+const errorCodes = new Map();
+errorCodes.set(200, "OK: running, but no redirect configured");
+errorCodes.set(500, "Internal Server Error");
+errorCodes.set(503, "Service Unavailable");
+errorCodes.set(504, "Gateway Timeout: API cannot reach Database");
+
 //testing API reachability
 let testCase1 = async function() {
     let result = [];
@@ -25,7 +31,7 @@ let testCase1 = async function() {
         result.push(true);
     } else {
         result.push(false);
-        result.push("Error Code: " + status);
+        result.push("Error Code: " + status + ": " + errorCodes.get(status));
     }
     return result;
 }
@@ -45,7 +51,7 @@ let testCase2 = async function() {
         result.push(true);
     } else {
         result.push(false);
-        result.push("Error Code: " + status);
+        result.push("Error Code: " + status + ": " + errorCodes.get(status));
     }
     return result;
 }
@@ -66,7 +72,7 @@ let testCase3 = async function() {
         result.push(true);
     } else {
         result.push(false);
-        result.push("Error Code: " + status);
+        result.push("Error Code: " + status + ": " + errorCodes.get(status));
     }
     return result;
 }
