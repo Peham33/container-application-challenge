@@ -8,26 +8,21 @@ metadata:
         return 404 "<html>No service is available on the configured port.</html>";
       }
       error_page 503 @custom_503;
-
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
   name: challenge
 spec:
   tls:
     - hosts:
         - challenge.test
       secretName: challenge-test-tls
-
-  # Musterlösung:
-  # Mit default backend funktionieren keine custom error messages
-  # rules:
-  #   - host: challenge.test
-  #     http:
-  #       paths:
-  #         - path: /
-  #           pathType: Prefix
-  #           backend:
-  #             service:
-  #               name: api
-  #               port:
-  #                 number: 8080
+  rules:
+    - host: challenge.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 8080
