@@ -109,3 +109,9 @@ Querying the API should now work:
 
  Invoke-RestMethod -method "GET" -Uri "https://challenge.test/missions"
  ```
+
+Register Login Test Query in Vagrant with curl:
+```bash
+curl -X POST -d "codeName=123&name=test" https://challenge.test/register -v -H 'content-type: application/x-www-form-urlencoded'                                           
+curl -X POST -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
+```
