@@ -10,10 +10,10 @@ function sleep(ms) {
 }
 
 const errorCodes = new Map();
-errorCodes.set(200, "running, but no redirect configured");
+errorCodes.set(200, "OK: running, but no redirect configured");
 errorCodes.set(500, "Internal Server Error");
 errorCodes.set(503, "Service Unavailable");
-errorCodes.set(504, "API cannot reach Database");
+errorCodes.set(504, "Gateway Timeout: API cannot reach Database");
 
 //testing API reachability
 let testCase1 = async function() {

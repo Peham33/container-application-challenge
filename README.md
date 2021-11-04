@@ -95,7 +95,12 @@ Find out the external IP of your ingress by running `kubectl get ingress`. It sh
 
 Create a DNS entry on your system (this may need administrative access on your system)
 ```bash
+# In Vagrant
+sudo bash
+echo "<ip> challenge.test" >> /etc/hosts
+
 # For Linux or Mac
+sudo bash
 echo "192.168.64.3 challenge.test" >> /etc/hosts
 
 # On Windows PowerShell use
@@ -109,3 +114,9 @@ Querying the API should now work:
 
  Invoke-RestMethod -method "GET" -Uri "https://challenge.test/missions"
  ```
+
+Register Login Test Query in Vagrant with curl:
+```bash
+curl -d "codeName=123&name=test" https://challenge.test/register -v -H 'content-type: application/x-www-form-urlencoded' -i                                           
+curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
+```

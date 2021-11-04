@@ -13,12 +13,13 @@ Create your own Personal Access Token (PAT) by following the [official instructi
 To use the Github Image Registry with Docker you first must authenticate yourself.
 
 ````
-echo "<yourtoken>" > CR_PAT.txt
 
 # Linux and Mac
+echo "<yourtoken>" > CR_PAT.txt
 cat CR_PAT.txt | docker login docker.pkg.github.com --username USERNAME --password-stdin
 
 # Windows
+echo "<yourtoken>" >> CR_PAT.txt
 get-content CR_PAT.txt | docker login docker.pkg.github.com --username USERNAME --password-stdin
 ````
 
