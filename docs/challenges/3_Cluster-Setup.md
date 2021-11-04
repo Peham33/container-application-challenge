@@ -18,7 +18,7 @@ Jeder Versuch sich mit dem Ingress zu verbinden scheitert, wir glauben, dass der
 
 ### API reparieren
 
-Der Eindringling hat einen Weg gefunden, Schadsoftware auf unserem System auszuführen. Diese hat die Konfiguration der API geändert.
+Der Eindringling hat einen Weg gefunden, Schadsoftware auf unserem System auszuführen. Diese hat einen Teil unserer Konfiguration gelöscht.
 
 ### API Verbindung herstellen mit Ingress
 
@@ -35,3 +35,6 @@ Tests zeigen, dass Probleme mit der Verbindungsverschlüsselung existieren. Die 
 Ausgezeichnet! Unsere Applikation funktioniert wieder und unsere Agenten können Ihre Informationen wieder sicher und verlässlich teilen.
 
 Allerdings gibt es noch ein Problem: Mehrere Nutzer haben berichtet, dass Ihre Daten nach einem Wartungsfenster verschwunden sind. Untersuchen Sie dieses Phänomen und sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen!
+
+### Sicherheit
+Die Konfigurationen unserer API und Datenbank haben eine Sicherheitslücke. Sie dir genau an, wie die Datenbankzugangsdaten in den Deployments gemountet werden und versuche dies besser zu gestalten. 
