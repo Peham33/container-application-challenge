@@ -6,12 +6,12 @@ const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
 //testing API reachability
-let testCase1 = async function() {
+let testCase1 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/compose-api-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
@@ -27,12 +27,12 @@ let testCase1 = async function() {
 }
 
 //testing API<->Database connection
-let testCase2 = async function() {
+let testCase2 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/compose-api-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
@@ -47,12 +47,12 @@ let testCase2 = async function() {
 }
 
 //testing automatic https upgrade
-let testCase3 = async function() {
+let testCase3 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/compose-https-upgrade-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/compose-https-upgrade-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
