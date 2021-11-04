@@ -16,12 +16,12 @@ errorCodes.set(503, "Service Unavailable");
 errorCodes.set(504, "API cannot reach Database");
 
 //testing API reachability
-let testCase1 = async function() {
+let testCase1 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/api-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/api-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
@@ -37,12 +37,12 @@ let testCase1 = async function() {
 }
 
 //testing API<->Database connection
-let testCase2 = async function() {
+let testCase2 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/api-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/api-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
@@ -57,12 +57,12 @@ let testCase2 = async function() {
 }
 
 //testing automatic https upgrade
-let testCase3 = async function() {
+let testCase3 = async function () {
     let result = [];
     let status = null;
 
     try {
-        status = await fetch('http://localhost:3000/https-upgrade-test', {cache: "no-store"}).then(response => response.status);
+        status = await fetch('http://localhost:3000/https-upgrade-test', { cache: "no-store" }).then(response => response.status);
     } catch (e) {
         status = 503
     }
@@ -154,7 +154,7 @@ class TestCase {
         this.intervals.push(id);
         let width = 0;
         function frame() {
-            
+
             if (testResult != null) {
                 success = testResult[0];
                 interval = 10;
@@ -165,13 +165,13 @@ class TestCase {
 
             if (width >= 100) {
                 clearInterval(id);
-                
+
                 //console.log(testResult);
                 success = testResult[0];
 
                 if (success) {
                     barDiv.innerHTML = "Success!";
-                    barDiv.classList.add("bar-success");       
+                    barDiv.classList.add("bar-success");
                 }
                 else {
                     //on failure, print error msg included in function's returned array

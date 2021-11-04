@@ -92,7 +92,7 @@ export class TestCase {
         this.intervals.push(id);
         let width = 0;
         function frame() {
-            
+
             if (testResult != null) {
                 success = testResult[0];
                 interval = 10;
@@ -103,7 +103,7 @@ export class TestCase {
 
             if (width >= 100) {
                 clearInterval(id);
-                
+
                 //console.log(testResult);
                 success = testResult[0];
 
