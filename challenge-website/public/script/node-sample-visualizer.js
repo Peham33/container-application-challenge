@@ -21,7 +21,7 @@ let basicBashTest = async function() {
     }
 
     //read json from result
-    const resultMsg = await resp.json();
+    const resultMsg = JSON.parse(await resp.json());
 
     //depending on returned status, make bars green (true) or red (false) and push a status message
     if (status == 200) {
@@ -39,7 +39,7 @@ let basicBashTest = async function() {
 
 //test case declarations
 let testCases = [];
-testCases.push(new TestCase(1, "Basic Bash Test - returning result of bash command", "", basicBashTest));
+testCases.push(new TestCase(1, "Basic Bash Test - returning result of bash command \"whoami\"", "", basicBashTest));
 
 //initial render of tests
 testCases.forEach(element => element.render());
