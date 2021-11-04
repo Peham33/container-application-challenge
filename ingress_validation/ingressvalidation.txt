@@ -1,0 +1,10 @@
+ingress validation
+1. check if ingress.yaml exists
+2. get ingress rule backend api port 
+3. change ingress echo service spec port to backend api port
+4. apply ingress echo
+5. change ingress rule backend service name to echoserver
+6. apply ingress 
+7. curl http://challenge.test/?echo_body=funktioniert -L
+8. returned funktioniert => valid
+
