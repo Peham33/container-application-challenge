@@ -12,13 +12,11 @@ spec:
     - hosts:
         - challenge.test
       secretName: challenge-test-tls
-
   defaultBackend:
     service:
       name: api
       port:
         number: 8080
-  
   rules:
     - host: challenge.test
       http:
@@ -28,5 +26,5 @@ spec:
             backend:
               service:
                 name: api
-                port: 
+                port:
                   number: 8080
