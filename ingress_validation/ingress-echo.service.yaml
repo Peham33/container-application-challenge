@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: echoserver
 spec:
   ports:
-    - port: 8080
+    - port: 0000
       targetPort: 8081
   selector:
     app.kubernetes.io/name: echoserver
