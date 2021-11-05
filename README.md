@@ -97,14 +97,14 @@ Create a DNS entry on your system (this may need administrative access on your s
 ```bash
 # In Vagrant
 sudo bash
-echo "<ip> challenge.test" >> /etc/hosts
+echo "192.168.49.2 challenge.test" >> /etc/hosts
 
 # For Linux or Mac
 sudo bash
-echo "192.168.64.3 challenge.test" >> /etc/hosts
+echo "192.168.49.2 challenge.test" >> /etc/hosts
 
 # On Windows PowerShell use
-echo "192.168.64.3 challenge.test" | Out-file -append -encoding ascii $env:windir\system32\drivers\etc\hosts
+echo "192.168.49.2 challenge.test" | Out-file -append -encoding ascii $env:windir\system32\drivers\etc\hosts
 ```
 
 Querying the API should now work:
