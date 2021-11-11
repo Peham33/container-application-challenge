@@ -43,7 +43,7 @@ sudo apt-get install -y nodejs
 
 # challenge website
 sudo cp -r /vagrant/challenge-website /opt/challenge-website
-sudo npm install /opt/challenge-website
+sudo npm install --prefix /opt/challenge-website
 sudo npm install -g forever
 sudo forever start --sourceDir /opt/challenge-website .
 
@@ -53,6 +53,11 @@ sudo update-ca-certificates
 
 # set hostname "challenge.test"
 sudo sh -c 'echo "192.168.49.2 challenge.test" >> /etc/hosts'
+
+# install tools for yaml changing
+sudo snap install yq
+sudo apt-get install moreutils -y
+
 
 SCRIPT
 
