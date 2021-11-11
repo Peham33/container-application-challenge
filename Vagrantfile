@@ -51,6 +51,9 @@ sudo forever start --sourceDir /opt/challenge-website .
 sudo cp /vagrant/ha-proxy/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
+# set hostname "challenge.test"
+sudo sh -c 'echo "192.168.49.2 challenge.test" >> /etc/hosts'
+
 SCRIPT
 
 end
