@@ -19,10 +19,6 @@ if [ -f "../ingress.yaml" ]; then
     kubectl apply -f ingress-echo.deployment.yaml
 	kubectl apply -f ingress-echo.service.yaml
 
-    cat ../ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
-    cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
-    kubectl apply -f ../ingress.yaml
-
     echopodReadyState=$(kubectl get pods | grep "echo.*Running" | cut -f9 -d' ')
     while [[ $echopodReadyState != "Running" ]]; do
         sleep 2
@@ -30,7 +26,15 @@ if [ -f "../ingress.yaml" ]; then
         echo "Echoserver not running."
     done
     echo $echopodReadyState
+
+    cat ../ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
+    cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
+    kubectl apply -f ../ingress.yaml
+
+    sleep 5
     curl http://challenge.test/?echo_body=funktioniert -L 
+
+    echo ""
 
     #Cleanup
     echopod=$(kubectl get pods | grep "echo" | cut -f1 -d' ')
@@ -39,6 +43,7 @@ if [ -f "../ingress.yaml" ]; then
     kubectl delete pod $echopod --force
     cat ../ingress.yaml | yq e '.spec.defaultBackend.service.name = "api"' - | sudo sponge ../ingress.yaml
     cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "api"' - | sudo sponge ../ingress.yaml
+    kubectl apply -f ../ingress.yaml
 else 
     echo "ingress.yaml does not exist!"
 fi
