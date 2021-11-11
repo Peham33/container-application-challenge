@@ -26,7 +26,7 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-compose
-sudo usermod -aG docker $USER && newgrp docker
+sudo usermod -aG docker vagrant && newgrp docker
 
 # minikube
 sudo curl -Lo /usr/local/bin/minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -42,20 +42,32 @@ sudo apt-get install -y nodejs
 
 
 # challenge website
-sudo cp -r /vagrant/challenge-website /opt/challenge-website
-sudo npm install --prefix /opt/challenge-website
-sudo npm install -g forever
-sudo forever start --sourceDir /opt/challenge-website .
+OLD_PWD=$(pwd)
+rm -rf /opt/challenge-website
+cp -r /vagrant/challenge-website /opt/challenge-website
+cd /opt/challenge-website
+
+npm install
+npm install -g forever
+forever start .
+
+# Allow root to use minikube configuration of vagrant user
+ln -s /home/vagrant/.kube /root/.kube 
+cd $OLD_PWD
 
 # install self-signed certificate
 sudo cp /vagrant/ha-proxy/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
+# change directory automatically when opening a new shell
+echo 'cd /vagrant' >> /home/vagrant/.bashrc
+
 # install tools for yaml changing
 sudo snap install yq
 sudo apt-get install moreutils -y
 
-
+# Default IP for Minikube
+echo "192.168.49.2 challenge.test" >> /etc/hosts
 
 SCRIPT
 
