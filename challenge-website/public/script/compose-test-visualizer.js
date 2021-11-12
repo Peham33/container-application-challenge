@@ -69,14 +69,16 @@ let testCase3 = async function () {
 
 //test case declarations
 let testCases = [];
-testCases.push(new TestCase(1, "Test Case 1: API running", "Tests if API is reachable", testCase1));
-testCases.push(new TestCase(2, "Test Case 2: API <-> Database connection", "Tests if the API can reach the database", testCase2));
-testCases.push(new TestCase(3, "Test Case 3: https Upgrade", "Tests if automatic https upgrade is configured", testCase3));
+testCases.push(new TestCase(1, "Test Case 1: API running", false, testCase1));
+testCases.push(new TestCase(2, "Test Case 2: API <-> Database connection", false, testCase2));
+testCases.push(new TestCase(3, "Test Case 3: https Upgrade", false, testCase3));
 
 //initial render of tests
 testCases.forEach(element => element.render());
 
 //execute all tests
-function runTests() {
-    testCases.forEach(element => element.execute());
+async function runTests() {
+    for (let testCase of testCases) {
+        await testCase.execute();
+    }
 }

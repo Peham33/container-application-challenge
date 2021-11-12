@@ -16,10 +16,10 @@ statusCodes.set(504, "Gateway Timeout");
 
 //class to represent individual test cases
 export class TestCase {
-    constructor(id, name, desc, testFunction) {
+    constructor(id, name, waitForExecute, testFunction) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
+        this.waitForExecute = waitForExecute;
         this.testFunction = testFunction;
     }
 
@@ -69,40 +69,41 @@ export class TestCase {
 
         //execute test function async
         let success = false;
-        let interval = 200;
+        let interval = 200; //default interval for the frame function
+        let fasterInterval = 10; //bar goes a lot faster once result is obtained
 
         let testResult = null;
         let testPromise = this.testFunction().then(result =>
             testResult = result
         )
 
-        //wait 500ms for an answer
-        await sleep(500);
-
-        //console.log(testResult)
-        //console.log(testPromise)
-        //if there was an answer already, shorten the interval for the bar animation
-        if (testResult != null) {
-            success = testResult[0];
-            interval = 10;
-        }
-
         //render bar animation
         let id = setInterval(frame, interval);
         this.intervals.push(id);
         let width = 0;
+
+        //synchronous execution - await the frame function (signfied by id variable)
+        if (this.waitForExecute) {
+            while (id != -1) {
+                await sleep(50);
+            }
+        }
+
         function frame() {
 
-            if (testResult != null) {
+            //checks if testResult has been obtained - speed up if yes
+            if (testResult != null && interval != fasterInterval) {
                 success = testResult[0];
-                interval = 10;
                 clearInterval(id);
-                id = setInterval(frame, 10);
+                interval = fasterInterval;
+                id = setInterval(frame, fasterInterval);
             }
 
 
+            //once width 100 is reached, bar has reached 100%
             if (width >= 100) {
                 clearInterval(id);
+                id = -1;
 
                 //console.log(testResult);
                 success = testResult[0];
