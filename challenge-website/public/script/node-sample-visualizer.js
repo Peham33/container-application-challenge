@@ -70,13 +70,15 @@ let fileExistsTest = async function () {
 
 //test case declarations
 let testCases = [];
-testCases.push(new TestCase(1, "Basic Bash Test - returning result of bash command \"whoami\"", "", basicBashTest));
-testCases.push(new TestCase(2, "Bash Test - checks if file \"/vagrant/testfile.txt\" exists", "", fileExistsTest));
+testCases.push(new TestCase(1, "Basic Bash Test - returning result of bash command \"whoami\"", true, basicBashTest));
+testCases.push(new TestCase(2, "Bash Test - checks if file \"/vagrant/testfile.txt\" exists", true, fileExistsTest));
 
 //initial render of tests
 testCases.forEach(element => element.render());
 
 //execute all tests
-function runTests() {
-    testCases.forEach(element => element.execute());
+async function runTests() {
+    for (let testCase of testCases) {
+        await testCase.execute();
+    }
 }
