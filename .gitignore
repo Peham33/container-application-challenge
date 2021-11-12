@@ -4,3 +4,4 @@ target/
 .idea/
 .alias
 CR_PAT.txt
+.vagrant
