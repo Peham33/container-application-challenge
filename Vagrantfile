@@ -87,6 +87,8 @@ apt-get install moreutils -y
 # Default IP for Minikube
 echo "192.168.49.2 challenge.test" >> /etc/hosts
 
+# Change default directory when opening a new shell
+echo 'cd /vagrant' >> /home/vagrant/.bashrc
 SCRIPT
 
 end
