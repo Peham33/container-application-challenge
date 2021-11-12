@@ -9,5 +9,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 require('./compose-tests')(app);
 //validation samples (use as templates)
 require('./validation-samples')(app);
+//ingress validation
+require('./ingress-validation')(app);
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
