@@ -51,11 +51,12 @@ sudo forever start --sourceDir /opt/challenge-website .
 sudo cp /vagrant/ha-proxy/server.crt /usr/local/share/ca-certificates/
 sudo update-ca-certificates
 
+# change directory automatically when opening a new shell
+echo 'cd /vagrant' >> /home/vagrant/.bashrc
+
 # install tools for yaml changing
 sudo snap install yq
 sudo apt-get install moreutils -y
-
-
 
 SCRIPT
 
