@@ -42,9 +42,16 @@
     background-color: #ff0000 !important;
 }
 
-.error-msg {
+.text-success {
+    color: #00ff00 !important;
+}
+
+.text-failure {
+    color: #ff0000 !important;
+}
+
+.status-msg {
     margin-top: 10px;
-    color: #ff0000;
 }
 
 .hidden {
