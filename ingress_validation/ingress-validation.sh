@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Check API
+curl -d "codeName=007" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i | grep #504 oder 200 f
+
 if [ -f "../ingress.yaml" ]; then
     DEFAULTBACKEND_PORT=$(cat ../ingress.yaml | yq e '.spec.defaultBackend.service.port.number' -  )
     RULES_PORT=$(cat ../ingress.yaml | yq e '.spec.rules[0].http.paths[0].backend.service.port.number' -)
@@ -31,7 +35,7 @@ if [ -f "../ingress.yaml" ]; then
     cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
     kubectl apply -f ../ingress.yaml
 
-    sleep 5
+    # sleep 5
     curl http://challenge.test/?echo_body=funktioniert -L 
 
     echo ""
