@@ -47,9 +47,27 @@ rm -rf /opt/challenge-website
 cp -r /vagrant/challenge-website /opt/challenge-website
 cd /opt/challenge-website
 
-npm install
-npm install -g forever
-forever start .
+npm ci
+
+# Configure node server as daemon
+cat <<EOF >> /etc/systemd/system/challenge-website.service
+[Unit]
+Description=Challenge Website for verificaton
+After=network.target
+
+[Service]
+Type=simple
+User=vagrant
+ExecStart=/usr/bin/node /opt/challenge-website/index.js
+WorkingDirectory=/opt/challenge-website
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl start challenge-website.service 
+systemctl enable challenge-website.service 
 
 # Allow root to use minikube configuration of vagrant user
 ln -s /home/vagrant/.kube /root/.kube 

@@ -55,7 +55,7 @@ kubectl get pods -A
 
 Disable verfication of TLS CA to allow a self-signed certificate (See [Issue #5401](https://github.com/kubernetes/ingress-nginx/issues/5401#issuecomment-662424306))
 ```bash
-    kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 ```
 
 Apply the ingress configuration
@@ -101,11 +101,7 @@ echo "192.168.49.2 challenge.test" >> /etc/hosts
 
 # For Linux or Mac
 sudo bash
-<<<<<<< Updated upstream
 echo "192.168.49.2 challenge.test" >> /etc/hosts
-=======
-echo "192.168.64.2 challenge.test" >> /etc/hosts
->>>>>>> Stashed changes
 
 # On Windows PowerShell use
 echo "192.168.49.2 challenge.test" | Out-file -append -encoding ascii $env:windir\system32\drivers\etc\hosts

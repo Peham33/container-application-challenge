@@ -3,10 +3,10 @@ const childProcess = require("child_process");
 module.exports  = app => {
     app.get('/validate-kubernetes-database', (req, response) => {
         const id = Date.now().valueOf() % 1000;
-        const registerCurl = `curl -d "codeName=${id}&name=test" https://challenge.test/register -H 'content-type: application/x-www-form-urlencoded' -ik`;
-        const loginCurl = `curl -d "codeName=${id}" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -ik`;
+        const registerCurl = `curl -m 5 -d 'codeName=${id}&name=test' https://challenge.test/register -H 'content-type: application/x-www-form-urlencoded' -ik`;
+        const loginCurl = `curl -m 5 -d "codeName=${id}" http://challenge.test/login -H "content-type: application/x-www-form-urlencoded" -L -ik`;
         const restartPod = `kubectl scale deployment database --replicas=0; sleep 1; kubectl scale deployment database --replicas=1`
-        const waitForDatabase = `while [[ $(${loginCurl} | grep "HTTP/2 504" | wc -l) -eq 1  ]]; do ${loginCurl}; sleep 0.5; done`
+        const waitForDatabase = `timeout 15s bash -c -- 'while [[ $(${loginCurl} | grep "HTTP/2 504" | wc -l) -eq 1  ]]; do ${loginCurl}; sleep 0.5; done'`
 
         const body = {};
         let html = "";
