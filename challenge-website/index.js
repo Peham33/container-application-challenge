@@ -7,6 +7,8 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 //tests part 1 (compose)
 require('./compose-tests')(app);
+//tests part 2 (kubernetes)
+require('./api-validation')(app);
 //validation samples (use as templates)
 require('./validation-samples')(app);
 require('./ingress-validation')(app);
