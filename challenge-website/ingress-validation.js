@@ -1,5 +1,3 @@
-const http = require('http')
-const https = require('https')
 const childProcess = require('child_process');
 
 module.exports = function (app) {
@@ -22,10 +20,10 @@ module.exports = function (app) {
             } else {
                 res.status(500);
             }
-            res.json(JSON.stringify(stdout));
+            res.json({stdout});
         } catch (e) {
             console.log(e.stdout);
-            res.status(500).json(JSON.stringify("Error when executing command!"));
+            res.status(500).json({error: "Error when executing command!"});
         }
     });
-}
+};
