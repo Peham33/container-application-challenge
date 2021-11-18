@@ -67,6 +67,64 @@ let fileExistsTest = async function () {
     return result;
 }
 
+let apiTest = async function () {
+    //data structures for passing result to the display function
+    let result = [];
+    let status = null;
+    let resp = null;
+
+    //perform the GET-request
+    try {
+        resp = await fetch('http://localhost:3000/api-test', { cache: "no-store" });
+        status = resp.status;
+    } catch (e) {
+        status = 503;
+    }
+
+    const resultMsg = (await resp.json()).message;
+
+    //depending on returned status, make bars green (true) or red (false) and push a status message
+    if (status == 200) {
+        result.push(true); //green
+        result.push(resultMsg);
+    } else {
+        result.push(false); //red
+        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
+    }
+
+    return result;
+}
+
+let securityTest = async function () {
+    //data structures for passing result to the display function
+    let result = [];
+    let status = null;
+    let resp = null;
+
+    //perform the GET-request
+    try {
+        resp = await fetch('http://localhost:3000/security-test', { cache: "no-store" });
+        status = resp.status;
+    } catch (e) {
+        status = 503;
+    }
+
+    //read json from result
+    const resultMsg = (await resp.json()).message;
+
+    //depending on returned status, make bars green (true) or red (false) and push a status message
+    if (status == 200) {
+        result.push(true); //green
+        result.push(resultMsg);
+    } else {
+        result.push(false); //red
+        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
+    }
+
+
+    return result;
+}
+
 
 //test case declarations
 let testCases = [];
@@ -82,7 +140,9 @@ testCases.push(new TestCase(3, "Kubernetes database", true, async () =>
         })
         .catch(reason => [false, reason])
 ));
-testCases.push(new TestCase(4, "Kubernetes ingress", true, async () =>
+testCases.push(new TestCase(4, "API Test", true, apiTest));
+testCases.push(new TestCase(5, "Security Test - test if secret is correctly configured", true, securityTest))
+testCases.push(new TestCase(6, "Kubernetes ingress", true, async () =>
     fetch('http://localhost:3000/ingress-validation')
         .then(response => {
             if (response.status != 200)
