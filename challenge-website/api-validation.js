@@ -3,9 +3,9 @@ const childProcess = require('child_process');
 module.exports = function (app) {
     app.get('/api-test', function (req, res) {
         try {
-            apiConfiguredCorrectly() ? res.status(200).json(JSON.stringify({ message: 'ok' })) : res.status(500).json(JSON.stringify({ message: 'Not ok' }));
+            apiConfiguredCorrectly() ? res.status(200).json({ message: 'ok' }) : res.status(500).json({ message: 'Not ok' });
         } catch (e) {
-            res.status(500).json(JSON.stringify({ message: 'Error when executing command!' }))
+            res.status(500).json({ message: 'Error when executing command!' })
         }
     });
 
@@ -24,9 +24,9 @@ module.exports = function (app) {
             const apiCorrect = passwordCorrect === true && usernameCorrect === true && dbUser === true && dbUserKey === true && dbPassword === true && dbPasswordKey === true;
 
             res.status(apiCorrect ? 200 : 500);
-            res.json(JSON.stringify({ message: apiCorrect ? 'API is configured correctly!' : 'Invalid configuration detected!' }));
+            res.json({ message: apiCorrect ? 'API is configured correctly!' : 'Invalid configuration detected!' });
         } catch (e) {
-            res.status(500).json(JSON.stringify({ message: 'Error when executing command!' }));
+            res.status(500).json({ message: 'Error when executing command!' });
         }
     });
 
