@@ -72,6 +72,16 @@ let fileExistsTest = async function () {
 let testCases = [];
 testCases.push(new TestCase(1, "Basic Bash Test - returning result of bash command \"whoami\"", true, basicBashTest));
 testCases.push(new TestCase(2, "Bash Test - checks if file \"/vagrant/testfile.txt\" exists", true, fileExistsTest));
+testCases.push(new TestCase(3, "Kubernetes database", true, async () =>
+    fetch('http://localhost:3000/validate-kubernetes-database')
+        .then(response => {
+            if (response.status != 200)
+                return [false, "Database does not work as expected."]
+
+            return [true, "Database persists Agents during a restart!"];
+        })
+        .catch(reason => [false, reason])
+));
 
 //initial render of tests
 testCases.forEach(element => element.render());
