@@ -5,9 +5,9 @@ const childProcess = require('child_process');
 module.exports = function (app) {
     app.get('/api-test', function (req, res) {
         try {
-            apiConfiguredCorrectly() ? res.status(200).json(JSON.stringify('ok')) : res.status(500).json(JSON.stringify('not'))
+            apiConfiguredCorrectly() ? res.status(200).json(JSON.stringify({ message: 'ok' })) : res.status(500).json(JSON.stringify({ message: 'Not ok' }));
         } catch (e) {
-            res.status(500).json("Error when executing command!")
+            res.status(500).json(JSON.stringify({ message: 'Error when executing command!' }))
         }
     });
 
@@ -23,11 +23,12 @@ module.exports = function (app) {
             const dbPassword = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.name}"', secretName);
             const dbPasswordKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.key}"', 'DB_PASSWORD');
 
-            passwordCorrect === true && usernameCorrect === true && dbUser === true && dbUserKey === true && dbPassword === true && dbPasswordKey === true ?
-                res.status(200).json(JSON.stringify('secret2 correctly configured')) : res.status(500).json(JSON.stringify('no security updates detected'));
+            const apiCorrect = passwordCorrect === true && usernameCorrect === true && dbUser === true && dbUserKey === true && dbPassword === true && dbPasswordKey === true;
+
+            res.status(apiCorrect ? 200 : 500);
+            res.json(JSON.stringify({ message: apiCorrect ? 'API is configured correctly!' : 'Invalid configuration detected!' }));
         } catch (e) {
-            console.log(e);
-            res.status(500).json("Error when executing command!")
+            res.status(500).json(JSON.stringify({ message: 'Error when executing command!' }));
         }
     });
 

@@ -76,14 +76,12 @@ let apiTest = async function () {
     //perform the GET-request
     try {
         resp = await fetch('http://localhost:3000/api-test', { cache: "no-store" });
-        console.log(resp)
         status = resp.status;
     } catch (e) {
         status = 503;
     }
 
-    //read json from result
-    const resultMsg = JSON.parse(await resp.json());
+    const resultMsg = JSON.parse(await resp.json()).message;
 
     //depending on returned status, make bars green (true) or red (false) and push a status message
     if (status == 200) {
@@ -93,7 +91,6 @@ let apiTest = async function () {
         result.push(false); //red
         result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
     }
-
 
     return result;
 }
@@ -114,7 +111,7 @@ let securityTest = async function () {
     }
 
     //read json from result
-    const resultMsg = JSON.parse(await resp.json());
+    const resultMsg = JSON.parse(await resp.json()).message;
 
     //depending on returned status, make bars green (true) or red (false) and push a status message
     if (status == 200) {
