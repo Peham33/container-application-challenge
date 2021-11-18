@@ -7,7 +7,7 @@
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: consolas;
+    font-family: monospace, consolas;
 }
 
 a:visited {
