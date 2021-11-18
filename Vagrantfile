@@ -77,9 +77,6 @@ cd $OLD_PWD
 cp /vagrant/ha-proxy/server.crt /usr/local/share/ca-certificates/
 update-ca-certificates
 
-# change directory automatically when opening a new shell
-echo 'cd /vagrant' >> /home/vagrant/.bashrc
-
 # install tools for yaml changing
 snap install yq
 apt-get install moreutils -y
