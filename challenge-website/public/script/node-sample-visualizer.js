@@ -142,6 +142,16 @@ testCases.push(new TestCase(3, "Kubernetes database", true, async () =>
 ));
 testCases.push(new TestCase(4, "API Test", true, apiTest));
 testCases.push(new TestCase(5, "Security Test - test if secret is correctly configured", true, securityTest))
+testCases.push(new TestCase(6, "Kubernetes ingress", true, async () =>
+    fetch('http://localhost:3000/ingress-validation')
+        .then(response => {
+            if (response.status != 200)
+                return [false, "Something is wrong with the configured ingress."]
+
+            return [true, "Ingress up and running."];
+        })
+        .catch(reason => [false, reason])
+))
 
 //initial render of tests
 testCases.forEach(element => element.render());
