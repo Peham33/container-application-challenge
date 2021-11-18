@@ -1,5 +1,3 @@
-const http = require('http')
-const https = require('https')
 const childProcess = require('child_process');
 
 module.exports = function (app) {
@@ -55,7 +53,7 @@ module.exports = function (app) {
      * @returns Ingress port if configured, otherwise undefined
      */
     function tryGetIngressPort() {
-        const port = kubectl('kubectl get ingress -o=jsonpath="{.items[*].spec.rules[0].http.paths[*].backend.service.port.number}"');
+        let port = kubectl('kubectl get ingress -o=jsonpath="{.items[*].spec.rules[0].http.paths[*].backend.service.port.number}"');
         if (!port)
             port = kubectl('kubectl get ingress -o=jsonpath="{.items[*].spec.defaultBackend.service.port.number}"');
 
