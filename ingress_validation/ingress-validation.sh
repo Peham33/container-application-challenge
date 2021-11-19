@@ -21,7 +21,9 @@ if [ -f "../ingress.yaml" ]; then
         echo "No port numbers assigned! Define either default backend or rules entry"
         exit 1
     fi
-    
+
+    # TODO - Falls api service yaml file existiert Portnummern abgleichen => exit falls false
+        
     # Try to reach the Kubernetes cluster, abort if not possible
     kubectl cluster-info
     success=$?
@@ -30,7 +32,7 @@ if [ -f "../ingress.yaml" ]; then
         exit 1
     fi
     
-    #Setup Echoserver
+    # Setup Echoserver
     cat ingress-echo.service.yaml | yq e ".spec.ports[].port = $PORT" - | sudo sponge ingress-echo.service.yaml
     kubectl apply -f ingress-echo.deployment.yaml
     kubectl apply -f ingress-echo.service.yaml
@@ -46,9 +48,11 @@ if [ -f "../ingress.yaml" ]; then
     done
     echo $ECHOPOD_READYSTATE
     
-    cat ../ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
-    cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../ingress.yaml
-    kubectl apply -f ../ingress.yaml
+    # TESTING - Copy ingress.yaml and change it afterwards
+    cp ../ingress.yaml ../echoserver-ingress.yaml
+    cat ../echoserver-ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
+    cat ../echoserver-ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
+    kubectl apply -f ../echoserver-ingress.yaml
     
     sleep 5
     curl http://challenge.test/?echo_body=funktioniert -L -m 5
@@ -60,9 +64,10 @@ if [ -f "../ingress.yaml" ]; then
     kubectl delete deployment echoserver
     kubectl delete service echoserver
     kubectl delete pod $ECHOPOD --force
-    cat ../ingress.yaml | yq e '.spec.defaultBackend.service.name = "api"' - | sudo sponge ../ingress.yaml
-    cat ../ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "api"' - | sudo sponge ../ingress.yaml
+    # TESTING - Try to apply old ingress.yaml / delete the echoserver applied ingress
+    kubectl delete ingress challenge
     kubectl apply -f ../ingress.yaml
+
 else
     echo 'ingress.yaml does not exist!'
 fi
