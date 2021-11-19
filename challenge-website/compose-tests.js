@@ -8,7 +8,7 @@ module.exports = function (app) {
     //query missions, returning status code
     app.get('/compose-api-test', (req, res) => {
         https
-            .get('https://localhost:443/missions', resp => {
+            .get('https://localhost:443/missions', {f}, resp => {
                 let data = ''
                 resp.on('data', chunk => {
                     data += chunk;

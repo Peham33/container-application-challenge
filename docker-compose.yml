@@ -37,11 +37,3 @@ services:
       POSTGRES_DB: ${DB}
     volumes:
       - ./db/postgres/initdb:/docker-entrypoint-initdb.d
-
-  challenge-container:
-    build:
-      context: challenge-container
-    ports:
-      - 3000:3000
-    extra_hosts:
-      - "host.docker.internal:host-gateway"

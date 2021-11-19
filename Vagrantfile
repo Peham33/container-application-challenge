@@ -50,7 +50,7 @@ cd /opt/challenge-website
 npm ci
 
 # Configure node server as daemon
-cat <<EOF >> /etc/systemd/system/challenge-website.service
+cat <<EOF > /etc/systemd/system/challenge-website.service
 [Unit]
 Description=Challenge Website for verificaton
 After=network.target
@@ -71,6 +71,11 @@ systemctl enable challenge-website.service
 
 # Allow root to use minikube configuration of vagrant user
 ln -s /home/vagrant/.kube /root/.kube 
+
+# Enable kubectl autocomplete
+# https://kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-bash-linux/
+apt-get install bash-completion
+kubectl completion bash >/etc/bash_completion.d/kubectl
 cd $OLD_PWD
 
 # install self-signed certificate
