@@ -16,7 +16,7 @@ module.exports  = app => {
             body["registerCurl"] = stdout;
             html += `<h1>Initial Create</h1>`;
             html += `<code>${stdout}</code>`;
-            const registerSuccess = (stdout.match(/HTTP\/2 201/) || []).length === 1;
+            const registerSuccess = (stdout.match(/HTTP\/.*201/) || []).length === 1;
             html += `<p>${registerSuccess}</p>`;
             body["registerSuccess"] = registerSuccess;
 
@@ -24,7 +24,7 @@ module.exports  = app => {
             body["loginCurl"] = stdout;
             html += `<h1>Login</h1>`;
             html += `<code>${stdout}</code>`;
-            const loginSuccess = (stdout.match(/HTTP\/2 200/) || []).length === 1;
+            const loginSuccess = (stdout.match(/HTTP\/.*200/) || []).length === 1;
             html += `<p>${loginSuccess}</p>`;
             body["loginSuccess"] = loginSuccess;
 
@@ -39,7 +39,7 @@ module.exports  = app => {
             body["loginAfterRestart"] = stdout;
             html += `<h1>Login 2</h1>`;
             html += `<code>${stdout}</code>`;
-            const loginAfterRestartSuccess = (stdout.match(/HTTP\/2 200/) || []).length === 1;
+            const loginAfterRestartSuccess = (stdout.match(/HTTP\/.*200/) || []).length === 1;
             html += `<p>${loginAfterRestartSuccess}</p>`;
             body["loginSuccess"] = loginAfterRestartSuccess;
 
