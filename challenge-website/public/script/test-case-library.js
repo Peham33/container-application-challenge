@@ -105,8 +105,11 @@ export class TestCase {
                 clearInterval(id);
                 id = -1;
 
-                //console.log(testResult);
-                success = testResult[0];
+                if (testResult == null) {
+                    success = false;
+                } else {
+                    success = testResult[0];
+                }
 
                 //bar and status message change based on success/failure
                 if (success) {
@@ -120,7 +123,7 @@ export class TestCase {
                     statusDiv.classList.add("text-failure");
                 }
                 //display the status div if there is a message to display
-                if (testResult[1] != null) {
+                if (testResult != null && testResult[1] != null) {
                     statusDiv.innerHTML = testResult[1];
                     statusDiv.classList.remove("hidden");
                 }
