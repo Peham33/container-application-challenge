@@ -17,6 +17,18 @@ module.exports = function (app) {
 
             if (stdout.match("funktioniert")) {
                 res.status(200);
+            } else if (stdout.match("No port numbers assigned! Define either default backend or rules entry")) {
+                res.status(500);
+                res.json(JSON.stringify("No port numbers assigned! Define either default backend or rules entry"));
+            } else if (stdout.match("API service port and ingress port do not match")) {
+                res.status(500);
+                res.json(JSON.stringify("API service port and ingress port do not match"));
+            } else if (stdout.match("Can not connect to kubectl cluster.")) {
+                res.status(500);
+                res.json(JSON.stringify("Can not connect to kubectl cluster."));
+            } else if (stdout.match("ingress.yaml does not exist!")) {
+                res.status(500);
+                res.json(JSON.stringify("ingress.yaml does not exist!"));
             } else {
                 res.status(500);
             }

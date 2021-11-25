@@ -145,9 +145,18 @@ testCases.push(new TestCase(5, "Security Test - test if secret is correctly conf
 testCases.push(new TestCase(6, "Kubernetes ingress", true, async () =>
     fetch('http://localhost:3000/ingress-validation')
         .then(response => {
-            if (response.status != 200)
-                return [false, "Something is wrong with the configured ingress."]
-
+            if (response.status != 200) {
+                if (response.json().parse() == "No port numbers assigned! Define either default backend or rules entry")
+                    return [false, "No port numbers assigned! Define either default backend or rules entry"];
+                if (response.json().parse() == "API service port and ingress port do not match")
+                    return [false, "API service port and ingress port do not match"];
+                if (response.json().parse() == "Can not connect to kubectl cluster.")
+                    return [false, "Can not connect to kubectl cluster."];
+                if (response.json().parse() == "ingress.yaml does not exist!")
+                    return [false, "ingress.yaml does not exist!"];
+                
+                return [false, "Something is wrong with the configured ingress."];
+            }
             return [true, "Ingress up and running."];
         })
         .catch(reason => [false, reason])

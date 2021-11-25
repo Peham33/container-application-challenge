@@ -8,6 +8,8 @@ if [[ $API_STATUS == '504' || $API_STATUS == '200' ]]; then
 fi
 # API is not up
 if [ -f "../ingress.yaml" ]; then
+
+    # If no ingress port is set for either default backend or rules exit.
     DEFAULTBACKEND_PORT=$(cat ../ingress.yaml | yq e '.spec.defaultBackend.service.port.number' -  )
     RULES_PORT=$(cat ../ingress.yaml | yq e '.spec.rules[0].http.paths[0].backend.service.port.number' -)
     if [[ $RULES_PORT == "null" ]];
@@ -22,14 +24,21 @@ if [ -f "../ingress.yaml" ]; then
         exit 1
     fi
 
-    # TODO - Falls api service yaml file existiert Portnummern abgleichen => exit falls false
+    # If api service port and ingress port do not match - exit.
+    if [[ -f "../api.service.yaml" ]]; then
+        API_SERVICE_PORT=$(cat ../api.service.yaml | yq e '.spec.ports[0].port' - )
+        if [[ $PORT != $API_SERVICE_PORT && $API_SERVICE_PORT != "null" ]]; then
+            echo "API service port and ingress port do not match"
+            exit 2
+        fi
+    fi
         
     # Try to reach the Kubernetes cluster, abort if not possible
     kubectl cluster-info
     success=$?
     if [[ $success -ne  0 ]]; then
         echo "Can not connect to kubectl cluster."
-        exit 1
+        exit 3
     fi
     
     # Setup Echoserver
@@ -50,8 +59,14 @@ if [ -f "../ingress.yaml" ]; then
     
     # TESTING - Copy ingress.yaml and change it afterwards
     cp ../ingress.yaml ../echoserver-ingress.yaml
-    cat ../echoserver-ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
-    cat ../echoserver-ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
+    if [[ $DEFAULTBACKEND_PORT != "null" ]];
+    then       
+        cat ../echoserver-ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
+    fi
+    if [[ $RULES_PORT != "null" ]];
+    then
+        cat ../echoserver-ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
+    fi
     kubectl apply -f ../echoserver-ingress.yaml
     
     sleep 5
@@ -64,9 +79,9 @@ if [ -f "../ingress.yaml" ]; then
     kubectl delete deployment echoserver
     kubectl delete service echoserver
     kubectl delete pod $ECHOPOD --force
-    # TESTING - Try to apply old ingress.yaml / delete the echoserver applied ingress
     kubectl delete ingress challenge
     kubectl apply -f ../ingress.yaml
+    rm ../echoserver-ingress.yaml
 
 else
     echo 'ingress.yaml does not exist!'
