@@ -1,5 +1,5 @@
 # Vorbereitung
-Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:5000> verbinden, dort finden sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebniss nach jedem Teilschritt überprüfen. 
+Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebniss nach jedem Teilschritt überprüfen. 
 
 # Kubernetes Cluster Szenario
 
