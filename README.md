@@ -1,48 +1,63 @@
 # container-application-challenge
-SPR4G1 Studienprojekt für gepardec
+SPR5G1 Studienprojekt für gepardec
 
-## How to start REST API with HAProxy
-1. Run `mvnw package -DskipTests` in ./app
-2. Run `docker-compose up --build` in root directory
-3. Import the self-signed ssl certificate on your local system
-    - [Windows](https://support.securly.com/hc/en-us/articles/360026808753-How-to-manually-install-the-Securly-SSL-certificate-on-Windows)
-    -  [MacOS](https://superuser.com/questions/1359755/trust-self-signed-cert-in-chrome-macos-10-13)
-    - [Linux](https://tarunlalwani.com/post/self-signed-certificates-trusting-them/)
-4. The application is now running under [https://localhost:443](https://localhost:443)
-5. If the backend has not changed, running `docker-compose up` is enough
+## Setup
 
-## Instructions for Docker Image Registry
+Before you can start the challenge, it is necessary to go through the Setup Guide below.
 
-[docs/Working-With-The-Image-Registry.md](docs/Working-With-The-Image-Registry.md)
+### Setup Vagrant
 
-## Setup Kubernetes local environment
+The container-application-challenge runs inside a small Vagrant VM. To start the VM it is necessary to download and install [Vagrant](https://www.vagrantup.com/downloads).
 
-Use `minikube` to start a local kubernetes cluster by running `minikube start`.
+<https://www.vagrantup.com/downloads>
 
----
-**NOTE**
+If not already installed a installation of [VirtualBox](https://www.virtualbox.org/wiki/Downloads) is also mandatory.
 
+<https://www.virtualbox.org/wiki/Downloads>
 
-Use `minikube start --driver=hyperv` on Windows or `minikube start --driver=hyperkit` on MacOS, as there are some limitiations to the network driver of docker. (See [Issue #7332](https://github.com/kubernetes/minikube/issues/7332))
+### Clone Repo
 
-If you don't have Hyper-V enabled, see [the Microsoft documentation](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) for a guide on how to enable it.
+The Vagrant Startup file and all files needed to run the challenge are located on this GitHub repository.
 
-If you had previously set up a local cluster with minikube, you might need to delete it with `minikube delete`. Please be aware that this is a __permanent deletion__.
+https://github.com/aeisl/container-application-challenge
 
-If `minikube delete` throws a FILE_IN_USE error you will need to manually delete the Hyper-V server and kill the services which are locking minikube files.
+Navigate to the local directory you want to run the challenge in.
 
-![hyperv delete](docs/hyperv-delete.JPG)
-![minikube process delete](docs/minikube-process-delete.JPG)
+Run this command
 
-To stop the processes use `taskkill /F /PID <PID_NUMBER>`
+```bash
+git clone https://github.com/aeisl/container-application-challenge.git
+```
 
-After deleting both the Hyper-V server and the locking tasks it is necessary to use `minikube delete --purge` to completely delete all existing minikube files.
+and navigate into the directory.
 
----
+```bash
+cd container-application-challenge
+```
 
-### Ingress and SSL
+### Start and configure Vagrant
 
-We want an Ingress Control Pod to be available, so enable the minikube addon
+By running `vagrant up` the VM should start and configure itself automatically.
+
+This may take a few minutes depending on your download speed.
+
+After waiting for a few moments - check if the setup worked by accessing the challenge website on [https://localhost:3000](https://localhost:3000).
+
+To connect to the Vagrant VM run
+
+```bash
+vagrant ssh
+```
+
+### Start minikube
+
+To start the kubernetes cluster run:
+
+```bash
+minikube start
+```
+
+We want an Ingress Control Pod to be available, so the ingress addon for minikube needs to be enabled.
 
 ```bash
 minikube addons enable ingress
@@ -54,13 +69,21 @@ kubectl get pods -A
 ```
 
 Disable verfication of TLS CA to allow a self-signed certificate (See [Issue #5401](https://github.com/kubernetes/ingress-nginx/issues/5401#issuecomment-662424306))
+
+This command needs to be executed after every restart of the minikube cluster.
+
 ```bash
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 ```
 
-Apply the ingress configuration
+### Applying the configuration of the base cluster pods.
+
 ```bash
-kubectl apply -f ingress.yaml
+kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
+kubectl apply -f api.configmap.yaml # Applies config map for api 
+kubectl apply -f database.service.yaml -f database.deployment.yaml
+kubectl apply -f api.deployment.yaml
+kubectl apply -f database.volume.yaml -f database.claim.yaml
 ```
 
 Add the SSL certificate as kubernetes secret type _tls_
@@ -68,55 +91,41 @@ Add the SSL certificate as kubernetes secret type _tls_
 kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha-proxy/server.crt
 ```
 
+The following files will not be appliable right after setup and need to be configured correctly first.
 
-### Start the database and application
+- ingress.yaml
+- api.service.yaml
+- database-credentials.yaml
 
----
-**NOTE**
+Now the setup should be complete and you can start with the challenge.
+Follow the instructions of [3_Cluster-Setup.pdf](docs/challenges/3_Cluster-Setup.pdf)
 
-The cluster uses Docker images provided by our [image registry on Github](https://github.com/aeisl/container-application-challenge/packages). If you want to update versions of those images, follow the [instructions](docs/Working-With-The-Image-Registry.md).
+## Handing in your Solution
 
----
+<!-- TODO -->
+
+## Cleanup
+
+Using the command `vagrant destroy` all traces of the Vagrant VM will be deleted from your machine.
+
+## Query Samples
+
+If the cluster is set up correctly, the following queries should return status code 200.
+
+Curl command for registering a new agent.
+
+    curl -d "codeName=123&name=test" https://challenge.test/register -v -H 'content-type: application/x-www-form-urlencoded' -i
+
+Curl command to check if register worked.
+
+    curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
+
+## FAQ
+
+My ingress, api and database are correct according to the challenge-website validatons but the ingress can not be applied.
+
+Answer:
 
 ```bash
-kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
-kubectl apply -f database-credentials.yaml # Applies database secrets
-kubectl apply -f api.configmap.yaml # Applies config map for api 
-kubectl apply -f database.service.yaml -f database.deployment.yaml
-kubectl apply -f api.service.yaml -f api.deployment.yaml
-kubectl apply -f database.volume.yaml -f database.claim.yaml
-```
-
-### Finshing the setup
-
-Find out the external IP of your ingress by running `kubectl get ingress`. It should look something like this:
-
-![kubectl get ingress](./docs/kubectl-get-ingress.png)
-
-Create a DNS entry on your system (this may need administrative access on your system)
-```bash
-# In Vagrant
-sudo bash
-echo "192.168.49.2 challenge.test" >> /etc/hosts
-
-# For Linux or Mac
-sudo bash
-echo "192.168.49.2 challenge.test" >> /etc/hosts
-
-# On Windows PowerShell use
-echo "192.168.49.2 challenge.test" | Out-file -append -encoding ascii $env:windir\system32\drivers\etc\hosts
-```
-
-Querying the API should now work:
- 
- ```bash
- curl -L -v http://challenge.test/missions
-
- Invoke-RestMethod -method "GET" -Uri "https://challenge.test/missions"
- ```
-
-Register Login Test Query in Vagrant with curl:
-```bash
-curl -d "codeName=123&name=test" https://challenge.test/register -v -H 'content-type: application/x-www-form-urlencoded' -i                                           
-curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 ```
