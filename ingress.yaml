@@ -14,3 +14,26 @@ metadata:
     app.kubernetes.io/name: ingress
     app.kubernetes.io/part-of: container-application-challenge
 spec:
+  tls:
+    - hosts:
+        - challenge.test
+      secretName: challenge-test-tls
+
+  defaultBackend:
+    service:
+      name: api
+      port:
+        number: 8080
+
+  rules:
+    - host: challenge.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 8080
+

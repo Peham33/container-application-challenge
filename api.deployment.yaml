@@ -27,4 +27,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: api-configmap
+            - secretRef:
+                name: database-credentials
       restartPolicy: Always
