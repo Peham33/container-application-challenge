@@ -20,7 +20,7 @@ export function getActivePage() {
 }
 
 export function resetPage() {
-    description.innerHTML = "";
+    descriptionDiv.innerHTML = "";
     testDiv.innerHTML = "";
 }
 
