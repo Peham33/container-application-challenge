@@ -12,18 +12,20 @@ Den Doppelagenten konnten wir inzwischen ausfindig machen, die Schäden bestehen
 Viel Glück, wir zählen auf Sie!
 # API
 
-Nicht nur der Ingress konnte nicht mehr erreicht werden, sondern auch die API wurde in Mitleidenschaft gezogen. Bei dem Versuch die Schnittstelle zu erreichen wird immer ein 503 Error Service Temporarily unavailable geliefert. Um den Fehler zu beheben müssen Sie einen API Service erstellen, welcher über den Port 8080 erreichbar ist.  
+Nicht nur der Ingress konnte nicht mehr erreicht werden, sondern auch die API wurde in Mitleidenschaft gezogen. Bei dem Versuch die Schnittstelle zu erreichen wird immer ein 503 Error Service Temporarily unavailable geliefert. Um den Fehler zu beheben müssen Sie einen API Service erstellen, welcher über den Port 8080 erreichbar ist. 
+(<https://kubernetes.io/docs/concepts/services-networking/service/>)
 
 Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation 
 mit Datenbank credentials erweitern.
+(<https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>)
 
 # Ingress
 
-Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. 
-Außerdem soll ein https Upgrade durchgeführt werden.
+Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
+Außerdem soll ein https Upgrade durchgeführt werden. (<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect>)
 
 # Datenbank
 
 Ausgezeichnet! Unsere Applikation funktioniert wieder und unsere Agenten können Ihre Informationen wieder sicher und verlässlich teilen.
 
-Allerdings gibt es noch ein Problem: Mehrere Nutzer haben berichtet, dass Ihre Daten nach einem Wartungsfenster verschwunden sind. Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen! Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. 
+Allerdings gibt es noch ein Problem: Mehrere Nutzer haben berichtet, dass Ihre Daten nach einem Wartungsfenster verschwunden sind. Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen! Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. (<https://kubernetes.io/docs/concepts/storage/persistent-volumes/>)
