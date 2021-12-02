@@ -8,8 +8,9 @@ const prevBtn = document.getElementById("previous");
 const nextBtn = document.getElementById("next");
 prevBtn.addEventListener("click", prevPage);
 nextBtn.addEventListener("click", nextPage);
-//set manually to highest page count
-let maxPage = 3;
+
+let testCases = [];
+let maxPage = () => Math.max(...testCases.map(testCase => testCase.page));
 
 //update button availability
 function updateButtons() {
@@ -19,7 +20,7 @@ function updateButtons() {
         prevBtn.removeAttribute("disabled");
     }
 
-    if (getActivePage() >= maxPage) {
+    if (getActivePage() >= maxPage()) {
         nextBtn.setAttribute("disabled", true);
     } else {
         nextBtn.removeAttribute("disabled");
@@ -36,7 +37,7 @@ function prevPage() {
 }
 
 function nextPage() {
-    if (getActivePage() < maxPage) {
+    if (getActivePage() < maxPage()) {
         changePage(+1);
         resetPage();
         updateButtons();
@@ -120,7 +121,6 @@ let securityTest = async function () {
 }
 
 //test case declarations
-let testCases = [];
 testCases.push(new TestCase(1, 1, "API Test", "", true, apiTest));
 testCases.push(new TestCase(1, 2, "Security Test - test if secret is correctly configured",
 `

@@ -10,14 +10,34 @@
 
 ## Mission Teil 1
 
-Willkommen zu Ihrer ersten Mission, starten wir mit einem kleinen Training im docker-compose File:
+> Willkommen, Agent!
+> 
+> Hier startet Ihre erste Trainings-Mission. Wir beginnen wir mit einer Aufgabe zu [docker-compose](https://docs.docker.com/compose/).
+> 
+> Sie arbeiten dabei auf einer Testinstanz unseres **Agenten-Verwaltung-Systems**. Es speichert und verwaltet unsere Agenten sowie deren Missionen in einer Datenbank und ermöglicht den Zugriff über eine REST-API.
+> Damit ein sicherer Zugriff möglich ist, verwenden wir einen Reverse-Proxy zur Terminierung von SSL Verbindungen, der Aufrufe anschließend an unsere API weiterleitet.
 
-- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen, stellen Sie dafür beim docker-compose File den richtigen Backend Port für die API ein, diesen finden Sie in der haproxy.cfg (ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
-Zum Testen rufen sie localhost/missions mit einem Browser auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
+![Zugriffs Ablauf](../access-flow-diagram.svg)
 
-- Können Sie nun den Server erreichen, stellen Sie die Sicherheit der Kommunikation sicher. Dafür implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).
-Zum Testen rufen Sie [http://localhost:443/missions]() mit ihrem Browser auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
+- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg ([ha-proxy/haproxy.cfg]()) und machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
+Zum Testen rufen sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
 
+> Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.
+> 
+> Sie verstehen sicherlich, dass Sicherheit für unsere Agenten unsere höchste Priorität hat. Stellen Sie daher sicher, dass jede Kommunikation verschlüsselt stattfindet, auch wenn sie versehentlich unverschlüsselt begonnen wird.
 
-- Als letzte Trainingseinheit sollen Sie nun Daten auf den Server anzeigen lassen. Verwenden sie dafür die im Pfad "\db\postgres\initdb" vorhandenen SQL-Scripts.
-Zum Testen rufen Sie [http://localhost/missions]() mit ihrem Browser auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen. (<https://dev.to/darkmavis1980/how-to-persist-data-with-docker-compose-ik8>)
+Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
+
+Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` mit ihrem Browser auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
+
+> Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.
+
+Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden sie dafür die im Pfad ([/db/postgres/initdb](../../db/postgres/initdb)) vorhandenen SQL-Scripts.
+
+Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76>)
+
+Zum Testen rufen Sie abermals `curl -L "http://localhost:80/missions" | jq` auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.
+
+> Ausgezeichnet!
+> 
+> Sie haben die Einführung gemeistert und sind bereit unser Produktivsystem zu konfigurieren.

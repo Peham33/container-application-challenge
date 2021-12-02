@@ -8,8 +8,10 @@ const prevBtn = document.getElementById("previous");
 const nextBtn = document.getElementById("next");
 prevBtn.addEventListener("click", prevPage);
 nextBtn.addEventListener("click", nextPage);
+
+let testCases = [];
 //set manually to highest page count
-let maxPage = 3;
+let maxPage = () => Math.max(...testCases.map(testCase => testCase.page));
 
 //update button availability
 function updateButtons() {
@@ -19,7 +21,7 @@ function updateButtons() {
         prevBtn.removeAttribute("disabled");
     }
 
-    if (getActivePage() >= maxPage) {
+    if (getActivePage() >= maxPage()) {
         nextBtn.setAttribute("disabled", true);
     } else {
         nextBtn.removeAttribute("disabled");
@@ -36,7 +38,7 @@ function prevPage() {
 }
 
 function nextPage() {
-    if (getActivePage() < maxPage) {
+    if (getActivePage() < maxPage()) {
         changePage(+1);
         resetPage();
         updateButtons();
@@ -124,10 +126,62 @@ let testCase3 = async function () {
 }
 
 //test case declarations
-let testCases = [];
-testCases.push(new TestCase(1, 1, "Test Case 1: API running", "<p>Willkommen zu Ihrer ersten Mission, starten wir mit einem kleinen Training im docker-compose File:</p><p>Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen, stellen Sie dafür beim docker-compose File den richtigen Backend Port für die API ein, diesen finden Sie in der haproxy.cfg (ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a href=\"https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/\">Link zur Dokumentation</a>)</p><p>Zum Testen rufen sie localhost/missions mit einem Browser auf. Der Aufruf sollte ein leeres Ergebnis enthalten.</p>", false, testCase1));
-testCases.push(new TestCase(2, 2, "Test Case 2: API <-> Database connection", "", false, testCase2));
-testCases.push(new TestCase(3, 3, "Test Case 3: https Upgrade", "", false, testCase3));
+testCases.push(new TestCase(1, 1, "Test Case 1: API running", `
+<div class="story">
+    <h2>Ihre Mission</h2>
+    <p>Willkommen, Agent!</p>
+    <p>Hier startet Ihre erste Trainings-Mission. Wir beginnen wir mit einer Aufgabe zu <a
+            href="https://docs.docker.com/compose/">docker-compose</a>.</p>
+    <p>Sie arbeiten dabei auf einer Testinstanz unseres <strong>Agenten-Verwaltung-Systems</strong>. Es speichert und verwaltet unsere Agenten sowie deren Missionen in einer Datenbank und ermöglicht den Zugriff über eine REST-API.</p>
+    <p>Damit ein sicherer Zugriff möglich ist, verwenden wir einen Reverse-Proxy zur Terminierung von SSL Verbindungen, der Aufrufe anschließend an unsere API weiterleitet.</p>
+    <img src="images/access-flow-diagram.svg" alt="Zugriffsdiagram für unser Agentensystem" width="600px">
+</div>
+
+<div class="instructions">
+    <h2>Missionsziel</h2>
+    <p>
+        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg (/ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/" target="_blank">HAProxy configuration essentials</a>)
+    </p>
+
+    <p>Zum Testen rufen sie <code>curl -L "http://localhost:80/missions"</code> auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
+    </p>
+</div>
+`, false, testCase1));
+testCases.push(new TestCase(2, 2, "Test Case 2: API <-> Database connection", `
+<div class="story">
+    <h2>Ihre Mission</h2>
+    <p>Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.</p>
+    <p>Sie verstehen sicherlich, dass Sicherheit für unsere Agenten unsere höchste Priorität hat. Stellen Sie daher sicher, dass jede Kommunikation verschlüsselt stattfindet, auch wenn sie versehentlich unverschlüsselt begonnen wird.</p>
+</div>
+
+<div class="instructions">
+    <h2>Missionsziel</h2>
+    <p>Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
+
+    <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
+</div>
+`, false, testCase2));
+testCases.push(new TestCase(3, 3, "Test Case 3: https Upgrade", `
+<div class="story">
+    <h2>Ihre Mission</h2>
+    <p>Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.</p>
+</div>
+
+<div class="instructions">
+    <h2>Missionsziel</h2>
+    <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden sie dafür die im Pfad <strong>/db/postgres/initdb</strong> vorhandenen SQL-Scripts.</p>
+    <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
+    <p>Zum Testen rufen Sie abermals <code>curl -L "http://localhost:80/missions" | jq</code> auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
+</div>
+`, false, testCase3));
+testCases.push(new TestCase(4,4, "Erfolg", `
+<div class="story">
+    <h2>Ihre Mission</h2>
+    <p>Ausgezeichnet!</p>
+    <p>Sie haben die Einführung gemeistert und sind bereit unser Produktivsystem zu konfigurieren.</p>
+    <p>Begeben Sie sich nun zum <a href="kubernetes-challenges.html">Kubernetes-System</a>.</p>
+</div>
+`, false, () => Promise.resolve([true, ''])))
 
 //initial render of tests
 renderAll();
