@@ -1,6 +1,6 @@
 #!/bin/bash
 # Check API
-API_STATUS=$(curl -d "codeName=007" http://challenge.test/login \
+API_STATUS=$(curl -m 5 -d "codeName=007" http://challenge.test/login \
      -H 'content-type: application/x-www-form-urlencoded' -L -i | grep -E "(504|200)" | cut -f2 -d' ')
 if [[ $API_STATUS == '504' || $API_STATUS == '200' ]]; then
     echo "funktioniert";
