@@ -1,6 +1,8 @@
 # container-application-challenge
 SPR5G1 Studienprojekt für gepardec
 
+<!-- Introduction / Begrüßung -->
+
 ## Setup
 
 Before you can start the challenge, it is necessary to go through the Setup Guide below.
@@ -11,7 +13,7 @@ The container-application-challenge runs inside a small Vagrant VM. To start the
 
 <https://www.vagrantup.com/downloads>
 
-If not already installed a installation of [VirtualBox](https://www.virtualbox.org/wiki/Downloads) is also mandatory.
+If not already installed, a installation of [VirtualBox](https://www.virtualbox.org/wiki/Downloads) is mandatory.
 
 <https://www.virtualbox.org/wiki/Downloads>
 
@@ -21,35 +23,33 @@ The Vagrant Startup file and all files needed to run the challenge are located o
 
 https://github.com/aeisl/container-application-challenge
 
-Navigate to the local directory you want to run the challenge in.
+To start the challenge, fork the repository.
 
-Run this command
+Navigate to the local directory you want to run the challenge in and clone your fork.
 
-```bash
-git clone https://github.com/aeisl/container-application-challenge.git
-```
+### Start and configure Vagrant
 
-and navigate into the directory.
+Navigate into the project directory.
 
 ```bash
 cd container-application-challenge
 ```
 
-### Start and configure Vagrant
-
 By running `vagrant up` the VM should start and configure itself automatically.
 
-This may take a few minutes depending on your download speed.
+This may take a few minutes depending on your download speed, the console output should tell you if the setup is done.
 
 After waiting for a few moments - check if the setup worked by accessing the challenge website on [https://localhost:3000](https://localhost:3000).
 
-To connect to the Vagrant VM run
+To connect and work on the virtual machine run.
 
 ```bash
 vagrant ssh
 ```
 
-### Start minikube
+All following commands need to be executed on the virtual machine.
+
+### Start and configure minikube
 
 To start the kubernetes cluster run:
 
@@ -64,11 +64,11 @@ minikube addons enable ingress
 
 # Verify that the nginx-controller pod is available
 kubectl get pods --namespace ingress-nginx
-# or if you dont have namespaces, check for a pod called 'ingress-controller'
+# or if you don't have namespaces, check for a pod called 'ingress-controller'
 kubectl get pods -A
 ```
 
-Disable verfication of TLS CA to allow a self-signed certificate (See [Issue #5401](https://github.com/kubernetes/ingress-nginx/issues/5401#issuecomment-662424306))
+Disable verification of TLS CA to allow a self-signed certificate (See [Issue #5401](https://github.com/kubernetes/ingress-nginx/issues/5401#issuecomment-662424306))
 
 This command needs to be executed after every restart of the minikube cluster.
 
@@ -76,7 +76,7 @@ This command needs to be executed after every restart of the minikube cluster.
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 ```
 
-### Applying the configuration of the base cluster pods.
+### Applying the configuration of the base cluster pods
 
 ```bash
 kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
@@ -91,24 +91,27 @@ Add the SSL certificate as kubernetes secret type _tls_
 kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha-proxy/server.crt
 ```
 
-The following files will not be appliable right after setup and need to be configured correctly first.
+The following files will not be applyable right after setup and need to be configured correctly first.
 
 - ingress.yaml
 - api.service.yaml
 - database-credentials.yaml
 
 Now the setup should be complete and you can start with the challenge.
-Follow the instructions of [3_Cluster-Setup.pdf](docs/challenges/3_Cluster-Setup.pdf)
+Follow the instructions on the [challenge website](http://localhost:3000/).
 
 ## Handing in your Solution
 
-<!-- TODO -->
+When you are done with the challenge you should create a pull request from your fork onto the main repository.
+The followup interview with gepardec will be based on this pull request.
 
 ## Cleanup
 
 Using the command `vagrant destroy` all traces of the Vagrant VM will be deleted from your machine.
 
 ## Query Samples
+
+These samples should be executed on the Vagrant VM.
 
 If the cluster is set up correctly, the following queries should return status code 200.
 
@@ -122,10 +125,12 @@ Curl command to check if register worked.
 
 ## FAQ
 
-My ingress, api and database are correct according to the challenge-website validatons but the ingress can not be applied.
+<!-- 
+My ingress, api and database are correct according to the challenge-website validations but the ingress can not be applied.
 
 Answer:
 
 ```bash
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-```
+``` 
+-->
