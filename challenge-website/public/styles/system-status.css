@@ -14,6 +14,10 @@
     border-color: var(--highlight-color);
 }
 
+#description {
+    margin-bottom: 36px;
+}
+
 .test-case-container {
     margin-top: 50px;
 }
@@ -28,14 +32,14 @@
 .test-case-bar {
     width: 0%;
     height: 30px;
-    background-color: #ffffff;
+    background-color: var(--highlight-color);
     text-align: center;
     line-height: 30px;
     color: #000000;
 }
 
 .bar-success {
-    background-color: #00ff00 !important;
+    background-color: var(--text-color) !important;
 }
 
 .bar-failure {
@@ -43,7 +47,7 @@
 }
 
 .text-success {
-    color: #00ff00 !important;
+    color: var(--text-color) !important;
 }
 
 .text-failure {
@@ -56,4 +60,39 @@
 
 .hidden {
     display: none;
+}
+
+.btn {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    font-size: 24px;
+}
+
+.btn:hover {
+    background-color: #ffffff;
+}
+
+button[disabled=disabled], button:disabled {
+    background-color: #797979 !important;
+}
+
+#previous {
+    margin-top: 36px;
+    background-color: #ffffff;
+    color: black;
+}
+
+#next {
+    background-color: var(--text-color);
+    color: var(--background-color);
+}
+
+#description {
+    width: 800px;
+}
+
+#description a {
+    color: var(--highlight-color);
 }

@@ -2,10 +2,26 @@
 
 //container for the test cases
 const testDiv = document.getElementById("test-cases");
+const descriptionDiv = document.getElementById("description");
 
 //async sleep function
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+let activePage = 1;
+
+export function changePage(change) {
+    activePage += change;
+}
+
+export function getActivePage() {
+    return activePage;
+}
+
+export function resetPage() {
+    descriptionDiv.innerHTML = "";
+    testDiv.innerHTML = "";
 }
 
 export const statusCodes = new Map();
@@ -16,9 +32,11 @@ statusCodes.set(504, "Gateway Timeout");
 
 //class to represent individual test cases
 export class TestCase {
-    constructor(id, name, waitForExecute, testFunction) {
+    constructor(page, id, name, description, waitForExecute, testFunction) {
+        this.page = page;
         this.id = id;
         this.name = name;
+        this.description = description;
         this.waitForExecute = waitForExecute;
         this.testFunction = testFunction;
     }
@@ -26,7 +44,14 @@ export class TestCase {
     //save currently running intervals (allows early restarting of tests)
     intervals = [];
 
+    isActive() {
+        return this.page == activePage;
+    }
+
     render() {
+        if (!this.isActive()) return;
+
+        descriptionDiv.innerHTML = this.description;
         testDiv.innerHTML += `
         <div class="test-case-container">
             ${this.name}
@@ -40,6 +65,8 @@ export class TestCase {
 
     //resets the progress bar and status message
     reset() {
+        if (!this.isActive()) return;
+
         //clear running intervals
         this.intervals.forEach(clearInterval);
 
@@ -60,6 +87,8 @@ export class TestCase {
 
     //executes testFunction and renders a progress bar
     async execute() {
+        if (!this.isActive()) return;
+
         //reset progress bar
         this.reset();
 
