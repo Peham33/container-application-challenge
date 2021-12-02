@@ -12,7 +12,7 @@
 
 Willkommen zu Ihrer ersten Mission, starten wir mit einem kleinen Training im docker-compose File:
 
-- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen, stellen Sie dafür beim HAProxy den richtigen Backend Port für die API ein und machen Sie diesen von dem Port 80 von außen erreichbar.
+- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen, stellen Sie dafür beim docker-compose File den richtigen Backend Port für die API ein, diesen finden Sie in der haproxy.cfg (ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
 Zum Testen rufen sie localhost/missions mit einem Browser auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
 
 - Können Sie nun den Server erreichen, stellen Sie die Sicherheit der Kommunikation sicher. Dafür implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).
