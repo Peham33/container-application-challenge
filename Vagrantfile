@@ -86,7 +86,7 @@ echo '[6/7] Setting up challenge website...'
   npm ci &&
 
 # Configure node server as daemon
-cat <<EOF >> /etc/systemd/system/challenge-website.service
+cat <<EOF > /etc/systemd/system/challenge-website.service
 [Unit]
 Description=Challenge Website for verificaton
 After=network.target
