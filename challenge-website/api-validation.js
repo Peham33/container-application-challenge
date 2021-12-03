@@ -3,30 +3,43 @@ const childProcess = require('child_process');
 module.exports = function (app) {
     app.get('/api-test', function (req, res) {
         const body = getApiStatus();
-        body.success ? res.status(200) : res.status(500);
+        res.status(body.success ? 200 : 500);
         res.json(body);
     });
 
     app.get('/security-test', function (req, res) {
+        const securityStatus = getSecurityStatus();
+        res.status(securityStatus.success ? 200 : 500);
+        res.json(securityStatus);
+    });
+
+    function getSecurityStatus() {
+        const body = {
+            success: false,
+            tests: [
+                { message: 'API deployment uses secret for database credentials.', success: false },
+                { message: 'Database deployment uses secret.', success: false },
+            ]
+        };
         try {
             const secretName = kubectl('kubectl get deployment api -o=jsonpath="{.spec.template.spec.containers[*].envFrom[*].secretRef.name}"');
             const passwordCorrect = kubectlAssert('kubectl get secret ' + secretName + ' -o=jsonpath="{.data.DB_PASSWORD}"', 'Ym9uZA==');
             const usernameCorrect = kubectlAssert('kubectl get secret ' + secretName + ' -o=jsonpath="{.data.DB_USERNAME}"', 'amFtZXM=');
+            body.tests[0].success = passwordCorrect && usernameCorrect;
 
             const dbUser = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_USER\')].valueFrom.secretKeyRef.name}"', secretName);
             const dbUserKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_USER\')].valueFrom.secretKeyRef.key}"', 'DB_USERNAME');
-
             const dbPassword = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.name}"', secretName);
             const dbPasswordKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.key}"', 'DB_PASSWORD');
 
-            const apiCorrect = passwordCorrect === true && usernameCorrect === true && dbUser === true && dbUserKey === true && dbPassword === true && dbPasswordKey === true;
-
-            res.status(apiCorrect ? 200 : 500);
-            res.json({ message: apiCorrect ? 'API is configured correctly!' : 'Invalid configuration detected!' });
+            body.tests[1].success = dbUser && dbUserKey && dbPassword && dbPasswordKey;
+            body.success = body.tests.map(x => x.success).every(x => x === true);
         } catch (e) {
-            res.status(500).json({ message: 'Error when executing command!' });
+            console.log(e);
         }
-    });
+
+        return body;
+    }
 
     function getApiStatus() {
         const body = {
