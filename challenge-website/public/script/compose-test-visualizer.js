@@ -73,12 +73,17 @@ let testApiReachability = async function () {
         status = 503
     }
 
+    result['tests'] = [];
+
     //status 200 or 504 denotes working API container (504 = database error, but API runs)
     if (status == 200 || status == 504) {
-        result.push(true);
+        result['success'] = true;
+        result['tests'].push({"test": "Tests if API is reachable on port 80", "success": true});
+        result['tests'].push({"test": "This test is always true", "success": true});
     } else {
-        result.push(false);
-        result.push("Error Code: " + status + ": " + statusCodes.get(status));
+        result['success'] = false;
+        result['tests'].push({"test": "Tests if API is reachable on port 80", "success": false});
+        result['tests'].push({"test": "This test is always true", "success": true});
     }
     return result;
 }

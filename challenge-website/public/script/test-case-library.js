@@ -102,7 +102,7 @@ export class TestCase {
         let fasterInterval = 10; //bar goes a lot faster once result is obtained
 
         let testResult = null;
-        let testPromise = this.testFunction().then(result =>
+        this.testFunction().then(result =>
             testResult = result
         )
 
@@ -137,7 +137,7 @@ export class TestCase {
                 if (testResult == null) {
                     success = false;
                 } else {
-                    success = testResult[0];
+                    success = testResult['success'];
                 }
 
                 //bar and status message change based on success/failure
@@ -151,9 +151,13 @@ export class TestCase {
                     barDiv.classList.add("bar-failure");
                     statusDiv.classList.add("text-failure");
                 }
+
                 //display the status div if there is a message to display
-                if (testResult != null && testResult[1] != null) {
-                    statusDiv.innerHTML = testResult[1];
+                if (testResult != null && testResult['tests'] != null) {
+                    statusDiv.innerHTML = "";
+                    for (let test of testResult['tests']) {
+                        statusDiv.innerHTML += `<div class="${test['success'] ? 'text-success' : 'text-failure'}">${test['success'] ? '&#x2713;' : '&#x2717;'} - ${test['test']}</div>`
+                    }
                     statusDiv.classList.remove("hidden");
                 }
             } else {
