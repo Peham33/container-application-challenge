@@ -137,7 +137,7 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>
-        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg (/ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/" target="_blank">HAProxy configuration essentials</a>)
+        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg (/ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
     </p>
 
     <p>Zum Testen rufen sie <code>curl -L "http://localhost:80/missions"</code> auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
@@ -155,7 +155,7 @@ testCases.push(new TestCase(2, 2, "Automatisches HTTPS Upgrade", `
     <h2>Missionsziel</h2>
     <p>Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
 
-    <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
+    <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a target="_blank" href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
 </div>
 `, false, testAutomaticHttpsUpgrade));
 testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten", `
@@ -167,7 +167,7 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden sie dafür die im Pfad <strong>/db/postgres/initdb</strong> vorhandenen SQL-Scripts.</p>
-    <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
+    <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
     <p>Zum Testen rufen Sie abermals <code>curl -L "http://localhost:80/missions" | jq</code> auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
 </div>
 `, false, testApiToDatabaseConnection));

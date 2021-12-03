@@ -133,9 +133,9 @@ testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfigu
 
 <div class="instructions">
     <h2>Missionsziel</h2>
-    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
+    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
 
-    <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
+    <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a target="_blank" href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
 </div>
 `, true, async () =>
         fetch('http://localhost:3000/ingress-validation')
@@ -159,8 +159,8 @@ testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets 
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>Bei dem Versuch die API zu erreichen, wird immer ein 503 Error <i>Service Temporarily unavailable</i> geliefert.</p>
-    <p>Um den Fehler zu beheben, müssen Sie ein API Service erstellen, welches über den Port 8080 erreichbar ist. (<a href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
-    <p>Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. (<a href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/">Kubernetes secure credentials</a>)</p>
+    <p>Um den Fehler zu beheben, müssen Sie ein API Service erstellen, welches über den Port 8080 erreichbar ist. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
+    <p>Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. (<a target="_blank" href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/">Kubernetes secure credentials</a>)</p>
 </div>
 `, true, securityTest))
 
@@ -176,7 +176,7 @@ testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen!</p>
-    <p>Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. (<a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volumes</a>)</p>
+    <p>Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. (<a target="_blank" href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volumes</a>)</p>
 </div>
 `, true, async () =>
     fetch('http://localhost:3000/validate-kubernetes-database')
