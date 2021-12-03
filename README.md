@@ -57,6 +57,21 @@ To start the kubernetes cluster run:
 minikube start
 ```
 
+After starting minikube some configuration of the cluster needs to be done. For this a setup script will be provided.
+Simply execute the script by running the following command inside Vagrant.
+
+```bash
+/vagrant/minikube-setup.sh
+```
+
+The script executes the following steps:
+
+1. Enable the minikube ingress addon.
+2. Disable the TLS CA verification to allow a self-signed certificate.
+3. Apply various k8s configurations.
+4. Create the TLS secret.
+
+<!-- 
 We want an Ingress Control Pod to be available, so the ingress addon for minikube needs to be enabled.
 
 ```bash
@@ -89,9 +104,10 @@ kubectl apply -f database.volume.yaml -f database.claim.yaml
 Add the SSL certificate as kubernetes secret type _tls_
 ```bash
 kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha-proxy/server.crt
-```
+``` 
+-->
 
-The following files will not be applyable right after setup and need to be configured correctly first.
+The following files will not be applyable right after the setup and need to be configured correctly first.
 
 - ingress.yaml
 - api.service.yaml
