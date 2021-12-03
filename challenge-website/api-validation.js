@@ -2,11 +2,9 @@ const childProcess = require('child_process');
 
 module.exports = function (app) {
     app.get('/api-test', function (req, res) {
-        try {
-            apiConfiguredCorrectly() ? res.status(200).json({ message: 'ok' }) : res.status(500).json({ message: 'Not ok' });
-        } catch (e) {
-            res.status(500).json({ message: 'Error when executing command!' })
-        }
+        const body = getApiStatus();
+        body.success ? res.status(200) : res.status(500);
+        res.json(body);
     });
 
     app.get('/security-test', function (req, res) {
@@ -30,12 +28,29 @@ module.exports = function (app) {
         }
     });
 
-    function apiConfiguredCorrectly() {
-        const nameCorrect = kubectlAssert('kubectl get service api -o=jsonpath="{.spec.selector.app\\.kubernetes\\.io/name}"', 'api');
-        const configuredPort = kubectl('kubectl get service api -o=jsonpath="{.spec.ports[*].port}"');
-        const ingressPort = tryGetIngressPort();
+    function getApiStatus() {
+        const body = {
+            success: false,
+            tests: [
+                { message: 'Service with name \'api\' created.', success: false },
+                { message: 'Ports configured correctly.', success: false },
+                { message: 'API is running and reachable.', success: false },
+            ]
+        };
+        try {
+            body.tests[0].success = kubectlAssert('kubectl get service api -o=jsonpath="{.spec.selector.app\\.kubernetes\\.io/name}"', 'api');
+            const configuredPort = kubectl('kubectl get service api -o=jsonpath="{.spec.ports[*].port}"');
+            const ingressPort = tryGetIngressPort();
+            body.tests[1].success = portsCorrect(configuredPort, ingressPort);
 
-        return nameCorrect === true && portsCorrect(configuredPort, ingressPort) === true;
+            const testCurl = 'curl -m 5 -I https://challenge.test/missions';
+            body.tests[2].success = childProcess.execSync(testCurl, { encoding: 'utf-8' }).match(/HTTP\/.*200/)?.length === 1
+            body.success = body.tests.map(x => x.success).every(x => x === true);
+        } catch (e) {
+            console.log(e);
+        }
+
+        return body;
     }
 
     function kubectlAssert(kubectlQuery, expectedValue) {
