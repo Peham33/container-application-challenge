@@ -63,8 +63,7 @@ async function runTests() {
 const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
-//testing API reachability
-let testCase1 = async function () {
+let testApiReachability = async function () {
     let result = [];
     let status = null;
 
@@ -84,8 +83,7 @@ let testCase1 = async function () {
     return result;
 }
 
-//testing API<->Database connection
-let testCase2 = async function () {
+let testApiToDatabaseConnection = async function () {
     let result = [];
     let status = null;
 
@@ -104,8 +102,7 @@ let testCase2 = async function () {
     return result;
 }
 
-//testing automatic https upgrade
-let testCase3 = async function () {
+let testAutomaticHttpsUpgrade = async function () {
     let result = [];
     let status = null;
 
@@ -126,7 +123,7 @@ let testCase3 = async function () {
 }
 
 //test case declarations
-testCases.push(new TestCase(1, 1, "Test Case 1: API running", `
+testCases.push(new TestCase(1, 1, "API ist verfügbar", `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Willkommen, Agent!</p>
@@ -146,8 +143,8 @@ testCases.push(new TestCase(1, 1, "Test Case 1: API running", `
     <p>Zum Testen rufen sie <code>curl -L "http://localhost:80/missions"</code> auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
     </p>
 </div>
-`, false, testCase1));
-testCases.push(new TestCase(2, 2, "Test Case 2: API <-> Database connection", `
+`, false, testApiReachability));
+testCases.push(new TestCase(2, 2, "Automatisches HTTPS Upgrade", `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.</p>
@@ -160,8 +157,8 @@ testCases.push(new TestCase(2, 2, "Test Case 2: API <-> Database connection", `
 
     <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
 </div>
-`, false, testCase2));
-testCases.push(new TestCase(3, 3, "Test Case 3: https Upgrade", `
+`, false, testAutomaticHttpsUpgrade));
+testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten", `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.</p>
@@ -173,7 +170,7 @@ testCases.push(new TestCase(3, 3, "Test Case 3: https Upgrade", `
     <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
     <p>Zum Testen rufen Sie abermals <code>curl -L "http://localhost:80/missions" | jq</code> auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
 </div>
-`, false, testCase3));
+`, false, testApiToDatabaseConnection));
 testCases.push(new TestCase(4,4, "Erfolg", `
 <div class="story">
     <h2>Ihre Mission</h2>
