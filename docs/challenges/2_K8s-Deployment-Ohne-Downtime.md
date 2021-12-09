@@ -4,7 +4,7 @@
 
 Der Kubernetes Cluster mit der Applikation läuft einwandfrei und unsere Spione absolvieren jede Ihrer Missionen erfolgreich.
 
-Es steht eine neue Version der API zur Verfügung, die den Spionen dringend benötigte Funktionalität bietet. Wir wollen sie so schnell wie möglich upgraden ohne den laufenden Betrieb zu stören.
+Es steht eine neue Version der API zur Verfügung, die den Spionen dringend benötigte Funktionalität bietet. Wir wollen Sie so schnell wie möglich upgraden ohne den laufenden Betrieb zu stören.
 
 ## Aufgabenstellung
 
