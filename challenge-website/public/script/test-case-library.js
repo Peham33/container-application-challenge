@@ -41,7 +41,7 @@ export class TestCase {
         this.testFunction = testFunction;
     }
 
-    //save currently running intervals (allows early restarting of tests)
+    //save running intervals, allows tests to get faster once completed
     intervals = [];
 
     isActive() {

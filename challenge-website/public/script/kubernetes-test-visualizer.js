@@ -53,9 +53,19 @@ function renderAll() {
 
 //execute all tests
 async function runTests() {
+    disableTestButton();
     for (let testCase of testCases) {
         await testCase.execute();
     }
+    enableTestButton();
+}
+
+function disableTestButton() {
+    runTestsBtn.setAttribute("disabled", true);
+}
+
+function enableTestButton() {
+    runTestsBtn.removeAttribute("disabled");
 }
 
 //button runs all tests

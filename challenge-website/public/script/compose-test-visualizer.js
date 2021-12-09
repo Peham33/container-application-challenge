@@ -54,14 +54,24 @@ function renderAll() {
 
 //execute all tests
 async function runTests() {
+    disableTestButton();
     for (let testCase of testCases) {
         await testCase.execute();
     }
+    enableTestButton();
 }
 
 //button runs all tests
 const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
+
+function disableTestButton() {
+    runTestsBtn.setAttribute("disabled", true);
+}
+
+function enableTestButton() {
+    runTestsBtn.removeAttribute("disabled");
+}
 
 let testApiReachability = async function () {
     let result = [];
@@ -148,7 +158,7 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
     <p>Zum Testen rufen sie <code>curl -L "http://localhost:80/missions"</code> auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
     </p>
 </div>
-`, false, testApiReachability));
+`, true, testApiReachability));
 testCases.push(new TestCase(2, 2, "Automatisches HTTPS Upgrade", `
 <div class="story">
     <h2>Ihre Mission</h2>
@@ -162,7 +172,7 @@ testCases.push(new TestCase(2, 2, "Automatisches HTTPS Upgrade", `
 
     <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a target="_blank" href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
 </div>
-`, false, testAutomaticHttpsUpgrade));
+`, true, testAutomaticHttpsUpgrade));
 testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten", `
 <div class="story">
     <h2>Ihre Mission</h2>
@@ -175,7 +185,7 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
     <p>Zum Testen rufen Sie abermals <code>curl -L "http://localhost:80/missions" | jq</code> auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
 </div>
-`, false, testApiToDatabaseConnection));
+`, true, testApiToDatabaseConnection));
 testCases.push(new TestCase(4,4, "Erfolg", `
 <div class="story">
     <h2>Ihre Mission</h2>
@@ -183,8 +193,7 @@ testCases.push(new TestCase(4,4, "Erfolg", `
     <p>Sie haben die Einführung gemeistert und sind bereit unser Produktivsystem zu konfigurieren.</p>
     <p>Begeben Sie sich nun zum <a href="kubernetes-challenges.html">Kubernetes-System</a>.</p>
 </div>
-`, false, () => Promise.resolve([true, ''])))
+`, true, () => Promise.resolve([true, ''])))
 
 //initial render of tests
 renderAll();
-
