@@ -97,3 +97,7 @@ button[disabled=disabled], button:disabled {
 #description a {
     color: var(--highlight-color);
 }
+
+code {
+    font-size: 14px;
+}

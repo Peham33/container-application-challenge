@@ -65,6 +65,7 @@ async function runTests() {
 const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
+//functions to enable/disable the runTest button
 function disableTestButton() {
     runTestsBtn.setAttribute("disabled", true);
 }
@@ -72,6 +73,12 @@ function disableTestButton() {
 function enableTestButton() {
     runTestsBtn.removeAttribute("disabled");
 }
+
+//function to allow clipboard copies
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+window.copyToClipboard = copyToClipboard;
 
 let testApiReachability = async function () {
     let result = [];
@@ -127,8 +134,8 @@ let testAutomaticHttpsUpgrade = async function () {
         status = 503
     }
 
-    //301 (redirect) means working https upgrade
-    if (status == 301) {
+    //301 or 302 (redirect) means working https upgrade
+    if (status == 301 || status == 302) {
         result.push(true);
     } else {
         result.push(false);
@@ -155,7 +162,15 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
         Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg (/ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
     </p>
 
-    <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
+    <p>Zum Testen rufen Sie das folgende Kommando in der VM auf:</p>
+    <p>
+        <code>curl -L "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+        </button>
+    </p>
+    <p>
+        Der Aufruf sollte ein leeres Ergebnis enthalten.
     </p>
 </div>
 `, true, testApiReachability));
@@ -170,7 +185,15 @@ testCases.push(new TestCase(2, 2, "Automatisches HTTPS Upgrade", `
     <h2>Missionsziel</h2>
     <p>Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
 
-    <p>Zum Testen rufen Sie <code>curl -L "http://localhost:80/missions"</code> in der VM auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a target="_blank" href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
+    <p>Zum Testen rufen Sie wieder das folgende Kommando in der VM auf:</p>
+    <p>
+        <code>curl -L "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+        </button>
+    </p>
+
+    <p>Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<a target="_blank" href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
 </div>
 `, true, testAutomaticHttpsUpgrade));
 testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten", `
@@ -183,7 +206,14 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <h2>Missionsziel</h2>
     <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden Sie dafür die im Pfad <strong>/db/postgres/initdb</strong> vorhandenen SQL-Scripts.</p>
     <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
-    <p>Zum Testen rufen Sie abermals <code>curl -L "http://localhost:80/missions" | jq</code> auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
+    <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
+    <p>
+        <code>curl -L "http://localhost:80/missions | jq"</code>
+        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot; | jq')">
+            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+        </button>
+    </p>
+    <p>Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
 </div>
 `, true, testApiToDatabaseConnection));
 testCases.push(new TestCase(4,4, "Erfolg", `
