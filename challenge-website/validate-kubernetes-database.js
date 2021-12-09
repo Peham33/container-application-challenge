@@ -30,9 +30,9 @@ module.exports = app => {
             body.tests[3].success = (stdout.match(/HTTP\/.*200/) || []).length === 1;
 
             response.status(
-                body.tests[2].success ? 200 : 500
+                body.tests[3].success ? 200 : 500
             );
-            body.success = body.tests[2].success;
+            body.success = body.tests[3].success;
             response.json(body);
         } catch (error) {
             response.status(500);
