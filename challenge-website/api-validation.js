@@ -77,9 +77,6 @@ module.exports = function (app) {
         });
     }
 
-    /**
-     * @returns Ingress port if configured, otherwise undefined
-     */
     function tryGetIngressPort() {
         let port = kubectl('kubectl get ingress -o=jsonpath="{.items[*].spec.rules[0].http.paths[*].backend.service.port.number}"');
         if (!port)
