@@ -5,7 +5,7 @@ module.exports = function (app) {
     //return the basic result of a bash command
     app.get('/ingress-validation', function (req, res) {
         //basic command execution - result will be in stdout
-        let jsonObj = {
+        let body = {
             success: true,
             tests: []
         };
@@ -22,20 +22,15 @@ module.exports = function (app) {
             });
 
             const jsonRes = JSON.parse(stdout);
-            jsonObj.tests = jsonRes;
+            body.tests = jsonRes;
 
-            if (jsonObj.tests.find(el => el.success == false) != null) {
-                jsonObj.success = false;
-            } else {
-                jsonObj.success = true;
-            }
-
-            res.status(500);
-            res.json(jsonObj);
+            body.success = body.tests.every(test => test.success);
+            res.status(body.success ? 200 : 500);
+            res.json(body);
 
         } catch (e) {
             console.log(e.stdout);
-            res.status(500).json(jsonObj);
+            res.status(500).json(body);
         }
     });
 };

@@ -46,8 +46,7 @@ module.exports = function (app) {
             success: false,
             tests: [
                 { message: 'Service with name \'api\' created.', success: false },
-                { message: 'Ports configured correctly.', success: false },
-                { message: 'API is running and reachable.', success: false },
+                { message: 'Ports configured correctly.', success: false }
             ]
         };
         try {
@@ -55,10 +54,6 @@ module.exports = function (app) {
             const configuredPort = kubectl('kubectl get service api -o=jsonpath="{.spec.ports[*].port}"');
             const ingressPort = tryGetIngressPort();
             body.tests[1].success = portsCorrect(configuredPort, ingressPort);
-
-            const testCurl = 'curl -m 5 -I https://challenge.test/missions';
-            body.tests[2].success = childProcess.execSync(testCurl, { encoding: 'utf-8' }).match(/HTTP\/.*200/)?.length === 1
-            body.success = body.tests.map(x => x.success).every(x => x === true);
         } catch (e) {
             console.log(e);
         }

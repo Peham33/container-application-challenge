@@ -46,45 +46,6 @@ api_ingress_port_match(){
     return 1;
 }
 
-kubectl_is_reachable(){
-    # Try to reach the Kubernetes cluster, abort if not possible
-    kubectl cluster-info
-    success=$?
-    if [[ $success -ne  0 ]]; then
-        return 0;
-    fi
-    return 1;
-}
-
-
-setup_echo_server_and_cleanup(){
-    # TESTING - Copy ingress.yaml and change it afterwards
-    cp ../ingress.yaml ../echoserver-ingress.yaml
-    if [[ $DEFAULTBACKEND_PORT != "null" ]];
-    then       
-        cat ../echoserver-ingress.yaml | yq e '.spec.defaultBackend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
-    fi
-    if [[ $RULES_PORT != "null" ]];
-    then
-        cat ../echoserver-ingress.yaml | yq e '.spec.rules[].http.paths[].backend.service.name = "echoserver"' - | sudo sponge ../echoserver-ingress.yaml
-    fi
-    kubectl apply -f ../echoserver-ingress.yaml
-    
-    sleep 5
-    curl http://challenge.test/?echo_body=funktioniert -L -m 5
-    
-    echo ""
-    
-    #Cleanup
-    ECHOPOD=$(kubectl get pods | grep "echo" | cut -f1 -d' ')
-    kubectl delete deployment echoserver
-    kubectl delete service echoserver
-    kubectl delete pod $ECHOPOD --force
-    kubectl delete ingress challenge
-    kubectl apply -f ../ingress.yaml
-    rm ../echoserver-ingress.yaml
-}
-
 ###
 ingress_running &>/dev/null
 if [[ $? -eq 0 ]]; then
@@ -114,31 +75,19 @@ else
     case4="true";
 fi
 
-kubectl_is_reachable &>/dev/null
-if [[ $? -eq 0 ]]; then
-    case5="false";
-else
-    case5="true";
-fi
-
-setup_echo_server_and_cleanup &>/dev/null
-
 cat<<EOT
 [
     { 
-        "message": "ingress works" ,"success": ${case1}
+        "message": "API ist vom Ingress aufrufbar" ,"success": ${case1}
     },
     {
-        "message": "ingress.yaml file is present in the root folder" ,"success": ${case2}
+        "message": "Die ingress.yaml Datei ist vorhanden" ,"success": ${case2}
     },
     {
-        "message": "Port number defined in the default backend or in the rule" ,"success": ${case3}
+        "message": "Die Portnummer wurde im Defaultbackend oder in einer Rule definiert" ,"success": ${case3}
     },
     {
-        "message": "API service port and ingress port match" ,"success": ${case4}
-    },
-    {
-        "message": "Connection to the kubectl cluster" ,"success": ${case5}
+        "message": "Das API Service und der Ingress verwenden den selben Port" ,"success": ${case4}
     }
 ]
 EOT
