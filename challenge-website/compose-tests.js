@@ -7,35 +7,50 @@ module.exports = function (app) {
 
     //query missions, returning status code
     app.get('/compose-api-test', (req, res) => {
-        https
-            .get('https://localhost:443/missions', resp => {
-                let data = ''
-                resp.on('data', chunk => {
-                    data += chunk;
-                })
-                resp.on('end', () => {
-                    res.status(resp.statusCode).json({ 'data': data });
-                })
+        let body = { success: false };
+        https.get('https://localhost:443/missions', resp => {
+            resp.on('end', () => {
+                res.status = resp.statusCode;
+                body['success'] = resp.statusCode == 200;
             })
+        })
             .on('error', err => {
-                res.status(500).json({ 'error': 'Error retrieving data!' });
+                res.status = 500;
+                body['success'] = false;
             })
+        res.json(body);
+    }
+    );
+
+    //query missions, returning status code
+    app.get('/compose-db-test', (req, res) => {
+        let body = { success: false };
+        https.get('https://localhost:443/missions', resp => {
+            resp.on('end', () => {
+                res.status = resp.statusCode;
+                body['success'] = resp.statusCode == 200;
+            })
+        })
+            .on('error', err => {
+                res.status = 500;
+                body['success'] = false;
+            })
+        res.json(body);
     });
 
     //query missions via http, returning status code
     app.get('/compose-https-upgrade-test', (req, res) => {
-        http
-            .get('http://localhost:80/missions', resp => {
-                let data = '';
-                resp.on('data', chunk => {
-                    data += chunk;
-                })
-                resp.on('end', () => {
-                    res.status(resp.statusCode).json({ 'data': data });
-                })
+        let body = { success: false };
+        http.get('http://localhost:80/missions', resp => {
+            resp.on('end', () => {
+                res.status = resp.statusCode;
+                body['success'] = resp.statusCode == 301 || resp.statusCode == 302;
             })
+        })
             .on('error', err => {
-                res.status(500).json({ 'error': 'Error retrieving data!' });
-            })
+                res.status = 500;
+                body['success'] = false;
+            });
+        res.json(body);
     });
 }

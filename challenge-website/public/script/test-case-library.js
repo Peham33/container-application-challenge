@@ -122,7 +122,7 @@ export class TestCase {
 
             //checks if testResult has been obtained - speed up if yes
             if (testResult != null && interval != fasterInterval) {
-                success = testResult[0];
+                success = testResult['success'];
                 clearInterval(id);
                 interval = fasterInterval;
                 id = setInterval(frame, fasterInterval);
@@ -156,7 +156,7 @@ export class TestCase {
                 if (testResult != null && testResult['tests'] != null) {
                     statusDiv.innerHTML = "";
                     for (let test of testResult['tests']) {
-                        statusDiv.innerHTML += `<div class="${test['success'] ? 'text-success' : 'text-failure'}">${test['success'] ? '&#x2713;' : '&#x2717;'} - ${test['test']}</div>`
+                        statusDiv.innerHTML += `<div class="${test['success'] ? 'text-success' : 'text-failure'}">${test['success'] ? '&#x2713;' : '&#x2717;'} - ${test['message']}</div>`
                     }
                     statusDiv.classList.remove("hidden");
                 }
