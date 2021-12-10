@@ -74,19 +74,20 @@ runTestsBtn.addEventListener("click", runTests);
 
 let apiTest = async function () {
     return await fetch('http://localhost:3000/api-test', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(async resp => { return await resp.json(); })
+        .catch(() => { return { success: false } });
 
 }
 
 let securityTest = async function () {
     return await fetch('http://localhost:3000/security-test', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(async resp => { return await resp.json(); })
+        .catch(() => { return { success: false } });
 }
 
 //test case declarations
-testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfiguriert",
+testCases.push(new TestCase(1, 1, "API ist wieder konfiguriert", "", true, apiTest));
+testCases.push(new TestCase(2, 2, "Kubernetes Ingress ist erreichbar und konfiguriert",
     `
 <div class="story">
     <h2>Ihre Mission</h2>
@@ -103,16 +104,15 @@ testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfigu
     <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a target="_blank" href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
 </div>
 `, true, async () =>
-        fetch('http://localhost:3000/ingress-validation')
-            .then(async response => {
-                let msg = await response.json();
-                return msg;
-            })
-            .catch(_ => {success: false})
+    fetch('http://localhost:3000/ingress-validation')
+        .then(async response => {
+            let msg = await response.json();
+            return msg;
+        })
+        .catch(_ => { success: false })
 ))
-testCases.push(new TestCase(2, 2, "Die API liefert wieder Daten", "", true, apiTest));
 testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets gespeichert",
-`
+    `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Scheinbar haben unsere Feinde ganze Arbeit geleistet. Die angerichteten Schäden sind doch schlimmer als befürchtet.</p>
@@ -128,7 +128,7 @@ testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets 
 `, true, securityTest))
 
 testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
-`
+    `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Ausgezeichnet! Unsere Applikation funktioniert und unsere Agenten können Ihre Informationen wieder sicher und verlässlich teilen.</p>
@@ -146,7 +146,7 @@ testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
         .then(async response => {
             return await response.json();
         })
-        .catch(_ => {success: false})
+        .catch(_ => { success: false })
 ));
 
 //initial render of tests
