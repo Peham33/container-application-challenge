@@ -1,11 +1,17 @@
 const childProcess = require('child_process');
+const { json } = require('express');
 
 module.exports = function (app) {
     //return the basic result of a bash command
     app.get('/ingress-validation', function (req, res) {
         //basic command execution - result will be in stdout
+        let jsonObj = {
+            success: true,
+            tests: []
+        };
+
         try {
-                const command = `
+            const command = `
                 cd /vagrant/ingress_validation/
                 /bin/bash ingress-validation.sh
                 `;
@@ -15,15 +21,21 @@ module.exports = function (app) {
                 cwd: '/vagrant',
             });
 
-            if (stdout.match("funktioniert")) {
-                res.status(200);
+            const jsonRes = JSON.parse(stdout);
+            jsonObj.tests = jsonRes;
+
+            if (jsonObj.tests.find(el => el.success == false) != null) {
+                jsonObj.success = false;
             } else {
-                res.status(500);
+                jsonObj.success = true;
             }
-            res.json({stdout});
+
+            res.status(500);
+            res.json(jsonObj);
+
         } catch (e) {
             console.log(e.stdout);
-            res.status(500).json({error: "Error when executing command!"});
+            res.status(500).json(jsonObj);
         }
     });
 };
