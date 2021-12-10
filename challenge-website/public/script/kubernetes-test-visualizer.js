@@ -73,61 +73,16 @@ const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
 let apiTest = async function () {
-    //data structures for passing result to the display function
-    let result = [];
-    let status = null;
-    let resp = null;
+    return await fetch('http://localhost:3000/api-test', { cache: "no-store" })
+        .then( async resp => { return await resp.json(); })
+        .catch(() => { return {success: false}});
 
-    //perform the GET-request
-    try {
-        resp = await fetch('http://localhost:3000/api-test', { cache: "no-store" });
-        status = resp.status;
-    } catch (e) {
-        status = 503;
-    }
-
-    const resultMsg = (await resp.json()).message;
-
-    //depending on returned status, make bars green (true) or red (false) and push a status message
-    if (status == 200) {
-        result.push(true); //green
-        result.push(resultMsg);
-    } else {
-        result.push(false); //red
-        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
-    }
-
-    return result;
 }
 
 let securityTest = async function () {
-    //data structures for passing result to the display function
-    let result = [];
-    let status = null;
-    let resp = null;
-
-    //perform the GET-request
-    try {
-        resp = await fetch('http://localhost:3000/security-test', { cache: "no-store" });
-        status = resp.status;
-    } catch (e) {
-        status = 503;
-    }
-
-    //read json from result
-    const resultMsg = (await resp.json()).message;
-
-    //depending on returned status, make bars green (true) or red (false) and push a status message
-    if (status == 200) {
-        result.push(true); //green
-        result.push(resultMsg);
-    } else {
-        result.push(false); //red
-        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
-    }
-
-
-    return result;
+    return await fetch('http://localhost:3000/security-test', { cache: "no-store" })
+        .then( async resp => { return await resp.json(); })
+        .catch(() => { return {success: false}});
 }
 
 //test case declarations
@@ -149,13 +104,11 @@ testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfigu
 </div>
 `, true, async () =>
         fetch('http://localhost:3000/ingress-validation')
-            .then(response => {
-                if (response.status != 200)
-                    return [false, "Something is wrong with the configured ingress."]
-
-                return [true, "Ingress up and running."];
+            .then(async response => {
+                let msg = await response.json();
+                return msg;
             })
-            .catch(reason => [false, reason])
+            .catch(_ => {success: false})
 ))
 testCases.push(new TestCase(2, 2, "Die API liefert wieder Daten", "", true, apiTest));
 testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets gespeichert",
@@ -190,13 +143,10 @@ testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
 </div>
 `, true, async () =>
     fetch('http://localhost:3000/validate-kubernetes-database')
-        .then(response => {
-            if (response.status != 200)
-                return [false, "Database does not work as expected."]
-
-            return [true, "Database persists Agents during a restart!"];
+        .then(async response => {
+            return await response.json();
         })
-        .catch(reason => [false, reason])
+        .catch(_ => {success: false})
 ));
 
 //initial render of tests

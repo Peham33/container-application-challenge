@@ -81,67 +81,21 @@ function copyToClipboard(text) {
 window.copyToClipboard = copyToClipboard;
 
 let testApiReachability = async function () {
-    let result = [];
-    let status = null;
-
-    try {
-        status = await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" }).then(response => response.status);
-    } catch (e) {
-        status = 503
-    }
-
-    result['tests'] = [];
-
-    //status 200 or 504 denotes working API container (504 = database error, but API runs)
-    if (status == 200 || status == 504) {
-        result['success'] = true;
-        result['tests'].push({"test": "Tests if API is reachable on port 80", "success": true});
-        result['tests'].push({"test": "This test is always true", "success": true});
-    } else {
-        result['success'] = false;
-        result['tests'].push({"test": "Tests if API is reachable on port 80", "success": false});
-        result['tests'].push({"test": "This test is always true", "success": true});
-    }
-    return result;
+    return await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" })
+        .then( async resp => { return await resp.json(); })
+        .catch(() => { return {success: false}});
 }
 
 let testApiToDatabaseConnection = async function () {
-    let result = [];
-    let status = null;
-
-    try {
-        status = await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" }).then(response => response.status);
-    } catch (e) {
-        status = 503
-    }
-
-    if (status == 200) {
-        result.push(true);
-    } else {
-        result.push(false);
-        result.push("Error Code: " + status + ": " + statusCodes.get(status));
-    }
-    return result;
+    return await fetch('http://localhost:3000/compose-db-test', { cache: "no-store" })
+        .then( async resp => { return await resp.json(); })
+        .catch(() => { return {success: false}});
 }
 
 let testAutomaticHttpsUpgrade = async function () {
-    let result = [];
-    let status = null;
-
-    try {
-        status = await fetch('http://localhost:3000/compose-https-upgrade-test', { cache: "no-store" }).then(response => response.status);
-    } catch (e) {
-        status = 503
-    }
-
-    //301 or 302 (redirect) means working https upgrade
-    if (status == 301 || status == 302) {
-        result.push(true);
-    } else {
-        result.push(false);
-        result.push("Error Code: " + status + ": " + statusCodes.get(status));
-    }
-    return result;
+    return await fetch('http://localhost:3000/compose-https-upgrade-test', { cache: "no-store" })
+        .then( async resp => { return await resp.json(); })
+        .catch(() => { return {success: false}});
 }
 
 //test case declarations
@@ -223,7 +177,7 @@ testCases.push(new TestCase(4,4, "Erfolg", `
     <p>Sie haben die Einführung gemeistert und sind bereit unser Produktivsystem zu konfigurieren.</p>
     <p>Begeben Sie sich nun zum <a href="kubernetes-challenges.html">Kubernetes-System</a>.</p>
 </div>
-`, true, () => Promise.resolve([true, ''])))
+`, true, () => Promise.resolve({success: true})))
 
 //initial render of tests
 renderAll();
