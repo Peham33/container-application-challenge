@@ -54,7 +54,7 @@ if [ $? -ne 0 ]; then \
 fi
 
 # node.js
-echo '[5/6] Installing node.js...'
+echo '[4/6] Installing node.js...'
 ( echo 'update-notifier=false' >> ~/.npmrc &&
   curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - &&
   apt-get install -y nodejs &&
@@ -68,7 +68,7 @@ if [ $? -ne 0 ]; then \
 fi
 
 # challenge website
-echo '[6/6] Setting up challenge website...'
+echo '[5/6] Setting up challenge website...'
 ( OLD_PWD=$(pwd)
   rm -rf /opt/challenge-website &&
   cp -r /vagrant/challenge-website /opt/challenge-website &&
@@ -105,7 +105,7 @@ if [ $? -ne 0 ]; then \
   exit 1; \ 
 fi
 
-echo '[7/7] Doing some little tweaks...'
+echo '[6/6] Doing some little tweaks...'
 ( # Allow root to use minikube configuration of vagrant user
   ln -s /home/vagrant/.kube /root/.kube &&
 
@@ -119,6 +119,11 @@ echo '[7/7] Doing some little tweaks...'
   # install tools for yaml changing
   snap install yq &&
   apt-get install moreutils -y &&
+
+  # Enable kubectl autocomplete
+  # https://kubernetes.io/docs/tasks/tools/included/optional-kubectl-configs-bash-linux/
+  apt-get install bash-completion
+  kubectl completion bash >/etc/bash_completion.d/kubectl
 
   # Default IP for Minikube
   echo "192.168.49.2 challenge.test" >> /etc/hosts &&
