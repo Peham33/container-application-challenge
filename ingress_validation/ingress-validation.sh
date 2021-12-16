@@ -37,13 +37,22 @@ port_assigned(){
 
 api_ingress_port_match(){
     # If api service port and ingress port do not match - exit.
+    DEFAULTBACKEND_PORT=$(cat ../ingress.yaml | yq e '.spec.defaultBackend.service.port.number' -  )
+    RULES_PORT=$(cat ../ingress.yaml | yq e '.spec.rules[0].http.paths[0].backend.service.port.number' -)
+    if [[ $RULES_PORT == "null" ]];
+    then
+        PORT=$DEFAULTBACKEND_PORT
+    else
+        PORT=$RULES_PORT
+    fi
+
     if [[ -f "../api.service.yaml" ]]; then
         API_SERVICE_PORT=$(cat ../api.service.yaml | yq e '.spec.ports[0].port' - )
-        if [[ $PORT != $API_SERVICE_PORT && $API_SERVICE_PORT != "null" ]]; then
-            return 0;
+        if [[ $PORT == $API_SERVICE_PORT && $API_SERVICE_PORT != "null" ]]; then
+            return 1;
         fi
     fi
-    return 1;
+    return 0;
 }
 
 ###
@@ -78,7 +87,7 @@ fi
 cat<<EOT
 [
     { 
-        "message": "API ist vom Ingress aufrufbar" ,"success": ${case1}
+        "message": "API ist über den Ingress aufrufbar" ,"success": ${case1}
     },
     {
         "message": "Die ingress.yaml Datei ist vorhanden" ,"success": ${case2}
@@ -87,7 +96,7 @@ cat<<EOT
         "message": "Die Portnummer wurde im Defaultbackend oder in einer Rule definiert" ,"success": ${case3}
     },
     {
-        "message": "Das API Service und der Ingress verwenden den selben Port" ,"success": ${case4}
+        "message": "Der API-Service Port und der Ingress Port stimmen überein" ,"success": ${case4}
     }
 ]
 EOT

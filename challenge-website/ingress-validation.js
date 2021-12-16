@@ -29,7 +29,9 @@ module.exports = function (app) {
             res.json(body);
 
         } catch (e) {
-            console.log(e.stdout);
+
+            body.success = false;
+            body.tests.push({"message": "Minikube ist nicht erreichbar", "success": false});
             res.status(500).json(body);
         }
     });
