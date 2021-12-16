@@ -12,7 +12,7 @@
 
 > Willkommen, Agent!
 > 
-> Hier startet Ihre erste Trainings-Mission. Wir beginnen wir mit einer Aufgabe zu [docker-compose](https://docs.docker.com/compose/).
+> Hier startet Ihre erste Trainings-Mission. Wir beginnen mit einer Aufgabe zu [docker-compose](https://docs.docker.com/compose/).
 > 
 > Sie arbeiten dabei auf einer Testinstanz unseres **Agenten-Verwaltung-Systems**. Es speichert und verwaltet unsere Agenten sowie deren Missionen in einer Datenbank und ermöglicht den Zugriff über eine REST-API.
 > Damit ein sicherer Zugriff möglich ist, verwenden wir einen Reverse-Proxy zur Terminierung von SSL Verbindungen, der Aufrufe anschließend an unsere API weiterleitet.
@@ -26,13 +26,13 @@ Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf so
 > 
 > Sie verstehen sicherlich, dass Sicherheit für unsere Agenten unsere höchste Priorität hat. Stellen Sie daher sicher, dass jede Kommunikation verschlüsselt stattfindet, auch wenn sie versehentlich unverschlüsselt begonnen wird.
 
-Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
+Implementieren Sie einen http auf https redirect für den HAProxy auf den port 443. Der redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
 
 Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` mit ihrem Browser auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
 
 > Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.
 
-Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden sie dafür die im Pfad ([/db/postgres/initdb](../../db/postgres/initdb)) vorhandenen SQL-Scripts.
+Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden sie dafür die im Pfad ([/vagrant/db/postgres/initdb](../../db/postgres/initdb)) vorhandenen SQL-Scripts.
 
 Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76>)
 
