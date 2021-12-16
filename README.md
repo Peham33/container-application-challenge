@@ -2,7 +2,6 @@
 SPR5G1 Studienprojekt für gepardec
 
 <!-- Introduction / Begrüßung -->
-
 ## Setup
 
 Before you can start the challenge, it is necessary to go through the Setup Guide below.
@@ -35,11 +34,11 @@ Navigate into the project directory.
 cd container-application-challenge
 ```
 
-By running `vagrant up` the VM should start and configure itself automatically.
+By running `vagrant up` the VM should start and configure itself automatically, the project directory will be mounted inside the VM.
 
 This may take a few minutes depending on your download speed, the console output should tell you if the setup is done.
 
-After waiting for a few moments - check if the setup worked by accessing the challenge website on [https://localhost:3000](https://localhost:3000).
+After waiting for a few moments - check if the setup worked by accessing the challenge website on your local machine ([https://localhost:3000](https://localhost:3000)).
 
 To connect and work on the virtual machine run.
 
@@ -49,7 +48,22 @@ vagrant ssh
 
 All following commands need to be executed on the virtual machine.
 
+## Setup Docker-Compose
+
+A ready to use compiled java application is included in the repository in order to make the setup faster and simpler.
+
+1. Run `docker-compose up --build` in /vagrant directory
+2. The application is now running under [https://localhost:443](https://localhost:443)
+
+If changes have been made to any files, run 
+`docker-compose up --build`.
+
+With this setup you are ready to start the first part of the challenge. You can access the instructions for part 1 at 
+[challenge website](http://localhost:3000/compose-challenges.html) or continue with the setup.
+
 ### Start and configure minikube
+
+This part of the setup is only needed for the kubernetes part of the challenge.
 
 To start the kubernetes cluster run:
 
@@ -71,42 +85,6 @@ The script executes the following steps:
 3. Apply various k8s configurations.
 4. Create the TLS secret.
 
-<!-- 
-We want an Ingress Control Pod to be available, so the ingress addon for minikube needs to be enabled.
-
-```bash
-minikube addons enable ingress
-
-# Verify that the nginx-controller pod is available
-kubectl get pods --namespace ingress-nginx
-# or if you don't have namespaces, check for a pod called 'ingress-controller'
-kubectl get pods -A
-```
-
-Disable verification of TLS CA to allow a self-signed certificate (See [Issue #5401](https://github.com/kubernetes/ingress-nginx/issues/5401#issuecomment-662424306))
-
-This command needs to be executed after every restart of the minikube cluster.
-
-```bash
-kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-```
-
-### Applying the configuration of the base cluster pods
-
-```bash
-kubectl apply -f github-registry-secret.yaml # Allows for pulling private Docker images
-kubectl apply -f api.configmap.yaml # Applies config map for api 
-kubectl apply -f database.service.yaml -f database.deployment.yaml
-kubectl apply -f api.deployment.yaml
-kubectl apply -f database.volume.yaml -f database.claim.yaml
-```
-
-Add the SSL certificate as kubernetes secret type _tls_
-```bash
-kubectl create secret tls challenge-test-tls --key ha-proxy/server.key --cert ha-proxy/server.crt
-``` 
--->
-
 The following files will not be applyable right after the setup and need to be configured correctly first.
 
 - ingress.yaml
@@ -115,6 +93,7 @@ The following files will not be applyable right after the setup and need to be c
 
 Now the setup should be complete and you can start with the challenge.
 Follow the instructions on the [challenge website](http://localhost:3000/).
+All changes you make to files can be made outside the Vagrant VM.
 
 ## Handing in your Solution
 
@@ -139,7 +118,7 @@ Curl command to check if register worked.
 
     curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
 
-## FAQ
+<!-- ## FAQ -->
 
 <!-- 
 My ingress, api and database are correct according to the challenge-website validations but the ingress can not be applied.
