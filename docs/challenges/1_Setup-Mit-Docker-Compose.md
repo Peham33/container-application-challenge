@@ -26,9 +26,9 @@ Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf so
 > 
 > Sie verstehen sicherlich, dass Sicherheit für unsere Agenten unsere höchste Priorität hat. Stellen Sie daher sicher, dass jede Kommunikation verschlüsselt stattfindet, auch wenn sie versehentlich unverschlüsselt begonnen wird.
 
-Implementieren Sie einen http auf https redirect für den HAProxy auf den port 443. Der redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
+Implementieren Sie einen http auf https Redirect für den HAProxy auf den Port 443. Der Redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
 
-Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` mit ihrem Browser auf. Sie sollten automatisch auf eine https Verbindung umgeleitet werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
+Zum Testen rufen Sie `curl -v "http://localhost:80/missions"` mit ihrem Browser auf. Es sollte ein 301 Moved Permanently zurückgegeben werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
 
 > Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.
 

@@ -82,13 +82,13 @@ window.copyToClipboard = copyToClipboard;
 
 let testApiReachability = async function () {
     let http = await fetch('http://localhost:3000/compose-api-test-http', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
+        .then( resp => { return resp.json(); })
         .catch(() => { return {success: false}});
     let https = await fetch('http://localhost:3000/compose-api-test-https', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
+        .then( resp => { return resp.json(); })
         .catch(() => { return {success: false}});
 
-    let tests = http['tests'].concat(https['tests']);
+    let tests = (http.tests || []).concat(https.tests || [])
     return {success: http['success'] && https['success'], tests: tests}
 }
 
@@ -143,7 +143,7 @@ testCases.push(new TestCase(2, 2, "Automatisches https-Upgrade", `
 
 <div class="instructions">
     <h2>Missionsziel</h2>
-    <p>Implementieren Sie einen http auf https redirect für den HAProxy auf dem port 443. Der redirect sollte den http-Code 301 zurückgeben.  Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
+    <p>Implementieren Sie einen http auf https Redirect für den HAProxy auf den Port 443. Der Redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
 
     <p>Zum Testen rufen Sie wieder das folgende Kommando in der VM auf:</p>
     <p>
@@ -168,8 +168,8 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
     <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
     <p>
-        <code>curl -L "http://localhost:80/missions | jq"</code>
-        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot; | jq')">
+        <code>curl -L "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
             <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
         </button>
     </p>
