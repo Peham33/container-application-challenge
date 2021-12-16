@@ -82,14 +82,14 @@ window.copyToClipboard = copyToClipboard;
 
 let testApiReachability = async function () {
     let http = await fetch('http://localhost:3000/compose-api-test-http', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(async resp => { return await resp.json(); })
+        .catch(() => { return { success: false } });
     let https = await fetch('http://localhost:3000/compose-api-test-https', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(async resp => { return await resp.json(); })
+        .catch(() => { return { success: false } });
 
     let tests = http['tests'].concat(https['tests']);
-    return {success: http['success'] && https['success'], tests: tests}
+    return { success: http['success'] && https['success'], tests: tests }
 }
 
 let testApiToDatabaseConnection = function () {
@@ -119,7 +119,7 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>
-        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg (/ha-proxy/haproxy.cfg) und machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
+        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg (/ha-proxy/haproxy.cfg). Machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
     </p>
 
     <p>Zum Testen rufen Sie das folgende Kommando in der VM auf:</p>

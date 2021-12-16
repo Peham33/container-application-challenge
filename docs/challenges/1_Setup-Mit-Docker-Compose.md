@@ -19,7 +19,7 @@
 
 ![Zugriffs Ablauf](../access-flow-diagram.svg)
 
-- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Sie finden diesen in der haproxy.cfg ([ha-proxy/haproxy.cfg]()) und machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
+- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg ([ha-proxy/haproxy.cfg]()). Machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
 Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
 
 > Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.
