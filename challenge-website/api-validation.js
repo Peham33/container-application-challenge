@@ -54,6 +54,7 @@ module.exports = function (app) {
             const configuredPort = kubectl('kubectl get service api -o=jsonpath="{.spec.ports[*].port}"');
             const ingressPort = tryGetIngressPort();
             body.tests[1].success = portsCorrect(configuredPort, ingressPort);
+            body.success = body.tests.every(x => x.success);
         } catch (e) {
             console.log(e);
         }

@@ -72,16 +72,16 @@ function enableTestButton() {
 const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
-let apiTest = async function () {
-    return await fetch('http://localhost:3000/api-test', { cache: "no-store" })
-        .then(async resp => { return await resp.json(); })
+let apiTest = function () {
+    return fetch('http://localhost:3000/api-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
         .catch(() => { return { success: false } });
 
 }
 
 let securityTest = async function () {
-    return await fetch('http://localhost:3000/security-test', { cache: "no-store" })
-        .then(async resp => { return await resp.json(); })
+    return fetch('http://localhost:3000/security-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
         .catch(() => { return { success: false } });
 }
 

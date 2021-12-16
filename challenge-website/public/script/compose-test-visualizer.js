@@ -80,22 +80,22 @@ function copyToClipboard(text) {
 }
 window.copyToClipboard = copyToClipboard;
 
-let testApiReachability = async function () {
-    return await fetch('http://localhost:3000/compose-api-test', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+let testApiReachability = function () {
+    return fetch('http://localhost:3000/compose-api-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 }
 
-let testApiToDatabaseConnection = async function () {
-    return await fetch('http://localhost:3000/compose-db-test', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+let testApiToDatabaseConnection = function () {
+    return fetch('http://localhost:3000/compose-db-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 }
 
-let testAutomaticHttpsUpgrade = async function () {
-    return await fetch('http://localhost:3000/compose-https-upgrade-test', { cache: "no-store" })
-        .then( async resp => { return await resp.json(); })
-        .catch(() => { return {success: false}});
+let testAutomaticHttpsUpgrade = function () {
+    return fetch('http://localhost:3000/compose-https-upgrade-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 }
 
 //test case declarations
@@ -170,14 +170,14 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <p>Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
 </div>
 `, true, testApiToDatabaseConnection));
-testCases.push(new TestCase(4,4, "Erfolg", `
+testCases.push(new TestCase(4, 4, "Erfolg", `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Ausgezeichnet!</p>
     <p>Sie haben die Einführung gemeistert und sind bereit unser Produktivsystem zu konfigurieren.</p>
     <p>Begeben Sie sich nun zum <a href="kubernetes-challenges.html">Kubernetes-System</a>.</p>
 </div>
-`, true, () => Promise.resolve({success: true})))
+`, true, () => Promise.resolve({ success: true })))
 
 //initial render of tests
 renderAll();
