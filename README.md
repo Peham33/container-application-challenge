@@ -38,7 +38,7 @@ By running `vagrant up` the VM should start and configure itself automatically, 
 
 This may take a few minutes depending on your download speed, the console output should tell you if the setup is done.
 
-After waiting for a few moments - check if the setup worked by accessing the challenge website on your local machine ([https://localhost:3000](https://localhost:3000)).
+After waiting for a few moments - check if the setup worked by accessing the challenge website on your local machine ([http://localhost:3000](http://localhost:3000)).
 
 To connect and work on the virtual machine run.
 
@@ -53,7 +53,7 @@ All following commands need to be executed on the virtual machine.
 A ready to use compiled java application is included in the repository in order to make the setup faster and simpler.
 
 1. Run `docker-compose up --build` in /vagrant directory
-2. The application is now running under [https://localhost:443](https://localhost:443)
+2. The application is now running in the VM under [http://localhost:443](http://localhost:443)
 
 If changes have been made to any files, run 
 `docker-compose up --build`.
@@ -117,15 +117,3 @@ Curl command for registering a new agent.
 Curl command to check if register worked.
 
     curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
-
-<!-- ## FAQ -->
-
-<!-- 
-My ingress, api and database are correct according to the challenge-website validations but the ingress can not be applied.
-
-Answer:
-
-```bash
-kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
-``` 
--->
