@@ -33,11 +33,11 @@ module.exports = function (app) {
             const dbPasswordKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.key}"', 'DB_PASSWORD');
 
             body.tests[1].success = dbUser && dbUserKey && dbPassword && dbPasswordKey;
-            body.success = body.tests.map(x => x.success).every(x => x === true);
+
         } catch (e) {
             console.log(e);
         }
-
+        body.success = body.tests.every(x => x.success);
         return body;
     }
 
@@ -54,11 +54,10 @@ module.exports = function (app) {
             const configuredPort = kubectl('kubectl get service api -o=jsonpath="{.spec.ports[*].port}"');
             const ingressPort = tryGetIngressPort();
             body.tests[1].success = portsCorrect(configuredPort, ingressPort);
-            body.success = body.tests.every(x => x.success);
         } catch (e) {
             console.log(e);
         }
-
+        body.success = body.tests.every(x => x.success);
         return body;
     }
 
