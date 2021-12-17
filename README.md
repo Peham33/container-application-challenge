@@ -48,7 +48,7 @@ vagrant ssh
 
 All following commands need to be executed on the virtual machine.
 
-## Setup Docker-Compose
+### Setup Docker-Compose
 
 A ready to use compiled java application is included in the repository in order to make the setup faster and simpler.
 
@@ -94,6 +94,16 @@ The following files will not be applyable right after the setup and need to be c
 Now the setup should be complete and you can start with the challenge.
 Follow the instructions on the [challenge website](http://localhost:3000/).
 All changes you make to files can be made outside the Vagrant VM.
+
+## Challenges
+
+The challenge instructions can be found in [docs/challenges](https://github.com/aeisl/container-application-challenge/tree/main/docs/challenges) or on the [challenge website](http://localhost:3000/) after [starting Vagrant](https://github.com/aeisl/container-application-challenge#start-and-configure-minikube).
+
+We currently have 3 challenge instructions (provided in German!):
+
+1. [Setup mit Docker-Compose](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/1_Setup-Mit-Docker-Compose.md)
+2. [K8s Deployment ohne Downtime](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/2_K8s-Deployment-Ohne-Downtime.md)
+3. [Cluster Setup](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/3_Cluster-Setup.md)
 
 ## Handing in your Solution
 
