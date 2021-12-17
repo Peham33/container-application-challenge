@@ -56,7 +56,7 @@ module.exports = function (app) {
                 data += chunk;
             })
             resp.on('end', () => {
-                if (resp.statusCode == 504 || resp.statusCode == 200 && data.includes('Operation Dijkstra')) {
+                if (resp.statusCode == 200 && data.includes('Operation Dijkstra')) {
                     body.success = true;
                     body.tests[0].success = true;
                 }
