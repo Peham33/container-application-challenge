@@ -4,6 +4,7 @@ window.renderAll = function() {
     for (let testCase of testCases) {
         testCase.render()
     }
+    runTests()
 }
 
 //execute all tests
