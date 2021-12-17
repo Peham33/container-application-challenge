@@ -55,6 +55,23 @@ api_ingress_port_match(){
     return 0;
 }
 
+https_upgrade_works() {
+  local target="http://challenge.test/missions"
+  local expectedLocationRegex="https:\/\/challenge.test/missions"
+  local expectedStatusCodeRegex="3.."
+
+  local response="$(curl -sI "$target")"
+  local actualLocation=$(echo "$response" | grep -iE '^Location')
+  local statusCode=$(echo "$response" | grep -iE '^HTTP' | cut -d' ' -f2)
+
+  if [[ "$actualLocation" =~ $expectedLocationRegex && \
+        "$statusCode" =~ $expectedStatusCodeRegex ]]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
 ###
 ingress_running &>/dev/null
 if [[ $? -eq 0 ]]; then
@@ -84,6 +101,13 @@ else
     case4="true";
 fi
 
+https_upgrade_works &>/dev/null
+if [[ $? -eq 0 ]]; then
+    case5="false";
+else
+    case5="true";
+fi
+
 cat<<EOT
 [
     { 
@@ -97,6 +121,9 @@ cat<<EOT
     },
     {
         "message": "Der API-Service Port und der Ingress Port stimmen überein" ,"success": ${case4}
+    },
+    {
+        "message": "Der Ingress Proxy führt ein HTTPS Upgrade durch", "success": ${case5}
     }
 ]
 EOT

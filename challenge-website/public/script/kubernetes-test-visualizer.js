@@ -114,17 +114,14 @@ testCases.push(new TestCase(2, 3, "Kubernetes Ingress ist erreichbar und konfigu
 
 <div class="instructions">
     <h2>Missionsziel</h2>
-    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
+    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert. Konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service, den Sie zuvor konfiguriert haben, zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
 
-    <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a target="_blank" href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
+    <p>Außerdem soll ein https Upgrade durchgeführt werden. Verwende dazu das vorkonfiguriertes TLS Secret <code>challenge-test-tls</code>.(<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/#tls">Ingress TLS Secret</a>)</p>
 </div>
-`, true, async () =>
+`, true, () =>
     fetch('http://localhost:3000/ingress-validation')
-        .then(async response => {
-            let msg = await response.json();
-            return msg;
-        })
-        .catch(_ => { success: false })
+        .then(response => response.json())
+        .catch(_ => ({ success: false }))
 ))
 
 testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
@@ -141,12 +138,10 @@ testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
     <p>Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen!</p>
     <p>Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. (<a target="_blank" href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volumes</a>)</p>
 </div>
-`, true, async () =>
+`, true, () =>
     fetch('http://localhost:3000/validate-kubernetes-database')
-        .then(async response => {
-            return await response.json();
-        })
-        .catch(_ => { success: false })
+        .then(response => response.json())
+        .catch(_ => ({ success: false }))
 ));
 
 //initial render of tests

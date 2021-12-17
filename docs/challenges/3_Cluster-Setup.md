@@ -23,8 +23,8 @@ mit Datenbank credentials erweitern.
 
 # Ingress
 
-Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
-Außerdem soll ein https Upgrade durchgeführt werden. (<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect>)
+Jeder Versuch sich mit dem Ingress zu verbinden scheitert. Konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service, den Sie zuvor konfiguriert haben, zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
+Außerdem soll ein https Upgrade durchgeführt werden. Verwende dazu das vorkonfiguriertes TLS Secret `challenge-test-tls`. (<https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>)
 
 
 # Datenbank

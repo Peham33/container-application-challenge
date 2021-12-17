@@ -126,7 +126,7 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
     <p>
         <code>curl -L "http://localhost:80/missions"</code>
         <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
-            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+            <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
     <p>
@@ -149,7 +149,7 @@ testCases.push(new TestCase(2, 2, "Automatisches https-Upgrade", `
     <p>
         <code>curl -v "http://localhost:80/missions"</code>
         <button onclick="copyToClipboard('curl -v &quot;http://localhost:80/missions&quot;')">
-            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+            <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
 
@@ -170,7 +170,7 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <p>
         <code>curl -L "http://localhost:80/missions"</code>
         <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
-            <img src="../images/clipboard.svg"/ width="15" alt="Kopieren">
+            <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
     <p>Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
