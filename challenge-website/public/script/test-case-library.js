@@ -16,11 +16,9 @@ statusCodes.set(504, "Gateway Timeout");
 
 //class to represent individual test cases
 export class TestCase {
-    constructor(page, id, name, description, waitForExecute, testFunction) {
+    constructor(id, name, testFunction) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.waitForExecute = waitForExecute;
         this.testFunction = testFunction;
     }
 
@@ -84,10 +82,8 @@ export class TestCase {
         let width = 0;
 
         //synchronous execution - await the frame function (signfied by id variable)
-        if (this.waitForExecute) {
-            while (id != -1) {
-                await sleep(50);
-            }
+        while (id != -1) {
+            await sleep(50);
         }
 
         function frame() {

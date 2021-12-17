@@ -13,7 +13,7 @@ let testApiReachability = async function () {
 }
 
 //test case declarations
-testCases.push(new TestCase(1, 1, "API ist verfügbar", ``, true, testApiReachability));
+testCases.push(new TestCase(1, "API ist verfügbar",  testApiReachability));
 
 //initial render of tests
 renderAll();

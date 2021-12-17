@@ -6,7 +6,7 @@ let testApiToDatabaseConnection = function () {
         .catch(() => { return { success: false } });
 }
 
-testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten", ``, true, testApiToDatabaseConnection));
+testCases.push(new TestCase(3, "Datenbankverbindung klappt und liefert Daten", testApiToDatabaseConnection));
 
 //initial render of tests
 renderAll();

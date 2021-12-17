@@ -6,6 +6,6 @@ let testAutomaticHttpsUpgrade = function () {
         .catch(() => { return { success: false } });
 }
 
-testCases.push(new TestCase(2, 2, "Automatisches https-Upgrade", ``, true, testAutomaticHttpsUpgrade));
+testCases.push(new TestCase(2, "Automatisches https-Upgrade",testAutomaticHttpsUpgrade));
 
 renderAll();
