@@ -100,7 +100,7 @@ testCases.push(new TestCase(1, 2, "Datenbank-Credentials werden als K8s Secrets 
 <div class="instructions">
 <h2>Missionsziel</h2>
 <p>Bei dem Versuch die API zu erreichen, wird immer ein 503 Error <i>Service Temporarily unavailable</i> geliefert.</p>
-<p>Um den Fehler zu beheben, müssen Sie ein API Service erstellen, welches über den Port 8080 erreichbar ist. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
+<p>Um den Fehler zu beheben, müssen Sie ein API Service in der api.service.yaml Datei konfigurieren, welches über den Port 8080 erreichbar ist. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
 <p>Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. (<a target="_blank" href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/">Kubernetes secure credentials</a>)</p>
 </div>
 `, true, securityTest))
@@ -109,7 +109,7 @@ testCases.push(new TestCase(2, 3, "Kubernetes Ingress ist erreichbar und konfigu
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Scheinbar haben unsere Feinde ganze Arbeit geleistet. Die angerichteten Schäden sind doch schlimmer als befürchtet.</p>
-    <p>Obwohl der Ingress Server wieder erreichbar ist, bleibt unser System unbenutzbar.</p>
+    <p>Konfigurieren Sie den Ingress Server so, dass dieser wieder erreichbar ist.</p>
 </div>
 
 <div class="instructions">
