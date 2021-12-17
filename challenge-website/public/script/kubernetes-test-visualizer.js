@@ -53,75 +53,41 @@ function renderAll() {
 
 //execute all tests
 async function runTests() {
+    disableTestButton();
     for (let testCase of testCases) {
         await testCase.execute();
     }
+    enableTestButton();
+}
+
+function disableTestButton() {
+    runTestsBtn.setAttribute("disabled", true);
+}
+
+function enableTestButton() {
+    runTestsBtn.removeAttribute("disabled");
 }
 
 //button runs all tests
 const runTestsBtn = document.getElementById("run-tests");
 runTestsBtn.addEventListener("click", runTests);
 
-let apiTest = async function () {
-    //data structures for passing result to the display function
-    let result = [];
-    let status = null;
-    let resp = null;
+let apiTest = function () {
+    return fetch('http://localhost:3000/api-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 
-    //perform the GET-request
-    try {
-        resp = await fetch('http://localhost:3000/api-test', { cache: "no-store" });
-        status = resp.status;
-    } catch (e) {
-        status = 503;
-    }
-
-    const resultMsg = (await resp.json()).message;
-
-    //depending on returned status, make bars green (true) or red (false) and push a status message
-    if (status == 200) {
-        result.push(true); //green
-        result.push(resultMsg);
-    } else {
-        result.push(false); //red
-        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
-    }
-
-    return result;
 }
 
 let securityTest = async function () {
-    //data structures for passing result to the display function
-    let result = [];
-    let status = null;
-    let resp = null;
-
-    //perform the GET-request
-    try {
-        resp = await fetch('http://localhost:3000/security-test', { cache: "no-store" });
-        status = resp.status;
-    } catch (e) {
-        status = 503;
-    }
-
-    //read json from result
-    const resultMsg = (await resp.json()).message;
-
-    //depending on returned status, make bars green (true) or red (false) and push a status message
-    if (status == 200) {
-        result.push(true); //green
-        result.push(resultMsg);
-    } else {
-        result.push(false); //red
-        result.push("Code: " + status + ": " + statusCodes.get(status) + ": " + resultMsg);
-    }
-
-
-    return result;
+    return fetch('http://localhost:3000/security-test', { cache: "no-store" })
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 }
 
 //test case declarations
-testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfiguriert",
+testCases.push(new TestCase(1, 1, "API ist wieder konfiguriert", "", true, apiTest));
+testCases.push(new TestCase(1, 2, "Datenbank-Credentials werden als K8s Secrets gespeichert",
     `
 <div class="story">
     <h2>Ihre Mission</h2>
@@ -132,24 +98,14 @@ testCases.push(new TestCase(1, 1, "Kubernetes Ingress ist erreichbar und konfigu
 </div>
 
 <div class="instructions">
-    <h2>Missionsziel</h2>
-    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
-
-    <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a target="_blank" href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
+<h2>Missionsziel</h2>
+<p>Bei dem Versuch die API zu erreichen, wird immer ein 503 Error <i>Service Temporarily unavailable</i> geliefert.</p>
+<p>Um den Fehler zu beheben, müssen Sie ein API Service erstellen, welches über den Port 8080 erreichbar ist. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
+<p>Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. (<a target="_blank" href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/">Kubernetes secure credentials</a>)</p>
 </div>
-`, true, async () =>
-        fetch('http://localhost:3000/ingress-validation')
-            .then(response => {
-                if (response.status != 200)
-                    return [false, "Something is wrong with the configured ingress."]
-
-                return [true, "Ingress up and running."];
-            })
-            .catch(reason => [false, reason])
-))
-testCases.push(new TestCase(2, 2, "Die API liefert wieder Daten", "", true, apiTest));
-testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets gespeichert",
-`
+`, true, securityTest))
+testCases.push(new TestCase(2, 3, "Kubernetes Ingress ist erreichbar und konfiguriert",
+    `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Scheinbar haben unsere Feinde ganze Arbeit geleistet. Die angerichteten Schäden sind doch schlimmer als befürchtet.</p>
@@ -158,14 +114,21 @@ testCases.push(new TestCase(2, 3, "Datenbank-Credentials werden als K8s Secrets 
 
 <div class="instructions">
     <h2>Missionsziel</h2>
-    <p>Bei dem Versuch die API zu erreichen, wird immer ein 503 Error <i>Service Temporarily unavailable</i> geliefert.</p>
-    <p>Um den Fehler zu beheben, müssen Sie ein API Service erstellen, welches über den Port 8080 erreichbar ist. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/service/">Kubernetes Services</a>)</p>
-    <p>Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. (<a target="_blank" href="https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/">Kubernetes secure credentials</a>)</p>
+    <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
+
+    <p>Außerdem soll ein https Upgrade durchgeführt werden. (<a target="_blank" href="https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect">Nginx Ingress</a>)</p>
 </div>
-`, true, securityTest))
+`, true, async () =>
+    fetch('http://localhost:3000/ingress-validation')
+        .then(async response => {
+            let msg = await response.json();
+            return msg;
+        })
+        .catch(_ => { success: false })
+))
 
 testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
-`
+    `
 <div class="story">
     <h2>Ihre Mission</h2>
     <p>Ausgezeichnet! Unsere Applikation funktioniert und unsere Agenten können Ihre Informationen wieder sicher und verlässlich teilen.</p>
@@ -180,13 +143,10 @@ testCases.push(new TestCase(3, 4, "Datenbank persistiert ihre Informationen",
 </div>
 `, true, async () =>
     fetch('http://localhost:3000/validate-kubernetes-database')
-        .then(response => {
-            if (response.status != 200)
-                return [false, "Database does not work as expected."]
-
-            return [true, "Database persists Agents during a restart!"];
+        .then(async response => {
+            return await response.json();
         })
-        .catch(reason => [false, reason])
+        .catch(_ => { success: false })
 ));
 
 //initial render of tests

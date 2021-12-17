@@ -1,5 +1,5 @@
 # Vorbereitung
-Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebniss nach jedem Teilschritt überprüfen. 
+Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden Sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebniss nach jedem Teilschritt überprüfen. 
 
 # Kubernetes Cluster Szenario
 
@@ -11,19 +11,21 @@ Den Doppelagenten konnten wir inzwischen ausfindig machen, die Schäden bestehen
 
 Viel Glück, wir zählen auf Sie!
 
-# Ingress
-
-Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
-Außerdem soll ein https Upgrade durchgeführt werden. (<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect>)
 
 # API
 
-Nicht nur der Ingress konnte nicht mehr erreicht werden, sondern auch die API wurde in Mitleidenschaft gezogen. Bei dem Versuch die Schnittstelle zu erreichen wird immer ein 503 Error Service Temporarily unavailable geliefert. Um den Fehler zu beheben, müssen Sie einen API Service erstellen, welcher über den Port 8080 erreichbar ist. 
+Die API wurde in Mitleidenschaft gezogen. Bei dem Versuch die Schnittstelle zu erreichen wird immer ein 503 Error Service Temporarily unavailable geliefert. Um den Fehler zu beheben, müssen Sie einen API Service erstellen, welcher über den Port 8080 erreichbar ist. 
 (<https://kubernetes.io/docs/concepts/services-networking/service/>)
 
 Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation 
 mit Datenbank credentials erweitern.
 (<https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>)
+
+# Ingress
+
+Jeder Versuch sich mit dem Ingress zu verbinden scheitert, konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service den Sie zuvor konfiguriert haben zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
+Außerdem soll ein https Upgrade durchgeführt werden. (<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#server-side-https-enforcement-through-redirect>)
+
 
 # Datenbank
 

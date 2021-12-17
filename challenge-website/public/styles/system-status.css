@@ -6,12 +6,13 @@
 
 #run-tests {
     width: 250px;
-    height: 70px;
+    height: 80px;
     background-color: var(--text-color);
     color: var(--background-color);
-    font-size: 36px;
+    font-size: 32px;
     font-family: inherit;
     border-color: var(--highlight-color);
+    border: none;
 }
 
 #description {
@@ -95,4 +96,8 @@ button[disabled=disabled], button:disabled {
 
 #description a {
     color: var(--highlight-color);
+}
+
+code {
+    font-size: 14px;
 }
