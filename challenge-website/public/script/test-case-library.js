@@ -44,13 +44,7 @@ export class TestCase {
     //save running intervals, allows tests to get faster once completed
     intervals = [];
 
-    isActive() {
-        return this.page == activePage;
-    }
-
     render() {
-        if (!this.isActive()) return;
-
         descriptionDiv.innerHTML = this.description;
         testDiv.innerHTML += `
         <div class="test-case-container">
@@ -65,8 +59,6 @@ export class TestCase {
 
     //resets the progress bar and status message
     reset() {
-        if (!this.isActive()) return;
-
         //clear running intervals
         this.intervals.forEach(clearInterval);
 
@@ -87,8 +79,6 @@ export class TestCase {
 
     //executes testFunction and renders a progress bar
     async execute() {
-        if (!this.isActive()) return;
-
         //reset progress bar
         this.reset();
 
@@ -97,7 +87,7 @@ export class TestCase {
         let statusDiv = document.getElementById(`test-case-${this.id}-status`);
 
         //execute test function async
-        let success = false;
+        this.success = false;
         let interval = 200; //default interval for the frame function
         let fasterInterval = 10; //bar goes a lot faster once result is obtained
 
@@ -122,7 +112,7 @@ export class TestCase {
 
             //checks if testResult has been obtained - speed up if yes
             if (testResult != null && interval != fasterInterval) {
-                success = testResult['success'];
+                this.success = testResult['success'];
                 clearInterval(id);
                 interval = fasterInterval;
                 id = setInterval(frame, fasterInterval);
@@ -135,9 +125,9 @@ export class TestCase {
                 id = -1;
 
                 if (testResult == null) {
-                    success = false;
+                    this.success = false;
                 } else {
-                    success = testResult['success'];
+                    this.success = testResult['success'];
                 }
 
                 //bar and status message change based on success/failure

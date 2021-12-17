@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
+    <title>Container Application Challenge</title>
+</head>
+
+<body>
+    <nav>
+        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item" href="compose-challenges-1.html">Compose Challenges</a>
+        <a class="nav-item nav-item-active" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
+    </nav>
+    <main>
+        <div id="description"></div>
+        <button id="run-tests">Tests ausführen</button>
+        <div id="test-cases"></div>
+        <a href="kubernetes-challenges-2.html"><button id="previous" class="btn">&laquo; Zurück</button></a>
+        <a href="kubernetes-challenges-success.html"><button id="next" class="btn">Weiter &raquo;</button></a>
+    </main>
+    <script src="script/base.js"></script>
+    <script defer type="module" src="script/kubernetes-challenges-1.js"></script>
+</body>
+
+</html>
