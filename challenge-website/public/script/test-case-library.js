@@ -2,26 +2,10 @@
 
 //container for the test cases
 const testDiv = document.getElementById("test-cases");
-const descriptionDiv = document.getElementById("description");
 
 //async sleep function
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-let activePage = 1;
-
-export function changePage(change) {
-    activePage += change;
-}
-
-export function getActivePage() {
-    return activePage;
-}
-
-export function resetPage() {
-    descriptionDiv.innerHTML = "";
-    testDiv.innerHTML = "";
 }
 
 export const statusCodes = new Map();
@@ -33,7 +17,6 @@ statusCodes.set(504, "Gateway Timeout");
 //class to represent individual test cases
 export class TestCase {
     constructor(page, id, name, description, waitForExecute, testFunction) {
-        this.page = page;
         this.id = id;
         this.name = name;
         this.description = description;
@@ -45,7 +28,6 @@ export class TestCase {
     intervals = [];
 
     render() {
-        descriptionDiv.innerHTML = this.description;
         testDiv.innerHTML += `
         <div class="test-case-container">
             ${this.name}
