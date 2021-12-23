@@ -102,7 +102,7 @@ The challenge instructions can be found in [docs/challenges](docs/challenges) or
 We currently have 3 challenge instructions (provided in German!):
 
 1. [Setup mit Docker-Compose](docs/challenges/1_Setup-Mit-Docker-Compose.md)
-2. [K8s Deployment ohne Downtime](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/2_K8s-Deployment-Ohne-Downtime.md)
+2. [K8s Deployment ohne Downtime](docs/challenges/2_K8s-Deployment-Ohne-Downtime.md)
 3. [Cluster Setup](docs/challenges/3_Cluster-Setup.md)
 
 ## Handing in your Solution
