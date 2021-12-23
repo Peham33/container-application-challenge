@@ -1,5 +1,7 @@
 #!/bin/bash
-
+LOG_FILE=/tmp/ingress-validation.out.txt
+touch $LOG_FILE
+echo "-----------------------------------" >> $LOG_FILE
 # Check API
 ingress_running(){
     API_STATUS=$(curl -m 5 -d "codeName=007" http://challenge.test/login \
@@ -73,35 +75,35 @@ https_upgrade_works() {
 }
 
 ###
-ingress_running &>/dev/null
+ingress_running &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case1="false";
 else
     case1="true";
 fi
 
-ingress_file_exists &>/dev/null
+ingress_file_exists &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case2="false";
 else
     case2="true";
 fi
 
-port_assigned &>/dev/null
+port_assigned &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case3="false";
 else
     case3="true";
 fi
 
-api_ingress_port_match &>/dev/null
+api_ingress_port_match &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case4="false";
 else
     case4="true";
 fi
 
-https_upgrade_works &>/dev/null
+https_upgrade_works &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case5="false";
 else
