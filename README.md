@@ -55,10 +55,10 @@ A ready to use compiled java application is included in the repository in order 
 1. Run `docker-compose up --build` in /vagrant directory
 2. The application is now running in the VM under [http://localhost:443](http://localhost:443)
 
-If changes have been made to any files, run 
+If changes have been made to any files, run
 `docker-compose up --build`.
 
-With this setup you are ready to start the first part of the challenge. You can access the instructions for part 1 at 
+With this setup you are ready to start the first part of the challenge. You can access the instructions for part 1 at
 [challenge website](http://localhost:3000/compose-challenges.html) or continue with the setup.
 
 ### Start and configure minikube
@@ -97,13 +97,13 @@ All changes you make to files can be made outside the Vagrant VM.
 
 ## Challenges
 
-The challenge instructions can be found in [docs/challenges](https://github.com/aeisl/container-application-challenge/tree/main/docs/challenges) or on the [challenge website](http://localhost:3000/) after [starting Vagrant](https://github.com/aeisl/container-application-challenge#start-and-configure-minikube).
+The challenge instructions can be found in [docs/challenges](docs/challenges) or on the [challenge website](http://localhost:3000/) after [starting Vagrant](#start-and-configure-minikube).
 
 We currently have 3 challenge instructions (provided in German!):
 
-1. [Setup mit Docker-Compose](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/1_Setup-Mit-Docker-Compose.md)
+1. [Setup mit Docker-Compose](docs/challenges/1_Setup-Mit-Docker-Compose.md)
 2. [K8s Deployment ohne Downtime](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/2_K8s-Deployment-Ohne-Downtime.md)
-3. [Cluster Setup](https://github.com/aeisl/container-application-challenge/blob/main/docs/challenges/3_Cluster-Setup.md)
+3. [Cluster Setup](docs/challenges/3_Cluster-Setup.md)
 
 ## Handing in your Solution
 
@@ -126,4 +126,4 @@ Curl command for registering a new agent.
 
 Curl command to check if register worked.
 
-    curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i  
+    curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i
