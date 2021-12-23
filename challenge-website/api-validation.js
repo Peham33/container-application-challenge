@@ -17,8 +17,8 @@ module.exports = function (app) {
         const body = {
             success: false,
             tests: [
-                { message: 'API deployment uses secret for database credentials.', success: false },
-                { message: 'Database deployment uses secret.', success: false },
+                { message: 'Das API Deployment verwendet Secrets für die Datenbankanmeldung.', success: false },
+                { message: 'Das Datenbank Deployment verwendet Secrets.', success: false },
             ]
         };
         try {
@@ -45,8 +45,8 @@ module.exports = function (app) {
         const body = {
             success: false,
             tests: [
-                { message: 'Service with name \'api\' created.', success: false },
-                { message: 'Ports configured correctly.', success: false }
+                { message: 'Ein Service mit dem Namen \'api\' wurde erstellt.', success: false },
+                { message: 'Die Ports wurden korrekt konfiguriert.', success: false }
             ]
         };
         try {
