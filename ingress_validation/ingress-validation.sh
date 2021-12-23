@@ -1,4 +1,6 @@
 #!/bin/bash
+LOG_FILE=/tmp/ingress-validation.out.txt
+touch $LOG_FILE
 
 # Check API
 ingress_running(){
@@ -55,57 +57,33 @@ api_ingress_port_match(){
     return 0;
 }
 
-https_upgrade_works() {
-  local target="http://challenge.test/missions"
-  local expectedLocationRegex="https:\/\/challenge.test/missions"
-  local expectedStatusCodeRegex="3.."
-
-  local response="$(curl -sI "$target")"
-  local actualLocation=$(echo "$response" | grep -iE '^Location')
-  local statusCode=$(echo "$response" | grep -iE '^HTTP' | cut -d' ' -f2)
-
-  if [[ "$actualLocation" =~ $expectedLocationRegex && \
-        "$statusCode" =~ $expectedStatusCodeRegex ]]; then
-    return 1
-  else
-    return 0
-  fi
-}
-
 ###
-ingress_running &>/dev/null
+ingress_running &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case1="false";
 else
     case1="true";
 fi
 
-ingress_file_exists &>/dev/null
+ingress_file_exists &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case2="false";
 else
     case2="true";
 fi
 
-port_assigned &>/dev/null
+port_assigned &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case3="false";
 else
     case3="true";
 fi
 
-api_ingress_port_match &>/dev/null
+api_ingress_port_match &>> $LOG_FILE
 if [[ $? -eq 0 ]]; then
     case4="false";
 else
     case4="true";
-fi
-
-https_upgrade_works &>/dev/null
-if [[ $? -eq 0 ]]; then
-    case5="false";
-else
-    case5="true";
 fi
 
 cat<<EOT
@@ -121,9 +99,6 @@ cat<<EOT
     },
     {
         "message": "Der API-Service Port und der Ingress Port stimmen überein" ,"success": ${case4}
-    },
-    {
-        "message": "Der Ingress Proxy führt ein HTTPS Upgrade durch", "success": ${case5}
     }
 ]
 EOT
