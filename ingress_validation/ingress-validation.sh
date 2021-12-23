@@ -1,7 +1,7 @@
 #!/bin/bash
 LOG_FILE=/tmp/ingress-validation.out.txt
 touch $LOG_FILE
-
+echo "-----------------------------------" >> $LOG_FILE
 # Check API
 ingress_running(){
     API_STATUS=$(curl -m 5 -d "codeName=007" http://challenge.test/login \
