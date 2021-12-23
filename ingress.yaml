@@ -14,7 +14,3 @@ metadata:
     app.kubernetes.io/name: ingress
     app.kubernetes.io/part-of: container-application-challenge
 spec:
-  tls:
-    - hosts:
-        - challenge.test
-      secretName: challenge-test-tls
