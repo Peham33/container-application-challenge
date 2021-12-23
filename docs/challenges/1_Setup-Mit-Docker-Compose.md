@@ -20,7 +20,7 @@
 ![Zugriffs Ablauf](../access-flow-diagram.svg)
 
 - Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür mithilfe einer Umgebungsvariable den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg ([app/src/main/docker/Dockerfile.jvm](../../app/src/main/docker/Dockerfile.jvm)). Machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
-Zum Testen rufen Sie `curl -L -i "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebins mit dem Status Code 504 enthalten.
+Zum Testen rufen Sie `curl -L -i "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebnis mit dem Status Code 504 enthalten.
 
 > Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.
 > 

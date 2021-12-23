@@ -130,7 +130,7 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
         </button>
     </p>
     <p>
-        Der Aufruf sollte ein leeres Ergebins mit dem Status Code 504 enthalten.
+        Der Aufruf sollte ein leeres Ergebnis mit dem Status Code 504 enthalten.
     </p>
 </div>
 `, true, testApiReachability));
