@@ -19,8 +19,8 @@
 
 ![Zugriffs Ablauf](../access-flow-diagram.svg)
 
-- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg ([ha-proxy/haproxy.cfg]()). Machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
-Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebnis enthalten.
+- Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür mithilfe einer Umgebungsvariable den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg ([app/src/main/docker/Dockerfile.jvm](../../app/src/main/docker/Dockerfile.jvm)). Machen Sie diesen von dem Port 80 von außen erreichbar. (<https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/>) 
+Zum Testen rufen Sie `curl -L -i "http://localhost:80/missions"` auf. Der Aufruf sollte ein leeres Ergebins mit dem Status Code 504 enthalten.
 
 > Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.
 > 
@@ -28,7 +28,7 @@ Zum Testen rufen Sie `curl -L "http://localhost:80/missions"` auf. Der Aufruf so
 
 Implementieren Sie einen http auf https Redirect für den HAProxy auf den Port 443. Der Redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an ([/ha-proxy/haproxy.cfg](../../ha-proxy/haproxy.cfg)).
 
-Zum Testen rufen Sie `curl -v "http://localhost:80/missions"` mit ihrem Browser auf. Es sollte ein 301 Moved Permanently zurückgegeben werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
+Zum Testen rufen Sie `curl -v -i "http://localhost:80/missions"` mit ihrem Browser auf. Es sollte ein 301 Moved Permanently zurückgegeben werden. (<https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/>)
 
 > Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.
 
@@ -36,7 +36,7 @@ Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Ver
 
 Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76>)
 
-Zum Testen rufen Sie abermals `curl -L "http://localhost:80/missions" | jq` auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.
+Zum Testen rufen Sie abermals `curl -L -i "http://localhost:80/missions"` auf. Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.
 
 > Ausgezeichnet!
 > 

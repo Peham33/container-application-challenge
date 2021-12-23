@@ -82,14 +82,14 @@ window.copyToClipboard = copyToClipboard;
 
 let testApiReachability = async function () {
     let http = await fetch('http://localhost:3000/compose-api-test-http', { cache: "no-store" })
-        .then( resp => { return resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
     let https = await fetch('http://localhost:3000/compose-api-test-https', { cache: "no-store" })
-        .then( resp => { return resp.json(); })
-        .catch(() => { return {success: false}});
+        .then(resp => { return resp.json(); })
+        .catch(() => { return { success: false } });
 
     let tests = (http.tests || []).concat(https.tests || [])
-    return {success: http['success'] && https['success'], tests: tests}
+    return { success: http['success'] && https['success'], tests: tests }
 }
 
 let testApiToDatabaseConnection = function () {
@@ -119,18 +119,18 @@ testCases.push(new TestCase(1, 1, "API ist verfügbar", `
 <div class="instructions">
     <h2>Missionsziel</h2>
     <p>
-        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür beim docker-compose File den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg (/ha-proxy/haproxy.cfg). Machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
+        Ihre erste Aufgabe besteht darin, den Java API Server erreichbar zu machen. Stellen Sie dafür mithilfe einer Umgebungsvariable den richtigen Backend-Port für die API ein. Den Backend-Port finden Sie in der haproxy.cfg (app/src/main/docker/Dockerfile.jvm). Machen Sie diesen von dem Port 80 von außen erreichbar. (<a target="_blank" href="https://www.haproxy.com/de/blog/the-four-essential-sections-of-an-haproxy-configuration/">HAProxy configuration essentials</a>)
     </p>
 
     <p>Zum Testen rufen Sie das folgende Kommando in der VM auf:</p>
     <p>
-        <code>curl -L "http://localhost:80/missions"</code>
-        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+        <code>curl -L -i "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -L -i &quot;http://localhost:80/missions&quot;')">
             <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
     <p>
-        Der Aufruf sollte ein leeres Ergebnis enthalten.
+        Der Aufruf sollte ein leeres Ergebins mit dem Status Code 504 enthalten.
     </p>
 </div>
 `, true, testApiReachability));
@@ -147,8 +147,8 @@ testCases.push(new TestCase(2, 2, "Automatisches https-Upgrade", `
 
     <p>Zum Testen rufen Sie wieder das folgende Kommando in der VM auf:</p>
     <p>
-        <code>curl -v "http://localhost:80/missions"</code>
-        <button onclick="copyToClipboard('curl -v &quot;http://localhost:80/missions&quot;')">
+        <code>curl -v -i "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -v -i &quot;http://localhost:80/missions&quot;')">
             <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
@@ -168,8 +168,8 @@ testCases.push(new TestCase(3, 3, "Datenbankverbindung klappt und liefert Daten"
     <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
     <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
     <p>
-        <code>curl -L "http://localhost:80/missions"</code>
-        <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+        <code>curl -L -i "http://localhost:80/missions"</code>
+        <button onclick="copyToClipboard('curl -L -i &quot;http://localhost:80/missions&quot;')">
             <img src="../images/clipboard.svg" width="15" alt="Kopieren">
         </button>
     </p>
