@@ -37,7 +37,7 @@
                 <p>Zum Testen rufen Sie das folgende Kommando in der VM auf:</p>
                 <p>
                     <code>curl -L "http://localhost:80/missions"</code>
-                    <button onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+                    <button class="always-enabled" onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
                         <img src="../images/clipboard.svg" width="15" alt="Kopieren">
                     </button>
                 </p>
@@ -49,7 +49,7 @@
         </div>
         <button id="run-tests">Tests ausführen</button>
         <div id="test-cases"></div>
-        <a href="compose-challenges-1.html"><button id="previous" class="btn" disabled>&laquo; Zurück</button></a>
+        <button id="previous" class="btn always-disabled" disabled>&laquo; Zurück</button>
         <a href="compose-challenges-2.html"><button id="next" class="btn">Weiter &raquo;</button></a>
     </main>
     <script src="script/base.js"></script>

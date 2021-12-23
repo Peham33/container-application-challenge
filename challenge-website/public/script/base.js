@@ -22,11 +22,13 @@ runTestsBtn.addEventListener("click", runTests);
 
 //functions to enable/disable the runTest button
 function disableButtons() {
-    document.querySelectorAll("button").forEach(b => b.setAttribute("disabled", true))
+    document.querySelectorAll("button:not(.always-enabled)")
+        .forEach(b => b.setAttribute("disabled", true))
 }
 
 function enableButtons() {
-    document.querySelectorAll("button").forEach(b => b.removeAttribute("disabled"))
+    document.querySelectorAll("button:not(.always-disabled)")
+        .forEach(b => b.removeAttribute("disabled"))
 }
 
 //function to allow clipboard copies

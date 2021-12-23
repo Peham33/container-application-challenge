@@ -62,7 +62,7 @@ https_upgrade_works() {
   local expectedLocationRegex="https:\/\/challenge.test/missions"
   local expectedStatusCodeRegex="3.."
 
-  local response="$(curl -sI "$target")"
+  local response="$(curl -m 1 -sI "$target")"
   local actualLocation=$(echo "$response" | grep -iE '^Location')
   local statusCode=$(echo "$response" | grep -iE '^HTTP' | cut -d' ' -f2)
 
