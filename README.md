@@ -59,7 +59,7 @@ If changes have been made to any files, run
 `docker-compose up --build`.
 
 With this setup you are ready to start the first part of the challenge. You can access the instructions for part 1 at
-[challenge website](http://localhost:3000/compose-challenges.html) or continue with the setup.
+[challenge website](http://localhost:3000/compose-challenges-1.html) or continue with the setup.
 
 ### Start and configure minikube
 
