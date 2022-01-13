@@ -11,10 +11,10 @@ module.exports = app => {
         const body = {
             success: false,
             tests: [
-                { message: 'API is reachable.', success: false },
-                { message: "Can create an agent via the API.", success: false },
-                { message: "Can use created agent for login.", success: false },
-                { message: "Data is preserved after restart.", success: false }
+                { message: 'Die API ist erreichbar.', success: false },
+                { message: "Ein Agent kann mithilfe der API erstellt werden.", success: false },
+                { message: "Der erstellte Agent kann für den Login verwendet werden.", success: false },
+                { message: "Die Daten sind nach einem Neustart noch verfügbar.", success: false }
             ]
         };
 
