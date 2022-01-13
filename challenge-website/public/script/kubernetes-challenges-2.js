@@ -4,7 +4,7 @@ testCases.push(new TestCase(3, "Kubernetes Ingress ist erreichbar und konfigurie
     fetch('http://localhost:3000/ingress-validation')
         .then(resp => resp.json())
         .catch(_ => ({ success: false }))
-))
+));
 
 //initial render of tests
 renderAll();

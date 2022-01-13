@@ -15,7 +15,7 @@ let securityTest = async function () {
 
 //test case declarations
 testCases.push(new TestCase(1, "API ist wieder konfiguriert", apiTest));
-testCases.push(new TestCase(2, "Datenbank-Credentials werden als K8s Secrets gespeichert", securityTest))
+testCases.push(new TestCase(2, "Datenbank-Credentials werden als K8s Secrets gespeichert", securityTest));
 
 //initial render of tests
 renderAll();
