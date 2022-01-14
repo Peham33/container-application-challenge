@@ -1,0 +1,13 @@
+[Unit]
+Description=Challenge Website for verificaton
+After=network.target
+
+[Service]
+Type=simple
+User=vagrant
+ExecStart=/usr/bin/node /opt/challenge-website/index.js
+WorkingDirectory=/opt/challenge-website
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
