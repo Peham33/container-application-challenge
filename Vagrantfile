@@ -11,6 +11,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "./vagrant-provisioning", destination: "/tmp/vagrant-provisioning"
 
   config.vm.provision "shell", inline: <<-SCRIPT
-    cd /tmp/vagrant-provisioning && chmod +x ./* && sudo ./provision.sh
+    cd /tmp/vagrant-provisioning && chmod +x *.sh && sh provision.sh
   SCRIPT
 end
