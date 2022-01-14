@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
+    <title>Container Application Challenge</title>
+</head>
+
+<body>
+    <nav>
+        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item" href="compose-challenges-1.html">Compose Challenges</a>
+        <a class="nav-item nav-item-active" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
+    </nav>
+    <main>
+        <div id="description">
+            <div class="story">
+                <h2>Ihre Mission</h2>
+                <p>Scheinbar haben unsere Feinde ganze Arbeit geleistet. Die angerichteten Schäden sind doch schlimmer als befürchtet.</p>
+                <p>Konfigurieren Sie den Ingress Server so, dass dieser wieder erreichbar ist.</p>
+            </div>
+
+            <div class="instructions">
+                <h2>Missionsziel</h2>
+                <p>Jeder Versuch sich mit dem Ingress zu verbinden scheitert. Konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service, den Sie zuvor konfiguriert haben, zu verbinden. (<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Kubernetes Ingress</a>)</p>
+
+                <p>Außerdem soll ein https Upgrade durchgeführt werden. Verwende dazu das vorkonfiguriertes TLS Secret <code>challenge-test-tls</code>.(<a target="_blank" href="https://kubernetes.io/docs/concepts/services-networking/ingress/#tls">Ingress TLS Secret</a>)</p>
+            </div>
+        </div>
+        <button id="run-tests">Tests ausführen</button>
+        <div id="test-cases"></div>
+        <a href="kubernetes-challenges-1.html"><button id="previous" class="btn">&laquo; Zurück</button></a>
+        <a href="kubernetes-challenges-3.html"><button id="next" class="btn">Weiter &raquo;</button></a>
+    </main>
+    <script src="script/base.js"></script>
+    <script defer type="module" src="script/kubernetes-challenges-2.js"></script>
+</body>
+
+</html>

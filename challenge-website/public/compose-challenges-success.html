@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
+    <title>Container Application Challenge</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+</head>
+
+<body>
+    <nav>
+        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item nav-item-active" href="compose-challenges-1.html">Compose Challenges</a>
+        <a class="nav-item" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
+    </nav>
+    <main>
+        <h1>Herzlichen Glückwunsch, Agent!</h1>
+        <p>Sie haben das Training herausragend gemeistert und sind bereit, unser Produktivsystem zu konfigurieren.</p>
+        <p>Begeben Sie sich nun zum <a href="kubernetes-challenges-1.html">Kubernetes-System</a>.</p>
+    </main>
+
+    <script type="text/javascript">
+        const jsconfetti = new JSConfetti()
+        const spawnConfetti = () => {
+            setTimeout(spawnConfetti, 2500)
+            jsconfetti.addConfetti({
+                confettiRadius: 5,
+                confettiNumber: 200
+            })
+        }
+        setTimeout(spawnConfetti, 500)
+    </script>
+</body>
+
+</html>

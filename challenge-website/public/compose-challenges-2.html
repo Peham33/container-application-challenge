@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
+    <title>Container Application Challenge</title>
+</head>
+
+<body>
+    <nav>
+        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item nav-item-active" href="compose-challenges-1.html">Compose Challenges</a>
+        <a class="nav-item" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
+    </nav>
+    <main>
+        <div id="description">
+            <div class="story">
+                <h2>Ihre Mission</h2>
+                <p>Sehr gut, Agent. Die erste Hürde haben Sie gemeistert.</p>
+                <p>Sie verstehen sicherlich, dass Sicherheit für unsere Agenten unsere höchste Priorität hat. Stellen Sie daher sicher, dass jede Kommunikation verschlüsselt stattfindet, auch wenn sie versehentlich unverschlüsselt begonnen wird.</p>
+            </div>
+
+            <div class="instructions">
+                <h2>Missionsziel</h2>
+                <p>Implementieren Sie einen http auf https Redirect für den HAProxy auf den Port 443. Der Redirect sollte den http-Code 301 zurückgeben. Passen Sie dafür die HAProxy Konfigurationen an (/ha-proxy/haproxy.cfg).</p>
+
+                <p>Zum Testen rufen Sie wieder das folgende Kommando in der VM auf:</p>
+                <p>
+                    <code>curl -L -i "http://localhost:80/missions"</code>
+                    <button class="always-enabled" onclick="copyToClipboard('curl -L -i &quot;http://localhost:80/missions&quot;')">
+                        <img src="../images/clipboard.svg" width="15" alt="Kopieren">
+                    </button>
+                </p>
+
+                <p>Es sollte ein 301 Moved Permanently zurückgegeben werden. (<a target="_blank" href="https://www.haproxy.com/de/blog/redirect-http-to-https-with-haproxy/" >Redirect http to https with HAProxy</a>) </p>
+            </div>
+        </div>
+        <button id="run-tests">Tests ausführen</button>
+        <div id="test-cases"></div>
+        <a href="compose-challenges-1.html"><button id="previous" class="btn">&laquo; Zurück</button></a>
+        <a href="compose-challenges-3.html"><button id="next" class="btn">Weiter &raquo;</button></a>
+    </main>
+    <script src="script/base.js"></script>
+    <script defer type="module" src="script/compose-challenges-2.js"></script>
+</body>
+
+</html>

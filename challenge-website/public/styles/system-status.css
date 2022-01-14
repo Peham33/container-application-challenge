@@ -91,7 +91,7 @@ button[disabled=disabled], button:disabled {
 }
 
 #description {
-    width: 800px;
+    max-width: 800px;
 }
 
 #description a {

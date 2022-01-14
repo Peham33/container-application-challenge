@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
+    <title>Container Application Challenge</title>
+</head>
+
+<body>
+    <nav>
+        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item nav-item-active" href="compose-challenges-1.html">Compose Challenges</a>
+        <a class="nav-item" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
+    </nav>
+    <main>
+        <div id="description">
+            <div class="story">
+                <h2>Ihre Mission</h2>
+                <p>Nun, da Sie eine sichere Verbindung garantiert haben, können wir endlich Daten über unsere Agenten und Missionen ausliefern.</p>
+            </div>
+
+            <div class="instructions">
+                <h2>Missionsziel</h2>
+                <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden Sie dafür die im Pfad <strong>/vagrant/db/postgres/initdb</strong> vorhandenen SQL-Scripts.</p>
+                <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
+                <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
+                <p>
+                    <code>curl -L "http://localhost:80/missions"</code>
+                    <button class="always-enabled" onclick="copyToClipboard('curl -L &quot;http://localhost:80/missions&quot;')">
+                        <img src="../images/clipboard.svg" width="15" alt="Kopieren">
+                    </button>
+                </p>
+                <p>Nun sollten Sie die Missionsdaten der Datenbank angezeigt bekommen.</p>
+            </div>
+        </div>
+        <button id="run-tests">Tests ausführen</button>
+        <div id="test-cases"></div>
+        <a href="compose-challenges-2.html"><button id="previous" class="btn">&laquo; Zurück</button></a>
+        <a href="compose-challenges-success.html"><button id="next" class="btn">Weiter &raquo;</button></a>
+    </main>
+    <script src="script/base.js"></script>
+    <script defer type="module" src="script/compose-challenges-3.js"></script>
+</body>
+
+</html>

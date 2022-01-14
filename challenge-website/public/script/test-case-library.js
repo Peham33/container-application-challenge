@@ -2,26 +2,10 @@
 
 //container for the test cases
 const testDiv = document.getElementById("test-cases");
-const descriptionDiv = document.getElementById("description");
 
 //async sleep function
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-let activePage = 1;
-
-export function changePage(change) {
-    activePage += change;
-}
-
-export function getActivePage() {
-    return activePage;
-}
-
-export function resetPage() {
-    descriptionDiv.innerHTML = "";
-    testDiv.innerHTML = "";
 }
 
 export const statusCodes = new Map();
@@ -32,26 +16,16 @@ statusCodes.set(504, "Gateway Timeout");
 
 //class to represent individual test cases
 export class TestCase {
-    constructor(page, id, name, description, waitForExecute, testFunction) {
-        this.page = page;
+    constructor(id, name, testFunction) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.waitForExecute = waitForExecute;
         this.testFunction = testFunction;
     }
 
     //save running intervals, allows tests to get faster once completed
     intervals = [];
 
-    isActive() {
-        return this.page == activePage;
-    }
-
     render() {
-        if (!this.isActive()) return;
-
-        descriptionDiv.innerHTML = this.description;
         testDiv.innerHTML += `
         <div class="test-case-container">
             ${this.name}
@@ -65,8 +39,6 @@ export class TestCase {
 
     //resets the progress bar and status message
     reset() {
-        if (!this.isActive()) return;
-
         //clear running intervals
         this.intervals.forEach(clearInterval);
 
@@ -87,8 +59,6 @@ export class TestCase {
 
     //executes testFunction and renders a progress bar
     async execute() {
-        if (!this.isActive()) return;
-
         //reset progress bar
         this.reset();
 
@@ -97,7 +67,7 @@ export class TestCase {
         let statusDiv = document.getElementById(`test-case-${this.id}-status`);
 
         //execute test function async
-        let success = false;
+        this.success = false;
         let interval = 200; //default interval for the frame function
         let fasterInterval = 10; //bar goes a lot faster once result is obtained
 
@@ -112,17 +82,15 @@ export class TestCase {
         let width = 0;
 
         //synchronous execution - await the frame function (signfied by id variable)
-        if (this.waitForExecute) {
-            while (id != -1) {
-                await sleep(50);
-            }
+        while (id != -1) {
+            await sleep(50);
         }
 
         function frame() {
 
             //checks if testResult has been obtained - speed up if yes
             if (testResult != null && interval != fasterInterval) {
-                success = testResult['success'];
+                this.success = testResult['success'];
                 clearInterval(id);
                 interval = fasterInterval;
                 id = setInterval(frame, fasterInterval);
@@ -135,9 +103,9 @@ export class TestCase {
                 id = -1;
 
                 if (testResult == null) {
-                    success = false;
+                    this.success = false;
                 } else {
-                    success = testResult['success'];
+                    this.success = testResult['success'];
                 }
 
                 //bar and status message change based on success/failure
