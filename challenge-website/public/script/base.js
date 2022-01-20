@@ -29,6 +29,33 @@ function disableButtons() {
 function enableButtons() {
     document.querySelectorAll("button:not(.always-disabled)")
         .forEach(b => b.removeAttribute("disabled"))
+    enableSuccessButton();
+}
+
+//try to enable success button
+function enableSuccessButton(){
+    const compose = "compose";
+    const kubernetes = "kubernetes";
+    const pathname = window.location.pathname;
+    const onLastChallengePage = /(compose|kubernetes)-challenges-3/.test(pathname);
+
+    if(onLastChallengePage){
+        if(pathname.includes(compose)){
+            var res = checkSuccess(compose);
+        }else if(pathname.includes(kubernetes)){
+            var res = checkSuccess(kubernetes);
+        }
+        document.getElementById("next").disabled = !res;
+    }
+}
+
+//check if all tests for site are completed
+function checkSuccess(site){
+    var values = [];
+    var keys = Object.keys(sessionStorage);
+    keys = keys.filter(e => e.includes(site));
+    keys.forEach(k => values.push(sessionStorage.getItem(k)));
+    return values.every(v => v === 'true');
 }
 
 //function to allow clipboard copies
