@@ -13,7 +13,7 @@ module.exports = app => {
             success: false,
             tests: [
                 { message: "Die Datenbank läuft.", success: false },
-                { message: 'Die API ist erreichbar.', success: false },
+                { message: "Die API ist erreichbar.", success: false },
                 { message: "Ein Agent kann mithilfe der API erstellt werden.", success: false },
                 { message: "Der erstellte Agent kann für den Login verwendet werden.", success: false },
                 { message: "Die Daten sind nach einem Neustart noch verfügbar.", success: false }
