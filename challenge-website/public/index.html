@@ -6,17 +6,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/system-status.css" />
     <title>Container Application Challenge</title>
 </head>
 
 <body>
     <nav>
-        <a class="nav-item nav-item-active" href="index.html">Mission Overview</a>
+        <a class="nav-item nav-item-active" href="index.html">Missions Überblick</a>
         <a class="nav-item" href="compose-challenges-1.html">Compose Challenges</a>
         <a class="nav-item" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
     </nav>
     <main>
-        Rough mission description goes here
+        <div class="description" style="max-width:800px">
+            <div class="story">
+                <h1>Willkommen, Agent!</h1>
+                <p>
+                    Wir freuen uns, dass Sie sich dafür entschieden haben ein Teil unseres Teams zu werden. 
+                    <br>
+                    <br>
+                    Ihre erste Mission zu Kubernetes können sie bald starten, jedoch müssen Sie zuerst unser Training zu Docker erfolgreich absolvieren.
+                    Keine Sorge wir haben Ihnen die notwendigen Dokumentationen verlinkt, so sollten sie die Aufgaben ohne Vorwissen abschließen können. 
+                    <br>
+                    <br>
+                    Falls Sie eine Aufgabe erfolgreich erfüllt haben, die Tests aber trotzdem fehlschlagen, dann fahren sie einfach mit der nächsten Aufgabe fort. 
+                    Wir wünschen Ihnen Alles Gute und Spaß an den Aufgaben.
+                    <br>
+                    <br>
+                    PS: Falls Sie die Challenge nicht abschließen können, folgen Sie diesem Link <br>(<a href="./submission.html">Abgabe</a>) für Instruktionen zur Abgabe und den weiteren Schritten.
+                </p>
+            </div>            
+        </div>  
+        <a href="compose-challenges-1.html"><button id="next" class="btn">Weiter &raquo;</button></a>     
     </main>
 </body>
 
