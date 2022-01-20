@@ -14,6 +14,9 @@ setup_misc() {
   snap install yq &&
   apt-get install moreutils -y &&
 
+  # install docker-compose
+  apt-get install docker-compose -y &&
+
   # Default IP for Minikube
   echo "192.168.49.2 challenge.test" >> /etc/hosts &&
 
