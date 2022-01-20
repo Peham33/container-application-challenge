@@ -29,6 +29,33 @@ function disableButtons() {
 function enableButtons() {
     document.querySelectorAll("button:not(.always-disabled)")
         .forEach(b => b.removeAttribute("disabled"))
+    enableSuccessButton();
+}
+
+//try to enable success button
+function enableSuccessButton(){
+    const compose = "compose";
+    const kubernetes = "kubernetes";
+    const siteNr = "3";
+
+    let winName = window.location.pathname.split("/").pop();
+    if(winName.includes(siteNr)){
+        if(winName.includes(compose)){
+            var res = checkSuccess(compose);
+        }else if(winName.includes(kubernetes)){
+            var res = checkSuccess(kubernetes);
+        }
+        document.getElementById("next").disabled = !res;
+    }
+}
+
+//check if all tests for site are completed
+function checkSuccess(site){
+    var values = [];
+    var keys = Object.keys(sessionStorage);
+    keys = keys.filter(e => e.includes(site));
+    keys.forEach(k => values.push(sessionStorage.getItem(k)));
+    return values.every(v => v === 'true');
 }
 
 //function to allow clipboard copies

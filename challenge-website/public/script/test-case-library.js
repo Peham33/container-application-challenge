@@ -66,6 +66,7 @@ export class TestCase {
         let barDiv = document.getElementById(`test-case-${this.id}-bar`);
         let statusDiv = document.getElementById(`test-case-${this.id}-status`);
 
+
         //execute test function async
         this.success = false;
         let interval = 200; //default interval for the frame function
@@ -135,5 +136,7 @@ export class TestCase {
                 barDiv.innerHTML = width + "%";
             }
         }
+        //add current test results to the session storage
+        sessionStorage.setItem(window.location.pathname.split("/").pop(),testResult['success']);
     }
 }
