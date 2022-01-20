@@ -36,13 +36,13 @@ function enableButtons() {
 function enableSuccessButton(){
     const compose = "compose";
     const kubernetes = "kubernetes";
-    const siteNr = "3";
+    const pathname = window.location.pathname;
+    const onLastChallengePage = /(compose|kubernetes)-challenges-3/.test(pathname);
 
-    let winName = window.location.pathname.split("/").pop();
-    if(winName.includes(siteNr)){
-        if(winName.includes(compose)){
+    if(onLastChallengePage){
+        if(pathname.includes(compose)){
             var res = checkSuccess(compose);
-        }else if(winName.includes(kubernetes)){
+        }else if(pathname.includes(kubernetes)){
             var res = checkSuccess(kubernetes);
         }
         document.getElementById("next").disabled = !res;
