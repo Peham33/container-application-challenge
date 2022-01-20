@@ -137,6 +137,6 @@ export class TestCase {
             }
         }
         //add current test results to the session storage
-        sessionStorage.setItem(window.location.pathname.split("/").pop(),testResult['success']);
+        sessionStorage.setItem(window.location.pathname.split("/").pop(),Boolean(testResult['success']));
     }
 }
