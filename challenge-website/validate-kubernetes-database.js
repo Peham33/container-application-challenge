@@ -2,7 +2,7 @@ const childProcess = require("child_process");
 
 module.exports = app => {
     app.get('/validate-kubernetes-database', (req, response) => {
-        const id = Date.now().valueOf() % 1000;
+        const id = Math.random().toString(36).replace(/[^a-zA-Z0-9]+/g, '').substr(0, 32);
         const apiTestCurl = `curl -m 5 -d "codeName=007" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i`
         const registerCurl = `curl -m 5 -d 'codeName=${id}&name=test' https://challenge.test/register -H 'content-type: application/x-www-form-urlencoded' -ik`;
         const loginCurl = `curl -m 5 -d "codeName=${id}" http://challenge.test/login -H "content-type: application/x-www-form-urlencoded" -L -ik`;
