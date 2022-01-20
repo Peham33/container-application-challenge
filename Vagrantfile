@@ -8,6 +8,10 @@ Vagrant.configure("2") do |config|
     vb.cpus = "2"
   end
 
+  # install docker using the vagrant provisioner and preload required images
+  config.vm.provision "docker",
+    images: ["postgres:alpine", "haproxy:2.3-alpine"]
+
   config.vm.provision "file", source: "./vagrant-provisioning", destination: "/tmp/vagrant-provisioning"
 
   config.vm.provision "shell", inline: <<-SCRIPT

@@ -1,129 +1,116 @@
 # container-application-challenge
 SPR5G1 Studienprojekt für gepardec
 
-<!-- Introduction / Begrüßung -->
 ## Setup
 
-Before you can start the challenge, it is necessary to go through the Setup Guide below.
+Bevor Sie mit der Challenge starten können, ist es notwendig die untenstehende Setup-Anleitung durchzugehen.
 
-### Setup Vagrant
+### Vagrant
 
-The container-application-challenge runs inside a small Vagrant VM. To start the VM it is necessary to download and install [Vagrant](https://www.vagrantup.com/downloads).
+Die container-application-challenge läuft in einer kleinen Vagrant-VM. Um diese VM starten zu können, ist eine Installation von [Vagrant](https://www.vagrantup.com/downloads) notwendig.
 
 <https://www.vagrantup.com/downloads>
 
-If not already installed, a installation of [VirtualBox](https://www.virtualbox.org/wiki/Downloads) is mandatory.
+Für Vagrant wird auch eine Installation von [VirtualBox](https://www.virtualbox.org/wiki/Downloads) benötigt.
 
 <https://www.virtualbox.org/wiki/Downloads>
 
-### Clone Repo
+### GitHub Repository clonen
 
-The Vagrant Startup file and all files needed to run the challenge are located on this GitHub repository.
+Das Vagrantfile, mit dem die VM gestartet wird, sowie alle benötigten Dateien für die Challenge befinden sich in diesem GitHub-Repository.
 
-https://github.com/aeisl/container-application-challenge
+https://github.com/gepardec/container-application-challenge
 
-To start the challenge, fork the repository.
+Um die Challenge zu starten, forken Sie das Repository.
 
-Navigate to the local directory you want to run the challenge in and clone your fork.
+Navigieren Sie zum lokalen Ordner, wo sie die Challenge ausführen wollen, und clonen Sie Ihren Fork.
 
-### Start and configure Vagrant
+### Starten und Konfiguration von Vagrant
 
-Navigate into the project directory.
+Navigieren Sie zu Ihrem lokalen Repository.
 
 ```bash
 cd container-application-challenge
 ```
 
-By running `vagrant up` the VM should start and configure itself automatically, the project directory will be mounted inside the VM.
+Führen Sie dort `vagrant up` in einem Terminal Ihrer Wahl aus. Die VM sollte starten und sich automatisch konfigurieren. Der Projekt-Ordner wird in der VM unter dem Pfad /vagrant gemountet.
 
-This may take a few minutes depending on your download speed, the console output should tell you if the setup is done.
+Dies kann einige Zeit in Anspruch nehmen, die hauptsächlich von Ihrer Downloadgeschwindigkeit abhängt. Bei 20 MBit/s können Sie mit ungefähr 30 Minuten rechnen. Der Konsolenoutput weist Sie darauf hin, sobald das Setup abgeschlossen wurde.
 
-After waiting for a few moments - check if the setup worked by accessing the challenge website on your local machine ([http://localhost:3000](http://localhost:3000)).
+Falls Sie unter Windows Probleme mit dem Starten der VM haben, kann es notwendig sein, die Hyper-V Virtualisierung auf Ihrem System zu deaktivieren. Dokumentation dazu finden Sie in den [Microsoft Hyper-V Docs](https://docs.microsoft.com/en-us/troubleshoot/windows-client/application-management/virtualization-apps-not-work-with-hyper-v).
 
-To connect and work on the virtual machine run.
+Überprüfen Sie, ob Ihr Setup erfolgreich war, indem Sie die Challenge Website in einem Webbrowser auf Ihrem lokalen System öffnen ([http://localhost:3000](http://localhost:3000)).
+
+Um sich mit der VM zu verbinden und darin zu arbeiten, führen Sie folgenden Befehl aus:
 
 ```bash
 vagrant ssh
 ```
 
-All following commands need to be executed on the virtual machine.
+Alle nachfolgenden Kommandos müssen in der virtuellen Maschine ausgeführt werden.
 
-### Setup Docker-Compose
+### Setup von Docker Compose
 
-A ready to use compiled java application is included in the repository in order to make the setup faster and simpler.
+Eine fertig kompilierte Java-Applikation ist im Repository enthalten, um das Setup einfacher und schneller zu gestalten.
 
-1. Run `docker-compose up --build` in /vagrant directory
-2. The application is now running in the VM under [http://localhost:443](http://localhost:443)
+1. Führen Sie `docker-compose up --build` im Ordner /vagrant aus. Dieses Kommando baut die benötigten Docker-Container und läuft im aktuellen Terminal. Wenn Sie den Prozess in Ihrem Terminal stoppen, werden auch die Container gestoppt.
+2. Die Applikation läuft nun innerhalb der VM unter [http://localhost:443](http://localhost:443)
 
-If changes have been made to any files, run
-`docker-compose up --build`.
+Wenn Sie Änderungen an der Docker-Konfiguration vorgenommen haben, führen Sie folgendes Kommando aus, um die Container neu zu bauen:
+`docker-compose up --build`
 
-With this setup you are ready to start the first part of the challenge. You can access the instructions for part 1 at
-[challenge website](http://localhost:3000/compose-challenges-1.html) or continue with the setup.
+Mit diesem Setup sind Sie bereit, den ersten Teil der Challenge zu starten. Die Anleitung hierfür finden Sie auf der [Challenge Website](http://localhost:3000/compose-challenges-1.html).
+Sie können jedoch auch gleich mit dem Kubernetes-Setup fortfahren und die Challenge danach starten.
 
-### Start and configure minikube
+### Starten und Konfigurieren von minikube
 
-This part of the setup is only needed for the kubernetes part of the challenge.
+Dieser Teil des Setup wird nur für den Kubernetes-Teil der Challenge benötigt.
 
-To start the kubernetes cluster run:
+Um den Kubernetes-Cluster zu starten, führen Sie folgenden Befehl aus:
 
 ```bash
 minikube start
 ```
 
-After starting minikube some configuration of the cluster needs to be done. For this a setup script will be provided.
-Simply execute the script by running the following command inside Vagrant.
+Nach dem Starten von minikube müssen einige Konfigurationen am Cluster vorgenommen werden. Hierfür wird ein Skript bereitgestellt.
+Führen Sie das Skript mit diesem Befehl aus:
 
 ```bash
 /vagrant/minikube-setup.sh
 ```
 
-The script executes the following steps:
+Das Skript umfasst die folgenden Schritte:
 
-1. Enable the minikube ingress addon.
-2. Disable the TLS CA verification to allow a self-signed certificate.
-3. Apply various k8s configurations.
-4. Create the TLS secret.
+1. Aktivieren des minikube ingress addon.
+2. Deaktivieren der TLS CA Verifikation, um ein selbst signiertes Zertifikat zu erlauben.
+3. Anwenden von mehreren Kubernetes Konfigurationsdateien.
+4. Erstellung des TLS secret.
 
-The following files will not be applyable right after the setup and need to be configured correctly first.
+Die folgenden Dateien sind nach dem Setup nicht sofort anwendbar und müssen im Zuge der Challenge korrekt konfiguriert werden.
 
 - ingress.yaml
 - api.service.yaml
 - database-credentials.yaml
 
-Now the setup should be complete and you can start with the challenge.
-Follow the instructions on the [challenge website](http://localhost:3000/).
-All changes you make to files can be made outside the Vagrant VM.
+Das Setup sollte jetzt fertig sein, und Sie können mit der Challenge starten.
+Folgen Sie den Anweisungen auf der [Challenge Website](http://localhost:3000/).
+Änderungen an den Konfigurationsdateien können außerhalb der Vagrant-VM gemacht werden, da der Ordner in der VM gemountet ist.
 
 ## Challenges
 
-The challenge instructions can be found in [docs/challenges](docs/challenges) or on the [challenge website](http://localhost:3000/) after [starting Vagrant](#start-and-configure-minikube).
+Die Challenge-Anleitungen finden Sie in [docs/challenges](docs/challenges) oder auf der [Challenge Website](http://localhost:3000/).
 
-We currently have 3 challenge instructions (provided in German!):
+Es gibt momentan 3 Challenge-Anleitungen:
 
 1. [Setup mit Docker-Compose](docs/challenges/1_Setup-Mit-Docker-Compose.md)
 2. [K8s Deployment ohne Downtime](docs/challenges/2_K8s-Deployment-Ohne-Downtime.md)
 3. [Cluster Setup](docs/challenges/3_Cluster-Setup.md)
 
-## Handing in your Solution
+## Abgeben Ihrer Lösung
 
-When you are done with the challenge you should create a pull request from your fork onto the main repository.
-The followup interview with gepardec will be based on this pull request.
+Wenn Sie mit der Challenge fertig sind, erstellen Sie einen Pull Request von Ihrem Fork auf das Hauptrepository.
+In Ihrem Interview mit gepardec haben Sie die Möglichkeit, auf Ihre Lösung einzugehen.
 
 ## Cleanup
 
-Using the command `vagrant destroy` all traces of the Vagrant VM will be deleted from your machine.
-
-## Query Samples
-
-These samples should be executed on the Vagrant VM.
-
-If the cluster is set up correctly, the following queries should return status code 200.
-
-Curl command for registering a new agent.
-
-    curl -d "codeName=123&name=test" https://challenge.test/register -v -H 'content-type: application/x-www-form-urlencoded' -i
-
-Curl command to check if register worked.
-
-    curl -d "codeName=123" http://challenge.test/login -H 'content-type: application/x-www-form-urlencoded' -L -i
+Mit dem Kommando `vagrant destroy` wird die Vagrant-VM von ihrem lokalen System entfernt.
