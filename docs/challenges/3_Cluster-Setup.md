@@ -1,5 +1,5 @@
 # Vorbereitung
-Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden Sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebniss nach jedem Teilschritt überprüfen. 
+Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden Sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebnis nach jedem Teilschritt überprüfen. 
 
 # Kubernetes Cluster Szenario
 
@@ -11,24 +11,33 @@ Den Doppelagenten konnten wir inzwischen ausfindig machen, die Schäden bestehen
 
 Viel Glück, wir zählen auf Sie!
 
-
 # API
 
-Die API wurde in Mitleidenschaft gezogen. Bei dem Versuch die Schnittstelle zu erreichen wird immer ein 503 Error Service Temporarily unavailable geliefert. Um den Fehler zu beheben, müssen Sie einen API Service erstellen, welcher über den Port 8080 erreichbar ist. 
-(<https://kubernetes.io/docs/concepts/services-networking/service/>)
+Bei dem Versuch die API zu erreichen, wird immer ein 503 Error Service Temporarily unavailable geliefert.
 
-Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation 
-mit Datenbank credentials erweitern.
+Um den Fehler zu beheben, müssen Sie ein API Service in der api.service.yaml Datei konfigurieren, welches über den Port 8080 erreichbar ist. (<https://kubernetes.io/docs/concepts/services-networking/service/>)
+
+Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern.
 (<https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>)
 
 # Ingress
 
-Jeder Versuch sich mit dem Ingress zu verbinden scheitert. Konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service, den Sie zuvor konfiguriert haben, zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
-Außerdem soll ein https Upgrade durchgeführt werden. Verwende dazu das vorkonfiguriertes TLS Secret `challenge-test-tls`. (<https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>)
+Scheinbar haben unsere Feinde ganze Arbeit geleistet. Die angerichteten Schäden sind doch schlimmer als befürchtet.
 
+Konfigurieren Sie den Ingress Server so, dass dieser wieder erreichbar ist.
+
+Jeder Versuch sich mit dem Ingress zu verbinden scheitert. Konfigurieren Sie die ingress.yaml Datei so, dass es wieder möglich ist sich mit dem Host challenge.test über den API Service, den Sie zuvor konfiguriert haben, zu verbinden. (<https://kubernetes.io/docs/concepts/services-networking/ingress/>)
+
+Außerdem soll ein https Upgrade durchgeführt werden. Verwende dazu das vorkonfiguriertes TLS Secret `challenge-test-tls`. (<https://kubernetes.io/docs/concepts/services-networking/ingress/#tls>)
 
 # Datenbank
 
 Ausgezeichnet! Unsere Applikation funktioniert und unsere Agenten können Ihre Informationen wieder sicher und verlässlich teilen.
 
-Allerdings gibt es noch ein Problem: Mehrere Nutzer haben berichtet, dass Ihre Daten nach einem Wartungsfenster verschwunden sind. Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen! Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. (<https://kubernetes.io/docs/concepts/storage/persistent-volumes/>)
+Allerdings gibt es noch ein Problem: Mehrere Nutzer haben berichtet, dass Ihre Daten nach einem Wartungsfenster verschwunden sind!
+
+Bitte helfen Sie uns ein letztes Mal, Agent!
+
+Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verloren gehen!
+
+Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. ([Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/))
