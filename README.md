@@ -35,11 +35,11 @@ cd container-application-challenge
 
 Führen Sie dort `vagrant up` in einem Terminal Ihrer Wahl aus. Die VM sollte starten und sich automatisch konfigurieren. Der Projekt-Ordner wird in der VM unter dem Pfad /vagrant gemountet.
 
-Dies kann einige Zeit in Anspruch nehmen, die hauptsächlich von Ihrer Downloadgeschwindigkeit abhängt. Bei 20 MBit/s können Sie mit ungefähr 30 Minuten rechnen. Der Konsolenoutput weist Sie darauf hin, wenn das Setup fertig ist.
+Dies kann einige Zeit in Anspruch nehmen, die hauptsächlich von Ihrer Downloadgeschwindigkeit abhängt. Bei 20 MBit/s können Sie mit ungefähr 30 Minuten rechnen. Der Konsolenoutput weist Sie darauf hin, sobald das Setup abgeschlossen wurde.
 
 Falls Sie unter Windows Probleme mit dem Starten der VM haben, kann es notwendig sein, die Hyper-V Virtualisierung auf Ihrem System zu deaktivieren. Dokumentation dazu finden Sie in den [Microsoft Hyper-V Docs](https://docs.microsoft.com/en-us/troubleshoot/windows-client/application-management/virtualization-apps-not-work-with-hyper-v).
 
-Überprüfen Sie, ob Ihr Setup erfolgreich war, indem Sie die challenge website in einem Webbrowser auf Ihrem lokalen System öffnen ([http://localhost:3000](http://localhost:3000)).
+Überprüfen Sie, ob Ihr Setup erfolgreich war, indem Sie die Challenge Website in einem Webbrowser auf Ihrem lokalen System öffnen ([http://localhost:3000](http://localhost:3000)).
 
 Um sich mit der VM zu verbinden und darin zu arbeiten, führen Sie folgenden Befehl aus:
 
@@ -59,14 +59,14 @@ Eine fertig kompilierte Java-Applikation ist im Repository enthalten, um das Set
 Wenn Sie Änderungen an der Docker-Konfiguration vorgenommen haben, führen Sie folgendes Kommando aus, um die Container neu zu bauen:
 `docker-compose up --build`
 
-Mit diesem Setup sind Sie bereit, den ersten Teil der Challenge zu starten. Die Anleitung hierfür finden Sie auf der [challenge website](http://localhost:3000/compose-challenges-1.html).
-Sie können aber auch gleich mit dem Kubernetes-Setup weitermachen.
+Mit diesem Setup sind Sie bereit, den ersten Teil der Challenge zu starten. Die Anleitung hierfür finden Sie auf der [Challenge Website](http://localhost:3000/compose-challenges-1.html).
+Sie können jedoch auch gleich mit dem Kubernetes-Setup fortfahren und die Challenge danach starten.
 
 ### Starten und Konfigurieren von minikube
 
 Dieser Teil des Setup wird nur für den Kubernetes-Teil der Challenge benötigt.
 
-Um das Kubernetes-Cluster zu starten, führen Sie folgenden Befehl aus:
+Um den Kubernetes-Cluster zu starten, führen Sie folgenden Befehl aus:
 
 ```bash
 minikube start
@@ -82,23 +82,23 @@ Führen Sie das Skript mit diesem Befehl aus:
 Das Skript umfasst die folgenden Schritte:
 
 1. Aktivieren des minikube ingress addon.
-2. Deaktivieren der TLS CA Verifikation, um ein selbstgezeichnetes Zertifikat zu erlauben.
-3. Anwenden von mehreren k8s Konfigurationsdateien.
+2. Deaktivieren der TLS CA Verifikation, um ein selbst signiertes Zertifikat zu erlauben.
+3. Anwenden von mehreren Kubernetes Konfigurationsdateien.
 4. Erstellung des TLS secret.
 
-Die folgenden Dateien sind nach dem Setup nicht sofort anwendbar und müssen zuerst korrekt konfiguriert werden.
+Die folgenden Dateien sind nach dem Setup nicht sofort anwendbar und müssen im Zuge der Challenge korrekt konfiguriert werden.
 
 - ingress.yaml
 - api.service.yaml
 - database-credentials.yaml
 
 Das Setup sollte jetzt fertig sein, und Sie können mit der Challenge starten.
-Folgen Sie den Anweisungen auf der [challenge website](http://localhost:3000/).
+Folgen Sie den Anweisungen auf der [Challenge Website](http://localhost:3000/).
 Änderungen an den Konfigurationsdateien können außerhalb der Vagrant-VM gemacht werden, da der Ordner in der VM gemountet ist.
 
 ## Challenges
 
-Die Challenge-Anleitungen finden Sie in [docs/challenges](docs/challenges) oder auf der [challenge website](http://localhost:3000/).
+Die Challenge-Anleitungen finden Sie in [docs/challenges](docs/challenges) oder auf der [Challenge Website](http://localhost:3000/).
 
 Es gibt momentan 3 Challenge-Anleitungen:
 
@@ -108,7 +108,7 @@ Es gibt momentan 3 Challenge-Anleitungen:
 
 ## Abgeben Ihrer Lösung
 
-Wenn Sie mit der Challenge fertig sind, erstellen Sie einen pull request von Ihrem Fork auf das Hauptrepository.
+Wenn Sie mit der Challenge fertig sind, erstellen Sie einen Pull Request von Ihrem Fork auf das Hauptrepository.
 In Ihrem Interview mit gepardec haben Sie die Möglichkeit, auf Ihre Lösung einzugehen.
 
 ## Cleanup
