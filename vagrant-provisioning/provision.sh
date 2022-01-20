@@ -4,7 +4,6 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
 . ./install-kubectl.sh
 . ./install-minikube.sh
-. ./install-maven.sh
 . ./install-nodejs.sh
 . ./setup-challenge-website.sh
 . ./setup-misc.sh
@@ -18,22 +17,19 @@ try() {
   fi
 }
 
-echo '[1/6] Installing kubectl...'
+echo '[1/5] Installing kubectl...'
 try install_kubectl
 
-echo '[2/6] Installing minikube...'
+echo '[2/5] Installing minikube...'
 try install_minikube
 
-echo '[3/6] Installing maven...'
-try install_maven
-
-echo '[4/6] Installing node.js...'
+echo '[3/5] Installing node.js...'
 try install_nodejs
 
-echo '[5/6] Setting up challenge website...'
+echo '[4/5] Setting up challenge website...'
 try setup_challenge_website
 
-echo '[6/6] Doing some little tweaks...'
+echo '[5/5] Doing some little tweaks...'
 try setup_misc
 
 echo
