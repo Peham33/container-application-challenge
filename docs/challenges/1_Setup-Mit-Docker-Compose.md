@@ -1,13 +1,23 @@
 # Vorbereitung
 Bevor sie den zweiten Teil starten führen Sie alle Schritte, die in der [README](../../README.md) Datei beschrieben sind, durch. Danach können Sie sich mit ihrem Hostsystem auf <http://localhost:3000> verbinden, dort finden Sie die Validierungen für die einzelnen Schritte und können somit Ihr Ergebnis nach jedem Teilschritt überprüfen.
 
+# Willkommen
+
+> Willkommen, Agent!
+>
+> Wir freuen uns, dass Sie sich dafür entschieden haben ein Teil unseres Teams zu werden.
+>
+> Ihre erste Mission zu Kubernetes können sie bald starten, jedoch müssen Sie zuerst unser Training zu Docker erfolgreich absolvieren.
+> Keine Sorge wir haben Ihnen die notwendigen Dokumentationen verlinkt, so sollten sie die Aufgaben ohne Vorwissen abschließen können
+>
+> Falls Sie eine Aufgabe erfolgreich erfüllt haben, die Tests aber trotzdem fehlschlagen, dann fahren sie einfach mit der nächsten Aufgabe fort.
+>
+> PS: Falls Sie die Challenge nicht abschließen können, folgen Sie diesem Link [Abgabe](./4_Abgabe.md) für Instruktionen zur Abgabe und den weiteren Schritten.
 
 # Docker Compose Szenario
 
 ## API
 
-> Willkommen, Agent!
-> 
 > Hier startet Ihre erste Trainings-Mission. Wir beginnen mit einer Aufgabe zu [docker-compose](https://docs.docker.com/compose/).
 > 
 > Sie arbeiten dabei auf einer Testinstanz unseres **Agenten-Verwaltung-Systems**. Es speichert und verwaltet unsere Agenten sowie deren Missionen in einer Datenbank und ermöglicht den Zugriff über eine REST-API.
@@ -44,6 +54,8 @@ Es sollte ein 301 Moved Permanently zurückgegeben werden. (<https://www.haproxy
 Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden Sie dafür die im Pfad ([/vagrant/db/postgres/initdb](../../db/postgres/initdb)) vorhandenen SQL-Scripts.
 
 Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76>)
+
+Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose up').
 
 Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:
 

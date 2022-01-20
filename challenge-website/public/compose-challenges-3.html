@@ -12,7 +12,7 @@
 
 <body>
     <nav>
-        <a class="nav-item" href="index.html">Mission Overview</a>
+        <a class="nav-item" href="index.html">Missions Überblick</a>
         <a class="nav-item nav-item-active" href="compose-challenges-1.html">Compose Challenges</a>
         <a class="nav-item" href="kubernetes-challenges-1.html">Kubernetes Challenges</a>
     </nav>
@@ -25,8 +25,11 @@
 
             <div class="instructions">
                 <h2>Missionsziel</h2>
-                <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden Sie dafür die im Pfad <strong>/vagrant/db/postgres/initdb</strong> vorhandenen SQL-Scripts.</p>
-                <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>)</p>
+                <p>Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Verwenden Sie dafür die im Pfad <strong>/vagrant/db/postgres/initdb</strong> vorhandenen SQL-Scripts. 
+                    Diese müssen nicht weiter bearbeitet werden.</p>
+                <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank neu gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>) 
+                    <br> 
+                    Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose up').</p>
                 <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
                 <p>
                     <code>curl -L "http://localhost:80/missions"</code>
