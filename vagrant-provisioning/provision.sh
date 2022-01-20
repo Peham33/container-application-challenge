@@ -3,7 +3,6 @@ export DEBIAN_FRONTEND=noninteractive
 export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
 . ./install-kubectl.sh
-. ./install-docker.sh
 . ./install-minikube.sh
 . ./install-maven.sh
 . ./install-nodejs.sh
@@ -12,32 +11,29 @@ export APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1
 
 try() {
   $1 > /tmp/provision.out.txt
-  if [ $? -ne 0 ]; then \ 
-    echo 'Error while setting up VM!'; \ 
-    cat /tmp/provision.out.txt; \ 
-    exit 1; \ 
+  if [ $? -ne 0 ]; then \
+    echo 'Error while setting up VM!'; \
+    cat /tmp/provision.out.txt; \
+    exit 1; \
   fi
 }
 
-echo '[1/7] Installing kubectl...'
+echo '[1/6] Installing kubectl...'
 try install_kubectl
 
-echo '[2/7] Installing docker...'
-try install_docker
-
-echo '[3/7] Installing minikube...'
+echo '[2/6] Installing minikube...'
 try install_minikube
 
-echo '[4/7] Installing maven...'
+echo '[3/6] Installing maven...'
 try install_maven
 
-echo '[5/7] Installing node.js...'
+echo '[4/6] Installing node.js...'
 try install_nodejs
 
-echo '[6/7] Setting up challenge website...'
+echo '[5/6] Setting up challenge website...'
 try setup_challenge_website
 
-echo '[7/7] Doing some little tweaks...'
+echo '[6/6] Doing some little tweaks...'
 try setup_misc
 
 echo
