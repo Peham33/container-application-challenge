@@ -35,9 +35,9 @@ cd container-application-challenge
 
 Führen Sie dort `vagrant up` in einem Terminal Ihrer Wahl aus. Die VM sollte starten und sich automatisch konfigurieren. Der Projekt-Ordner wird in der VM unter dem Pfad /vagrant gemountet.
 
-Falls Sie unter Windows Probleme mit dem Starten der VM haben, kann es notwendig sein, die Hyper-V Virtualisierung auf Ihrem System zu deaktivieren. Dokumentation dazu finden Sie in den [Microsoft Hyper-V Docs](https://docs.microsoft.com/en-us/troubleshoot/windows-client/application-management/virtualization-apps-not-work-with-hyper-v).
-
 Dies kann einige Zeit in Anspruch nehmen, die hauptsächlich von Ihrer Downloadgeschwindigkeit abhängt. Bei 20 MBit/s können Sie mit ungefähr 30 Minuten rechnen. Der Konsolenoutput weist Sie darauf hin, wenn das Setup fertig ist.
+
+Falls Sie unter Windows Probleme mit dem Starten der VM haben, kann es notwendig sein, die Hyper-V Virtualisierung auf Ihrem System zu deaktivieren. Dokumentation dazu finden Sie in den [Microsoft Hyper-V Docs](https://docs.microsoft.com/en-us/troubleshoot/windows-client/application-management/virtualization-apps-not-work-with-hyper-v).
 
 Überprüfen Sie, ob Ihr Setup erfolgreich war, indem Sie die challenge website in einem Webbrowser auf Ihrem lokalen System öffnen ([http://localhost:3000](http://localhost:3000)).
 
