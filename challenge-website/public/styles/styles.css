@@ -10,7 +10,7 @@ body {
     font-family: monospace, consolas;
 }
 
-a:visited {
+nav a:visited {
     text-decoration: none;
     color: inherit;
 }
@@ -33,4 +33,12 @@ nav {
 
 nav .nav-item-active {
     text-decoration: underline;
+}
+
+.tips {
+    margin-top: 2rem;
+    max-width: 800px;
+}
+.tips li {
+    margin-bottom: 1rem;
 }

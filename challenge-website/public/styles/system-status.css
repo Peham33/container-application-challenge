@@ -94,7 +94,7 @@ button[disabled=disabled], button:disabled {
     max-width: 800px;
 }
 
-#description a {
+a {
     color: var(--highlight-color);
 }
 
