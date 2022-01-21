@@ -46,6 +46,8 @@ Sorgen Sie dafür, dass bei einem Neustart der Datenbank keine Daten mehr verlor
 
 Ergänzen Sie dazu das Datenbank Deployment um einen Volume Claim. ([Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/))
 
+Tipp: PostgreSQL speichert Daten unter dem Pfad '/var/lib/postgresql/data'
+
 # Abschluss
 
 Gratulation, Sie haben die Challenge abgeschlossen!
