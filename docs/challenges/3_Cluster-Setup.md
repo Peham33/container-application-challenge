@@ -21,9 +21,7 @@ Bei dem Versuch die API zu erreichen, wird immer ein 503 Error Service Temporari
 
 Um den Fehler zu beheben, müssen Sie ein API Service in der api.service.yaml Datei konfigurieren, welches über den Port 8080 erreichbar ist. (<https://kubernetes.io/docs/concepts/services-networking/service/>)
 
-Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation (API- und Datenbank-Deployment) mit Datenbank-Credentials erweitern.
-(<https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>)
-Bis Sie eine sichere Lösung für die Datenbank-Zugangsdaten gefunden haben, sind diese im Datenbank-Deployment einsehbar.
+Der Doppelagent hat außerdem Sicherheitslücken in unseren Konfigurationen hinterlassen. Um unser System sicherer zu machen, sollten Sie unsere Applikation mit Datenbank-Credentials erweitern. Übernehmen Sie dafür die Key-Value Pairs DB_USERNAME und DB_PASSWORD aus der Api Configmap in ein Kubernetes Secret und binden Sie dieses als Umgebungvariable in die Deployments ein. (<https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/>)
 
 # Ingress
 
