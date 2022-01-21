@@ -55,7 +55,7 @@ Als letzte Trainingseinheit sollen Sie Daten auf dem Server anzeigen lassen. Ver
 
 Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank das erste Mal gestartet wird. (<https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76>)
 
-Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose up').
+Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose down && docker-compose up').
 
 Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:
 

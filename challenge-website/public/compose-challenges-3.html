@@ -29,7 +29,7 @@
                     Diese müssen nicht weiter bearbeitet werden.</p>
                 <p>Die Testdaten sollen automatisch eingespielt werden, wenn die Datenbank neu gestartet wird. (<a target="_blank" href="https://onexlab-io.medium.com/docker-compose-postgres-initdb-ba0021deef76">Docker compose Postgres initdb</a>) 
                     <br> 
-                    Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose up').</p>
+                    Es ist zu beachten, dass die SQL-Scripts nur bei einem initialen Aufbau der Datenbank ausgeführt werden ('docker-compose down && docker-compose up').</p>
                 <p>Zum Testen rufen Sie abermals das folgende Kommando in der VM auf:</p>
                 <p>
                     <code>curl -L "http://localhost:80/missions"</code>
