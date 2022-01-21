@@ -19,7 +19,7 @@ module.exports = function (app) {
             tests: [
                 { message: 'Ein Secret mit den Namen \'database-credentials\' wurde erstellt und enthält Username und Passwort der Datenbank.', success: false },
                 { message: 'Das API Deployment bindet das gesamte Secret über ein \'secretRef\' ein', success: false },
-                { message: 'Das Datenbank Deployment lest die Werte für Username und Passwort aus dem Secret aus.', success: false },
+                { message: 'Das Datenbank Deployment liest die Werte für Username und Passwort aus dem Secret aus.', success: false },
             ]
         };
 
