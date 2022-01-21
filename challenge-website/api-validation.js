@@ -17,26 +17,29 @@ module.exports = function (app) {
         const body = {
             success: false,
             tests: [
-                { message: 'Das API Deployment verwendet Secrets für die Datenbankanmeldung.', success: false },
-                { message: 'Das Datenbank Deployment verwendet Secrets.', success: false },
+                { message: 'Ein Secret mit den Namen \'database-credentials\' wurde erstellt und enthält DB_USERNAME: james und DB_PASSWORD: bond', success: false },
+                { message: 'Das API Deployment bindet das gesamte Secret über ein \'secretRef\' ein', success: false },
+                { message: 'Das Datenbank Deployment liest die Werte für Username und Passwort aus dem Secret aus.', success: false },
             ]
         };
+
         try {
-            const secretName = kubectl('kubectl get deployment api -o=jsonpath="{.spec.template.spec.containers[*].envFrom[*].secretRef.name}"');
-            const passwordCorrect = kubectlAssert('kubectl get secret ' + secretName + ' -o=jsonpath="{.data.DB_PASSWORD}"', 'Ym9uZA==');
-            const usernameCorrect = kubectlAssert('kubectl get secret ' + secretName + ' -o=jsonpath="{.data.DB_USERNAME}"', 'amFtZXM=');
+            const passwordCorrect = kubectlAssert('kubectl get secret database-credentials -o=jsonpath="{.data.DB_PASSWORD}"', 'Ym9uZA==');
+            const usernameCorrect = kubectlAssert('kubectl get secret database-credentials -o=jsonpath="{.data.DB_USERNAME}"', 'amFtZXM=');
             body.tests[0].success = passwordCorrect && usernameCorrect;
 
-            const dbUser = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_USER\')].valueFrom.secretKeyRef.name}"', secretName);
+            body.tests[1].success = kubectlAssert('kubectl get deployment api -o=jsonpath="{.spec.template.spec.containers[*].envFrom[*].secretRef.name}"', 'database-credentials')
+
+            const dbUser = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_USER\')].valueFrom.secretKeyRef.name}"', 'database-credentials');
             const dbUserKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_USER\')].valueFrom.secretKeyRef.key}"', 'DB_USERNAME');
-            const dbPassword = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.name}"', secretName);
+            const dbPassword = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.name}"', 'database-credentials');
             const dbPasswordKey = kubectlAssert('kubectl get deployment database -o=jsonpath="{.spec.template.spec.containers[*].env[?(@.name == \'POSTGRES_PASSWORD\')].valueFrom.secretKeyRef.key}"', 'DB_PASSWORD');
 
-            body.tests[1].success = dbUser && dbUserKey && dbPassword && dbPasswordKey;
-
+            body.tests[2].success = dbUser && dbUserKey && dbPassword && dbPasswordKey;
         } catch (e) {
             console.log(e);
         }
+
         body.success = body.tests.every(x => x.success);
         return body;
     }
