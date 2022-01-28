@@ -37,21 +37,21 @@ If not, check that the file contains the correct token or create a new one if yo
 
 Run the latest published version from the image registry.
 ````
-docker run -e POSTGRES_PASSWORD=password docker.pkg.github.com/aeisl/container-application-challenge/database:latest
+docker run -e POSTGRES_PASSWORD=password docker.pkg.github.com/gepardec/container-application-challenge/database:latest
 ````
 
 Build and publish a new latest version of our database image
 ````
 docker build -t spr/postgres db/postgres
-docker tag spr/database docker.pkg.github.com/aeisl/container-application-challenge/database:latest
-docker push docker.pkg.github.com/aeisl/container-application-challenge/database:latest
+docker tag spr/database docker.pkg.github.com/gepardec/container-application-challenge/database:latest
+docker push docker.pkg.github.com/gepardec/container-application-challenge/database:latest
 ````
 
 ### API (Quarkus)
 
 Run the latest published version from the image registry.
 ````
-docker run docker.pkg.github.com/aeisl/container-application-challenge/api:latest
+docker run docker.pkg.github.com/gepardec/container-application-challenge/api:latest
 ````
 
 Build and publish a new latest version of our api image
@@ -62,6 +62,6 @@ Make sure there are not environment variables set in [here](../app/.env)
 
 ````
 docker build -t spr/api -f app/src/main/docker/Dockerfile.jvm app
-docker tag spr/api docker.pkg.github.com/aeisl/container-application-challenge/api:latest
-docker push docker.pkg.github.com/aeisl/container-application-challenge/api:latest
+docker tag spr/api docker.pkg.github.com/gepardec/container-application-challenge/api:latest
+docker push docker.pkg.github.com/gepardec/container-application-challenge/api:latest
 ````

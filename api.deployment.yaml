@@ -20,7 +20,7 @@ spec:
       imagePullSecrets:
         - name: github-registry
       containers:
-        - image: docker.pkg.github.com/aeisl/container-application-challenge/api:latest
+        - image: docker.pkg.github.com/gepardec/container-application-challenge/api:latest
           imagePullPolicy: IfNotPresent
           name: api
           resources: {}
